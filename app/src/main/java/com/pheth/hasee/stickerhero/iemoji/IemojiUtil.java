@@ -126,6 +126,7 @@ public class IemojiUtil {
                 public void onNewResult(DataSource<Void> dataSource) {
                     shareGif(ctx, url, historyDao, historyItem);
                     IS_SHARE_IN_PROGRESS = false;
+
                 }
 
                 @Override
