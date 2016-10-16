@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- gif -->
+    <string-array name="emoji_shared_packages_gif_file">
+        <item>com.facebook.orca</item> <!-- facebook Messenger pic:文件 gif:文件-->
+        <item>com.whatsapp</item> <!-- whatsapp pic:文件 gif:文件-->
+        <item>com.bsb.hike</item> <!-- hike pic:文件 gif:文件 ???-->
+        <item>com.google.android.apps.messaging</item> <!-- google messager pic:文件 gif:文件-->
+        <item>com.google.android.talk</item><!-- 环聊 pic:文件 gif:文件 -->
+        <item>com.tencent.mobileqq</item> <!-- qq pic:文件 gif:文件-->
+        <item>com.twitter.android</item> <!-- twitter pic:文件 gif:文件 -->
+        <!-- <item>com.facebook.katana</item> facebook  pic:文件  gif:url -->
+    </string-array>
+
+    <!-- picture -->
+    <string-array name="emoji_shared_packages_pic_file">
+        <item>com.twitter.android</item> <!-- twitter pic:文件 gif:文件 -->
+        <item>com.facebook.orca</item> <!-- facebook Messenger pic:文件 gif:文件-->
+        <item>com.facebook.katana</item> <!-- facebook  pic:文件  gif:url-->
+        <item>com.whatsapp</item> <!-- whatsapp pic:文件 gif:文件-->
+        <item>com.bsb.hike</item> <!-- hike pic:文件 gif:文件 ???-->
+        <item>jp.naver.line.android</item> <!-- line pic:文件  gif:url-->
+        <item>com.google.android.apps.messaging</item> <!-- google messager pic:文件 gif:文件-->
+        <item>com.google.android.talk</item><!-- 环聊 pic:文件 gif:文件 -->
+        <item>com.tencent.mobileqq</item> <!-- qq pic:文件 gif:文件-->
+        <item>com.tencent.mm</item> <!-- 微信 pic:文件 gif:url-->
+        <!-- <item>com.Slack</item> -->
+    </string-array>
+</resources>

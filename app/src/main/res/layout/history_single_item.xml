@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <com.facebook.drawee.view.SimpleDraweeView xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:fresco="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/iv_single_sticker"
+        android:layout_width="65dp"
+        android:layout_height="60dp"
+        android:adjustViewBounds="true"
+        fresco:progressBarImage="@drawable/foto_gif_loading_icon"
+        fresco:progressBarImageScaleType="center"
+        fresco:viewAspectRatio="1.33" />
+
+    <TextView
+        android:id="@+id/tv_category_title"
+        android:layout_width="65dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:lines="1"
+        android:textSize="10dp"
+        android:textColor="@color/white"
+        android:textStyle="bold" />
+
+</LinearLayout>

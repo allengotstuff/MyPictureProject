@@ -1,0 +1,20 @@
+<resources>
+    <string name="app_name">StickerHero</string>
+    <string name="action_settings">Settings</string>
+    <string name="toast_wait">Please wait few seconds</string>
+    <string name="loading_image">loading image...</string>
+    <string name="please_add_favorite">You havn\'t add any favorite stickers yet,\nLong hold items in Category to add to your favorite list !</string>
+
+    <!-- the social package tile and social package id should keep in the same old, to keep reference-->
+    <string-array name="social_package_title">
+        <item>Whatsapp</item>
+        <item>Messenger</item>
+    </string-array>
+
+    <string-array name="social_package_id">
+        <item>com.whatsapp</item>
+        <item>com.facebook.orca</item>
+    </string-array>
+
+    <string name="whatsapp">com.whatsapp</string>
+</resources>
