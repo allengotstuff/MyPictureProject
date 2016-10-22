@@ -24,6 +24,7 @@ import com.facebook.drawee.backends.pipeline.Fresco;
 import com.facebook.drawee.interfaces.DraweeController;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.flurry.android.FlurryAgent;
+import com.pheth.hasee.stickerhero.GreenDaoManager.DaoManager;
 import com.pheth.hasee.stickerhero.MyApplication;
 import com.pheth.hasee.stickerhero.R;
 import com.pheth.hasee.stickerhero.greendao.DaoMaster;
@@ -35,71 +36,72 @@ import com.pheth.hasee.stickerhero.utils.MyGreenDaoUtils;
 import com.pheth.hasee.stickerhero.utils.StaticConstant;
 
 import java.util.ArrayList;
+
 /**
  * Created by allengotstuff on 9/1/2016.
  */
 public class CategoryStickAdapterSuitable extends BaseAdapter implements AdapterView.OnItemClickListener, AdapterView.OnItemLongClickListener {
 
-        private ArrayList<FavoriteCategory> mList;
-        private Context mContext;
-//        private float dpSizeSmall;
+    private ArrayList<FavoriteCategory> mList;
+    private Context mContext;
+    //        private float dpSizeSmall;
 //        private float dpSize62;
-        private LayouController mLayoutController;
+    private LayouController mLayoutController;
 
-        private DaoMaster daoMaster;
-        private DaoSession daoSession;
-        private FavoriteCategoryDao favoriteDao;
+    private DaoManager daoManager;
 
 
-        public CategoryStickAdapterSuitable(Context context, ArrayList<FavoriteCategory> imojis) {
-            mContext = context;
-            mList = imojis;
+    public CategoryStickAdapterSuitable(Context context, ArrayList<FavoriteCategory> imojis) {
+        mContext = context;
+        mList = imojis;
 //            dpSizeSmall = ScreenUtils.convertDpToPixel(30, mContext);
 //            dpSize62 = ScreenUtils.convertDpToPixel(62, mContext);
-            initdatabase();
+//            initdatabase();
+        daoManager = DaoManager.getManager();
+        daoManager.getFavoriteCategoryDao();
+    }
+
+
+//        private void initdatabase() {
+//            daoMaster = MyApplication.getDaoMaster();
+//            if (daoMaster != null) {
+//                daoSession = daoMaster.newSession();
+//                favoriteDao = daoSession.getFavoriteCategoryDao();
+//            }
+//        }
+
+    public void setLayoutController(LayouController ml) {
+        mLayoutController = ml;
+    }
+
+    @Override
+    public int getCount() {
+        return mList.size();
+    }
+
+    @Override
+    public Object getItem(int position) {
+        return mList.get(position);
+    }
+
+    @Override
+    public long getItemId(int position) {
+        return position;
+    }
+
+    @Override
+    public View getView(int position, View convertView, ViewGroup parent) {
+        MyHolder myHolder;
+
+        if (convertView == null) {
+            LayoutInflater inflater = (LayoutInflater) mContext.getSystemService(mContext.LAYOUT_INFLATER_SERVICE);
+            convertView = inflater.inflate(R.layout.category_imoji_single_item, parent, false);
+            myHolder = new MyHolder(convertView);
+        } else {
+            myHolder = (MyHolder) convertView.getTag();
+            myHolder.draweeView.setImageDrawable(null);
+            myHolder.textView_category_title.setText("");
         }
-
-
-        private void initdatabase() {
-            daoMaster = MyApplication.getDaoMaster();
-            if (daoMaster != null) {
-                daoSession = daoMaster.newSession();
-                favoriteDao = daoSession.getFavoriteCategoryDao();
-            }
-        }
-
-        public void setLayoutController(LayouController ml) {
-            mLayoutController = ml;
-        }
-
-        @Override
-        public int getCount() {
-            return mList.size();
-        }
-
-        @Override
-        public Object getItem(int position) {
-                return mList.get(position);
-        }
-
-        @Override
-        public long getItemId(int position) {
-            return position;
-        }
-
-        @Override
-        public View getView(int position, View convertView, ViewGroup parent) {
-            MyHolder myHolder;
-
-            if (convertView == null) {
-                LayoutInflater inflater = (LayoutInflater) mContext.getSystemService(mContext.LAYOUT_INFLATER_SERVICE);
-                convertView = inflater.inflate(R.layout.category_imoji_single_item, parent, false);
-                myHolder = new MyHolder(convertView);
-            } else {
-                myHolder = (MyHolder) convertView.getTag();
-                myHolder.draweeView.setImageDrawable(null);
-                myHolder.textView_category_title.setText("");
-            }
 
 //            FrameLayout.LayoutParams layoutParams = new FrameLayout.LayoutParams((int) dpSize62, (int) dpSize62);
 //            myHolder.draweeView.setLayoutParams(layoutParams);
@@ -116,97 +118,96 @@ public class CategoryStickAdapterSuitable extends BaseAdapter implements Adapter
 //                RenderingOptions options = IemojiUtil.getRenderOption(imoji, RenderingOptions.Size.Thumbnail);
 //                Uri uri = imoji.urlForRenderingOption(options);
 
-                String uri = mList.get(position).getUrl_thumb();
+        String uri = mList.get(position).getUrl_thumb();
 
-                DraweeController controller = Fresco.newDraweeControllerBuilder()
-                        .setUri(uri)
-                        .setAutoPlayAnimations(true)
-                        .build();
-                myHolder.draweeView.setController(controller);
-                myHolder.textView_category_title.setText("#" + mList.get(position).getTitle() + "#");
+        DraweeController controller = Fresco.newDraweeControllerBuilder()
+                .setUri(uri)
+                .setAutoPlayAnimations(true)
+                .build();
+        myHolder.draweeView.setController(controller);
+        myHolder.textView_category_title.setText("#" + mList.get(position).getTitle() + "#");
 //            }
 
-            convertView.setTag(myHolder);
-            return convertView;
-        }
+        convertView.setTag(myHolder);
+        return convertView;
+    }
 
-        private long lastClick = 0;
+    private long lastClick = 0;
 
-        @Override
-        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-            //get the single item's category id, and query the search for those category items
-            FavoriteCategory  category = mList.get(position);
-            String categoryID  = category.getIdentifier();
+    @Override
+    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        //get the single item's category id, and query the search for those category items
+        FavoriteCategory category = mList.get(position);
+        String categoryID = category.getIdentifier();
 
-            GridView gridView = mLayoutController.initFullEachCategoryGridView(categoryID);
-            mLayoutController.displaySingleCatgoryGridview(gridView);
+        GridView gridView = mLayoutController.initFullEachCategoryGridView(categoryID);
+        mLayoutController.displaySingleCatgoryGridview(gridView);
 
-            mLayoutController.setCategoryTitle(category.getTitle());
+        mLayoutController.setCategoryTitle(category.getTitle());
 
-            FlurryAgent.logEvent(StaticConstant.FAVORITE_CATEGORY_CLICK_INTO_SUB);
-        }
+        FlurryAgent.logEvent(StaticConstant.FAVORITE_CATEGORY_CLICK_INTO_SUB);
+    }
 
-        // setting animation for the view
-        private void initAnimation(final View view) {
-            view.clearAnimation();
+    // setting animation for the view
+    private void initAnimation(final View view) {
+        view.clearAnimation();
 
-            RotateAnimation rotate = new RotateAnimation(0f, -360f,
-                    Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
+        RotateAnimation rotate = new RotateAnimation(0f, -360f,
+                Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
 
-            // prevents View from restoring to original direction.
-            rotate.setFillAfter(true);
-            rotate.setDuration(1000);
-            rotate.setInterpolator(new DecelerateInterpolator(3));
-            view.startAnimation(rotate);
+        // prevents View from restoring to original direction.
+        rotate.setFillAfter(true);
+        rotate.setDuration(1000);
+        rotate.setInterpolator(new DecelerateInterpolator(3));
+        view.startAnimation(rotate);
+    }
 
-        }
+    @Override
+    public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
 
-        @Override
-        public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+        final FavoriteCategory category = mList.get(position);
 
-            final FavoriteCategory category = mList.get(position);
+        AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
+        builder.setTitle("Delete The Favorite Item");
+        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+                // User clicked OK button
 
-            AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
-            builder.setTitle("Delete The Favorite Item");
-            builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                public void onClick(DialogInterface dialog, int id) {
-                    // User clicked OK button
-
-                    boolean result = MyGreenDaoUtils.deleteFavoriteCategory(favoriteDao, category);
-                    if(result){
-                        Log.e("GreenDao_result","successful");
-                        Intent intent = new Intent(Constants.UPDATE_FAVORITE_LIST);
-                        intent.putExtra(Constants.UPDATE_FAVORITE_LIST,true);
-                        mContext.sendBroadcast(intent);
-                    }else{
-                        Log.e("GreenDao_result","not - succeed");
-                    }
-
+                boolean result = MyGreenDaoUtils.deleteFavoriteCategory(daoManager.getFavoriteCategoryDao(), category);
+                if (result) {
+                    Log.e("GreenDao_result", "successful");
+                    Intent intent = new Intent(Constants.UPDATE_FAVORITE_LIST);
+                    intent.putExtra(Constants.UPDATE_FAVORITE_LIST, true);
+                    mContext.sendBroadcast(intent);
+                } else {
+                    Log.e("GreenDao_result", "not - succeed");
                 }
-            });
-            builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-                public void onClick(DialogInterface dialog, int id) {
-                    // User cancelled the dialog
-                }
-            });
 
-            AlertDialog dialog = builder.create();
-            builder.create();
-            dialog.show();
-
-            return true;
-        }
-
-        class MyHolder {
-            SimpleDraweeView draweeView;
-
-            TextView textView_category_title;
-
-            MyHolder(View v) {
-                draweeView = (SimpleDraweeView) v.findViewById(R.id.iv_single_sticker);
-                textView_category_title = (TextView) v.findViewById(R.id.tv_category_title);
             }
+        });
+        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+                // User cancelled the dialog
+            }
+        });
+
+        AlertDialog dialog = builder.create();
+        builder.create();
+        dialog.show();
+
+        return true;
+    }
+
+    class MyHolder {
+        SimpleDraweeView draweeView;
+
+        TextView textView_category_title;
+
+        MyHolder(View v) {
+            draweeView = (SimpleDraweeView) v.findViewById(R.id.iv_single_sticker);
+            textView_category_title = (TextView) v.findViewById(R.id.tv_category_title);
         }
+    }
 
 //        private void refreshData() {
 //            ImojiSDK.getInstance()

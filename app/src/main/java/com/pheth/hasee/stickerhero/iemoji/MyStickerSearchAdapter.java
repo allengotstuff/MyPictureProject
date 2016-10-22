@@ -14,6 +14,7 @@ import android.widget.Toast;
 import com.facebook.drawee.backends.pipeline.Fresco;
 import com.facebook.drawee.interfaces.DraweeController;
 import com.facebook.drawee.view.SimpleDraweeView;
+import com.pheth.hasee.stickerhero.GreenDaoManager.DaoManager;
 import com.pheth.hasee.stickerhero.MyApplication;
 import com.pheth.hasee.stickerhero.R;
 import com.pheth.hasee.stickerhero.greendao.DaoMaster;
@@ -36,27 +37,16 @@ public class MyStickerSearchAdapter extends BaseAdapter implements AdapterView.O
     private ArrayList<SearchResult> mList;
     private Context mContext;
 
-    private DaoMaster daoMaster;
-    private HistoryDao historyDao;
-    private DaoSession daoSession;
+//    private DaoMaster daoMaster;
+//    private HistoryDao historyDao;
+//    private DaoSession daoSession;
+    private DaoManager daoManager;
 
     public MyStickerSearchAdapter(Context context, ArrayList<SearchResult> imojis) {
         mContext = context;
         mList = imojis;
-        initdatabase();
-    }
-
-//    public void setIemojiLayout(IemojiLayout lc) {
-//        mIemojiLayout = lc;
-//    }
-
-    private void initdatabase() {
-        daoMaster = MyApplication.getDaoMaster();
-        if (daoMaster != null) {
-            daoSession = daoMaster.newSession();
-            historyDao = daoSession.getHistoryDao();
-        }
-
+        daoManager = DaoManager.getManager();
+        daoManager.initHistoryDao();
     }
 
     @Override
@@ -125,7 +115,12 @@ public class MyStickerSearchAdapter extends BaseAdapter implements AdapterView.O
         Date date = new Date();
         History mHistory = new History(null,imojiName,null,uri.toString(),null,thumbUri.toString(),imoji.getIdentifier(),date);
 
-        IemojiUtil.shareGif(mContext, uri.toString(),historyDao,mHistory);
+
+        if(imoji.hasAnimationCapability()){
+            IemojiUtil.shareGif(mContext, uri.toString(),daoManager.getHistoryDao(),mHistory);
+        }else {
+            IemojiUtil.getBitmap(mContext, uri.toString(), daoManager.getHistoryDao(), mHistory);
+        }
     }
 
 

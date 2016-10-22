@@ -13,6 +13,7 @@ import android.widget.GridView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.pheth.hasee.stickerhero.GreenDaoManager.DaoManager;
 import com.pheth.hasee.stickerhero.MyApplication;
 import com.pheth.hasee.stickerhero.R;
 import com.pheth.hasee.stickerhero.greendao.DaoMaster;
@@ -48,10 +49,6 @@ public class ImojiCategoryLayoutSuitable extends FrameLayout {
     private ApiTask.WrappedAsyncTask<ImojisResponse> apiTask;
 
     private boolean isInChildGridView = false;
-
-    private DaoMaster daoMaster;
-    private DaoSession daoSession;
-    private FavoriteCategoryDao favoriteCategoryDao;
 
     private CategoryStickAdapterSuitable myAdapter;
 
@@ -257,7 +254,7 @@ public class ImojiCategoryLayoutSuitable extends FrameLayout {
             return;
 
         mCategoryList.clear();
-        mCategoryList.addAll(favoriteCategoryDao.loadAll());
+        mCategoryList.addAll(daoManager.getFavoriteCategoryDao().loadAll());
 
         if(mCategoryList.size()==0){
             tv_explain.setVisibility(View.VISIBLE);
@@ -270,7 +267,7 @@ public class ImojiCategoryLayoutSuitable extends FrameLayout {
 
     private ArrayList<FavoriteCategory> getFavoite() {
         ArrayList<FavoriteCategory> list = new ArrayList<FavoriteCategory>();
-        list.addAll(favoriteCategoryDao.loadAll());
+        list.addAll(daoManager.getFavoriteCategoryDao().loadAll());
 
         if(list.size()==0){
             tv_explain.setVisibility(View.VISIBLE);
@@ -280,12 +277,11 @@ public class ImojiCategoryLayoutSuitable extends FrameLayout {
         return list;
     }
 
+    private DaoManager daoManager;
     private void initdatabase() {
-        daoMaster = MyApplication.getDaoMaster();
-        if (daoMaster != null) {
-            daoSession = daoMaster.newSession();
-            favoriteCategoryDao = daoSession.getFavoriteCategoryDao();
-        }
+
+        daoManager = DaoManager.getManager();
+        daoManager.initFavoriteDao();
     }
 
     public class UpdateReceiver extends BroadcastReceiver {

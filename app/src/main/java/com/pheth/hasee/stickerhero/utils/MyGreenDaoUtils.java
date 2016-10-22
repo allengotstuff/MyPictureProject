@@ -1,9 +1,7 @@
 package com.pheth.hasee.stickerhero.utils;
 
-import com.pheth.hasee.stickerhero.greendao.Favorite;
 import com.pheth.hasee.stickerhero.greendao.FavoriteCategory;
 import com.pheth.hasee.stickerhero.greendao.FavoriteCategoryDao;
-import com.pheth.hasee.stickerhero.greendao.FavoriteDao;
 import com.pheth.hasee.stickerhero.greendao.History;
 import com.pheth.hasee.stickerhero.greendao.HistoryDao;
 

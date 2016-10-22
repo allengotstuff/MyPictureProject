@@ -2,6 +2,7 @@ package com.pheth.hasee.stickerhero.iemoji;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Environment;
 import android.os.Handler;
@@ -13,12 +14,16 @@ import android.widget.Toast;
 import com.facebook.binaryresource.BinaryResource;
 import com.facebook.binaryresource.FileBinaryResource;
 import com.facebook.cache.common.CacheKey;
+import com.facebook.common.references.CloseableReference;
+import com.facebook.datasource.BaseDataSubscriber;
 import com.facebook.datasource.DataSource;
 import com.facebook.datasource.DataSubscriber;
 import com.facebook.drawee.backends.pipeline.Fresco;
 import com.facebook.imagepipeline.cache.DefaultCacheKeyFactory;
 import com.facebook.imagepipeline.core.ImagePipeline;
 import com.facebook.imagepipeline.core.ImagePipelineFactory;
+import com.facebook.imagepipeline.datasource.BaseBitmapDataSubscriber;
+import com.facebook.imagepipeline.image.CloseableImage;
 import com.facebook.imagepipeline.request.ImageRequest;
 import com.flurry.android.FlurryAgent;
 import com.pheth.hasee.stickerhero.MyApplication;
@@ -27,10 +32,12 @@ import com.pheth.hasee.stickerhero.greendao.HistoryDao;
 import com.pheth.hasee.stickerhero.utils.CommonUtils;
 import com.pheth.hasee.stickerhero.utils.Constants;
 import com.pheth.hasee.stickerhero.utils.MyGreenDaoUtils;
+import com.pheth.hasee.stickerhero.utils.StampBitmap;
 import com.pheth.hasee.stickerhero.utils.StaticConstant;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -38,6 +45,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.util.UUID;
 
 import io.imoji.sdk.objects.Imoji;
 import io.imoji.sdk.objects.RenderingOptions;
@@ -104,17 +112,18 @@ public class IemojiUtil {
             //添加下载本地文件的url
             historyItem.setUrl_send_local(targetFile.getAbsolutePath());
 
-           boolean isUpdate =  MyGreenDaoUtils.AddToHistory(historyDao,historyItem);
+            boolean isUpdate = MyGreenDaoUtils.AddToHistory(historyDao, historyItem);
 
-            if(isUpdate){
-            //通知historylayout有分享内容更新的软件UI
-            Intent intent = new Intent(Constants.UPDATE_HISTORY_LIST);
-            intent.putExtra(Constants.UPDATE_HISTORY_LIST,true);
-            ctx.sendBroadcast(intent);
-                Log.e("IemojiUtil","add to database successfully");
+            if (isUpdate) {
+                //通知historylayout有分享内容更新的软件UI
+                Intent intent = new Intent(Constants.UPDATE_HISTORY_LIST);
+                intent.putExtra(Constants.UPDATE_HISTORY_LIST, true);
+                ctx.sendBroadcast(intent);
+                Log.e("IemojiUtil", "add to database successfully");
             }
 
             sharedFile(ctx, targetFile);
+
             IS_SHARE_IN_PROGRESS = false;
         } else {
 
@@ -151,8 +160,14 @@ public class IemojiUtil {
     public static void sharedFile(final Context ctx, File targetFile) {
 
         FlurryAgent.logEvent(StaticConstant.NUMBER_OF_TIME_SHARE_ON_SOCIAL);
-        if(TextUtils.isEmpty(MyApplication.sharedPackage)){
-            Toast.makeText(ctx,"package name is empty",Toast.LENGTH_SHORT).show();
+        if (TextUtils.isEmpty(MyApplication.sharedPackage)) {
+
+            mHandler.post(new Runnable() {
+                @Override
+                public void run() {
+                    Toast.makeText(ctx, "package name is empty", Toast.LENGTH_SHORT).show();
+                }
+            });
             return;
         }
 
@@ -161,7 +176,7 @@ public class IemojiUtil {
             mHandler.post(new Runnable() {
                 @Override
                 public void run() {
-                    Toast.makeText(ctx,"you don't have the selected social platform installed on your phone",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(ctx, "you don't have the selected social platform installed on your phone", Toast.LENGTH_SHORT).show();
                 }
             });
 
@@ -174,6 +189,70 @@ public class IemojiUtil {
         share.putExtra(Intent.EXTRA_STREAM, Uri.fromFile(targetFile));
         share.setType("image/gif");
         ctx.startActivity(share);
+    }
+
+
+    public static void getBitmap(final Context ctx, final String url, final HistoryDao historyDao, final History historyItem) {
+        Toast.makeText(ctx, "loading image...", Toast.LENGTH_SHORT).show();
+        IS_SHARE_IN_PROGRESS = true;
+        ImageRequest imageRequest = ImageRequest.fromUri(url);
+        final ImagePipeline imagePipeline = Fresco.getImagePipeline();
+        DataSubscriber dataSubscriber = new BaseBitmapDataSubscriber() {
+
+            @Override
+            protected void onFailureImpl(DataSource<CloseableReference<CloseableImage>> dataSource) {
+                IS_SHARE_IN_PROGRESS = false;
+            }
+
+            @Override
+            protected void onNewResultImpl(Bitmap bitmap) {
+
+                if (bitmap == null) {
+                    Log.e("IemojiUtil", "bitmap is null ");
+                    IS_SHARE_IN_PROGRESS = false;
+                    return;
+                }
+
+                if (bitmap.isRecycled()) {
+                    Log.e("IemojiUtil", "bitmap is recycled ");
+                    IS_SHARE_IN_PROGRESS = false;
+                    return;
+                }
+
+                Bitmap stampedBitmap = StampBitmap.stamp(bitmap, ctx);
+
+                File destinationFile = convertBitmapToFile(stampedBitmap, ctx);
+
+                if (stampedBitmap == null) {
+                    Log.e("IemojiUtil", "bitmap convert to file has error, return null file");
+                    return;
+                }
+
+                if (destinationFile == null) {
+                    Log.e("IemojiUtil", "saved file is null");
+                    return;
+                }
+
+                //添加下载本地文件的url
+                historyItem.setUrl_send_local(destinationFile.getAbsolutePath());
+
+                boolean isUpdate = MyGreenDaoUtils.AddToHistory(historyDao, historyItem);
+
+                if (isUpdate) {
+                    //通知historylayout有分享内容更新的软件UI
+                    Intent intent = new Intent(Constants.UPDATE_HISTORY_LIST);
+                    intent.putExtra(Constants.UPDATE_HISTORY_LIST, true);
+                    ctx.sendBroadcast(intent);
+                    Log.e("IemojiUtil", "add to database successfully");
+                }
+
+                IS_SHARE_IN_PROGRESS = false;
+
+                sharedFile(ctx, destinationFile);
+
+            }
+        };
+        imagePipeline.fetchDecodedImage(imageRequest, null).subscribe(dataSubscriber, MyApplication.getGlobelExector());
     }
 
     public static void cleanCache() {
@@ -196,6 +275,59 @@ public class IemojiUtil {
                 imageFormat,
                 size);
         return mStickDisplayOptions;
+    }
+
+    public static File convertBitmapToFile(Bitmap bitmap, Context ctx) {
+
+        File root = null;
+        File targerFile = null;
+        if (Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)
+                && ctx != null) {
+
+            if (ctx.getExternalFilesDir(null) != null
+                    && ctx.getExternalFilesDir(null).getAbsolutePath() != null) {
+
+                root = new File(ctx.getExternalFilesDir(null).getAbsolutePath(), "Share");
+                if (!root.exists()) {
+                    root.mkdirs();
+                }
+                String targetFileName = UUID.randomUUID().toString() + String.valueOf(System.currentTimeMillis()) + GIFSUFFIX;
+
+                targerFile = new File(root, targetFileName);
+            }
+
+            if (targerFile != null) {
+
+                ByteArrayOutputStream bos = new ByteArrayOutputStream();
+                bitmap.compress(Bitmap.CompressFormat.PNG, 100 /*ignored for PNG*/, bos);
+                byte[] bitmapdata = bos.toByteArray();
+
+                //write the bytes in file
+                FileOutputStream fos = null;
+
+                try {
+                    fos = new FileOutputStream(targerFile);
+                    fos.write(bitmapdata);
+
+                } catch (IOException e) {
+                    e.printStackTrace();
+                } finally {
+                    if (fos != null) {
+                        try {
+                            fos.flush();
+                            fos.close();
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+
+                    }
+                }
+
+            }
+
+        }
+
+        return targerFile;
     }
 
     public static void copyFile(File original, File targerFile) throws IOException {

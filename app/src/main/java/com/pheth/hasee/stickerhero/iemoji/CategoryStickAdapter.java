@@ -24,6 +24,7 @@ import com.facebook.drawee.backends.pipeline.Fresco;
 import com.facebook.drawee.interfaces.DraweeController;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.flurry.android.FlurryAgent;
+import com.pheth.hasee.stickerhero.GreenDaoManager.DaoManager;
 import com.pheth.hasee.stickerhero.MyApplication;
 import com.pheth.hasee.stickerhero.R;
 import com.pheth.hasee.stickerhero.greendao.DaoMaster;
@@ -61,28 +62,17 @@ public class CategoryStickAdapter extends BaseAdapter implements AdapterView.OnI
     private float dpSize62;
     private LayouController mLayoutController;
 
-    private DaoMaster daoMaster;
-    private DaoSession daoSession;
-    private FavoriteCategoryDao favoriteCategoryDao;
-
+    private DaoManager daoManager;
 
     public CategoryStickAdapter(Context context, ArrayList<Category> imojis) {
         mContext = context;
         mList = imojis;
         dpSizeSmall = ScreenUtils.convertDpToPixel(30, mContext);
         dpSize62 = ScreenUtils.convertDpToPixel(65, mContext);
-        initdatabase();
+        daoManager = DaoManager.getManager();
+        daoManager.initFavoriteDao();
     }
 
-
-    private void initdatabase() {
-        daoMaster = MyApplication.getDaoMaster();
-        if (daoMaster != null) {
-            daoSession = daoMaster.newSession();
-            favoriteCategoryDao = daoSession.getFavoriteCategoryDao();
-        }
-
-    }
 
     public void setLayoutController(LayouController ml) {
         mLayoutController = ml;
@@ -214,7 +204,7 @@ public class CategoryStickAdapter extends BaseAdapter implements AdapterView.OnI
                 Uri thumbail_uri = imoji.urlForRenderingOption(options);
 
                 FavoriteCategory favoriteCategory = new FavoriteCategory(null,category.getTitle(),imoji.getStandardFullSizeUri(true).toString(),thumbail_uri.toString(),category.getIdentifier(),null,null,currentDate);
-                boolean result = MyGreenDaoUtils.AddToFavoriteCategory(favoriteCategoryDao, favoriteCategory);
+                boolean result = MyGreenDaoUtils.AddToFavoriteCategory(daoManager.getFavoriteCategoryDao(), favoriteCategory);
                 if(result){
                     Log.e("favoriteCategoryDao","successful");
                     Intent intent = new Intent(Constants.UPDATE_FAVORITE_LIST);

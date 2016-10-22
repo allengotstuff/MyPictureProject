@@ -9,6 +9,7 @@ import com.crashlytics.android.Crashlytics;
 import com.facebook.drawee.backends.pipeline.Fresco;
 import com.facebook.imagepipeline.core.ImagePipelineConfig;
 import com.flurry.android.FlurryAgent;
+import com.pheth.hasee.stickerhero.GreenDaoManager.DaoManager;
 import com.pheth.hasee.stickerhero.greendao.DaoMaster;
 import com.pheth.hasee.stickerhero.iemoji.ImagePipelineConfigFactory;
 import com.pheth.hasee.stickerhero.utils.CommonUtils;
@@ -34,7 +35,6 @@ public class MyApplication extends Application {
     private static ThreadPoolExecutor threadPoolExecutor;
     private RenderingOptions mStickDisplayOptions;
 
-    private static DaoMaster daoMaster;
 
     private static String TAG = "MyApplication";
 
@@ -43,7 +43,7 @@ public class MyApplication extends Application {
     public void onCreate() {
         super.onCreate();
 //        LeakCanary.install(this);
-        Fabric.with(this, new Crashlytics());
+//        Fabric.with(this, new Crashlytics());
         FlurryAgent.setLogEnabled(false);
         FlurryAgent.init(this, "R9C94Z9PXMNDKY6N7J23");
 
@@ -51,13 +51,7 @@ public class MyApplication extends Application {
         sharedPackage = CommonUtils.getSocialShareOption(getApplicationContext());
 
         //初始化数据库·
-        try {
-            DaoMaster.DevOpenHelper helper = new DaoMaster.DevOpenHelper(this, "stickerhero-db", null);
-            SQLiteDatabase database = helper.getWritableDatabase();
-            daoMaster = new DaoMaster(database);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        DaoManager.getManager().init(this);
 
 
         ImagePipelineConfig pipelineConfig = ImagePipelineConfigFactory.getOkHttpImagePipelineConfig(this);
@@ -69,9 +63,6 @@ public class MyApplication extends Application {
 
     }
 
-    public static DaoMaster getDaoMaster() {
-        return daoMaster;
-    }
 
     private void initImojiSdk() {
         ImojiSDK.getInstance()

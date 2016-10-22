@@ -11,6 +11,7 @@ import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.GridView;
 
+import com.pheth.hasee.stickerhero.GreenDaoManager.DaoManager;
 import com.pheth.hasee.stickerhero.MyApplication;
 import com.pheth.hasee.stickerhero.R;
 import com.pheth.hasee.stickerhero.greendao.DaoMaster;
@@ -34,9 +35,7 @@ public class ImojiHistoryLayout extends FrameLayout {
     private ArrayList<History> mHistoryList;
     private FrameLayout main_container;
 
-    private DaoMaster daoMaster;
-    private DaoSession daoSession;
-    private HistoryDao historyDao;
+    private DaoManager daoManager;
 
     public ImojiHistoryLayout(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -65,15 +64,12 @@ public class ImojiHistoryLayout extends FrameLayout {
 
     private void initdataBase()
     {
-        daoMaster = MyApplication.getDaoMaster();
-        if (daoMaster != null) {
-            daoSession = daoMaster.newSession();
-            historyDao = daoSession.getHistoryDao();
-        }
+        daoManager = DaoManager.getManager();
+        daoManager.initHistoryDao();
 
         if(mHistoryList==null){
             mHistoryList = new ArrayList<History>();
-            mHistoryList.addAll(historyDao.loadAll());
+            mHistoryList.addAll(daoManager.getHistoryDao().loadAll());
             Log.e("History",mHistoryList.size()+"");
         }
     }
@@ -83,7 +79,7 @@ public class ImojiHistoryLayout extends FrameLayout {
             return;
 
         mHistoryList.clear();
-        mHistoryList.addAll(historyDao.loadAll());
+        mHistoryList.addAll(daoManager.getHistoryDao().loadAll());
         myAdapter.notifyDataSetChanged();
     }
 
