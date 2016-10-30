@@ -7,6 +7,7 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.app.FragmentTransaction;
 import android.view.ViewGroup;
 
+import com.pheth.hasee.stickerhero.fragments.CategoryFragment;
 import com.pheth.hasee.stickerhero.fragments.PageFragment;
 
 /**
@@ -24,6 +25,10 @@ public class FragmentPageAdapter extends FragmentPagerAdapter {
 
     @Override
     public Fragment getItem(int position) {
+        if(position==0){
+            CategoryFragment fragment = new CategoryFragment();
+            return fragment;
+        }
         return PageFragment.newInstance(position);
     }
 

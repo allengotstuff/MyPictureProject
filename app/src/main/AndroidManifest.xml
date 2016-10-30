@@ -24,7 +24,7 @@
             android:label="@string/app_name"
             android:excludeFromRecents="true"
             android:launchMode="singleTask"
-            android:theme="@style/DialogTheme">
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar">
 
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -38,6 +38,7 @@
 
         <receiver android:name=".iemoji.ImojiCategoryLayoutSuitable$UpdateReceiver"></receiver>
         <receiver android:name=".iemoji.ImojiHistoryLayout$UpdateReceiver"></receiver>
+        <receiver android:name=".fragments.BaseFragment$UpdateReceiver"></receiver>
 
 
         <service android:name=".headchat.ChatHeadService"/>

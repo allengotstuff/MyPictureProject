@@ -8,4 +8,11 @@
     <color name="light_pink">#C5CAE9</color>
     <color name="grey">#808080</color>
 
+    <array name="color_array">
+        <item name="blue">#0000FF</item>
+        <item name="yellow">#FFFF00</item>
+        <item name="lime">#00FF00</item>
+        <item name="cyan">#00FFFF</item>
+        <item name="red">#FF0000</item>
+    </array>
 </resources>
