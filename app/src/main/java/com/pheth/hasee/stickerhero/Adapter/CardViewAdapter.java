@@ -32,11 +32,16 @@ public class CardViewAdapter extends RecyclerView.Adapter<CardViewAdapter.MyView
     private Context mContext;
     private ArrayList<Category> categoryList;
     private int[] colors;
+    private RecyclerViewOnitemClickListener onitemClickListener;
 
     public CardViewAdapter(Context context, List categoryList) {
         mContext = context;
         this.categoryList = (ArrayList<Category>) categoryList;
         colors = mContext.getResources().getIntArray(R.array.color_array);
+    }
+
+    public void setOnitemClickListener(RecyclerViewOnitemClickListener onitemClickListener){
+        this.onitemClickListener = onitemClickListener;
     }
 
     @Override
@@ -47,7 +52,7 @@ public class CardViewAdapter extends RecyclerView.Adapter<CardViewAdapter.MyView
     }
 
     @Override
-    public void onBindViewHolder(MyViewHolder holder, int position) {
+    public void onBindViewHolder(final MyViewHolder holder, final int position) {
 
         Imoji imoji = categoryList.get(position).getPreviewImoji();
         RenderingOptions options = IemojiUtil.getRenderOption(imoji, RenderingOptions.Size.Thumbnail);
@@ -58,13 +63,15 @@ public class CardViewAdapter extends RecyclerView.Adapter<CardViewAdapter.MyView
                 .build();
 
         holder.categoryImage.setController(controller);
-
         int colorCode = colors[new Random().nextInt(5)];
-
-
         holder.cardView.setCardBackgroundColor(colorCode);
 
-
+        holder.cardView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onitemClickListener.onItemClick(holder, position);
+            }
+        });
     }
 
     @Override
@@ -82,5 +89,10 @@ public class CardViewAdapter extends RecyclerView.Adapter<CardViewAdapter.MyView
             categoryImage = (SimpleDraweeView) itemView.findViewById(R.id.iv_category);
             cardView = (CardView) itemView.findViewById(R.id.cardview);
         }
+    }
+
+
+     public interface RecyclerViewOnitemClickListener{
+        void onItemClick(RecyclerView.ViewHolder holder,int pos);
     }
 }

@@ -28,7 +28,7 @@ import io.imoji.sdk.objects.Category;
 /**
  * Created by allengotstuff on 10/30/2016.
  */
-public class CategoryFragment extends BaseFragment {
+public class CategoryFragment extends BaseFragment implements CardViewAdapter.RecyclerViewOnitemClickListener {
 
     private ImojiCategoryData imojiCategoryData;
     private RecyclerView recyclerView;
@@ -91,6 +91,7 @@ public class CategoryFragment extends BaseFragment {
         recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 3));
         recyclerView.addItemDecoration(new ItemDecoration(30));
         adapter = new CardViewAdapter(getContext(), mDataList);
+        adapter.setOnitemClickListener(this);
         recyclerView.setAdapter(adapter);
         swipeRefreshLayout.addView(recyclerView);
 
@@ -116,6 +117,11 @@ public class CategoryFragment extends BaseFragment {
             }
         };
         imojiCategoryData.startRequest(requestInfo);
+    }
+
+    @Override
+    public void onItemClick(RecyclerView.ViewHolder holder, int pos) {
+        
     }
 
 
