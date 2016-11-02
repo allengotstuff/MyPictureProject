@@ -8,11 +8,17 @@
     <color name="light_pink">#C5CAE9</color>
     <color name="grey">#808080</color>
 
+    <color name="main_top_banner">#ea4c89</color>
+    <color name="main_bg_color">#eeeeee</color>
+    <color name="tab_layout_underline">#ffff8c</color>
+
+
+
     <array name="color_array">
-        <item name="blue">#0000FF</item>
-        <item name="yellow">#FFFF00</item>
-        <item name="lime">#00FF00</item>
-        <item name="cyan">#00FFFF</item>
-        <item name="red">#FF0000</item>
+        <item name="green">#7bc982</item>
+        <item name="purple">#cd7ec1</item>
+        <item name="cyan">#00c6ff</item>
+        <item name="blue">#8cb5ee</item>
+        <item name="grey">#c7ced7</item>
     </array>
 </resources>

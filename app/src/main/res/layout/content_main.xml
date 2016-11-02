@@ -35,8 +35,8 @@
         android:id="@+id/tabLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/colorAccent"
-        app:tabIndicatorColor="@android:color/white"
+        android:background="@color/main_top_banner"
+        app:tabIndicatorColor="@color/tab_layout_underline"
         app:tabMode="scrollable"
         />
 

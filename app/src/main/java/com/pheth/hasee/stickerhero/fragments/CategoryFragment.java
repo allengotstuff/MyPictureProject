@@ -89,7 +89,7 @@ public class CategoryFragment extends BaseFragment implements CardViewAdapter.Re
         mDataList = new ArrayList();
         recyclerView = (RecyclerView) LayoutInflater.from(getContext()).inflate(R.layout.recycleview_layout, null);
         recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 3));
-        recyclerView.addItemDecoration(new ItemDecoration(30));
+        recyclerView.addItemDecoration(new ItemDecoration(20));
         adapter = new CardViewAdapter(getContext(), mDataList);
         adapter.setOnitemClickListener(this);
         recyclerView.setAdapter(adapter);
@@ -121,7 +121,7 @@ public class CategoryFragment extends BaseFragment implements CardViewAdapter.Re
 
     @Override
     public void onItemClick(RecyclerView.ViewHolder holder, int pos) {
-        
+        Log.e("onclikc",""+pos);
     }
 
 

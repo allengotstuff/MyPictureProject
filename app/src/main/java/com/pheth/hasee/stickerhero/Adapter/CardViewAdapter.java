@@ -63,8 +63,9 @@ public class CardViewAdapter extends RecyclerView.Adapter<CardViewAdapter.MyView
                 .build();
 
         holder.categoryImage.setController(controller);
-        int colorCode = colors[new Random().nextInt(5)];
-        holder.cardView.setCardBackgroundColor(colorCode);
+
+        int colorCode = colors[position%5];
+        holder.view_underBar.setBackgroundColor(colorCode);
 
         holder.cardView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -83,11 +84,13 @@ public class CardViewAdapter extends RecyclerView.Adapter<CardViewAdapter.MyView
 
         private SimpleDraweeView categoryImage;
         private CardView cardView;
+        private View view_underBar;
 
         public MyViewHolder(View itemView) {
             super(itemView);
             categoryImage = (SimpleDraweeView) itemView.findViewById(R.id.iv_category);
             cardView = (CardView) itemView.findViewById(R.id.cardview);
+            view_underBar = itemView.findViewById(R.id.under_bar);
         }
     }
 
