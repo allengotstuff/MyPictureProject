@@ -154,14 +154,14 @@ public class CategoryFragment extends BaseFragment implements CardViewAdapter.Re
                 outRect.set(spacing / 2, spacing, spacing / 2, 0);
 
                 if (totalCount - pos <= 2) {
-                    outRect.set(spacing, spacing, spacing / 2, spacing);
+                    outRect.set(spacing / 2, spacing, spacing / 2, spacing);
                 }
 
             } else if (pos == 2 || pos % 3 == 2) {
 
                 outRect.set(spacing / 2, spacing, spacing, 0);
                 if (totalCount - pos <= 1) {
-                    outRect.set(spacing, spacing, spacing / 2, spacing);
+                    outRect.set(spacing / 2, spacing, spacing, spacing);
                 }
             }
         }
