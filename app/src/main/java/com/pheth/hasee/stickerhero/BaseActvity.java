@@ -35,7 +35,7 @@ public class BaseActvity extends AppCompatActivity {
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         mNavigationView = (NavigationView) findViewById(R.id.id_nv_menu);
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
-
+        mToolbar.setTitleTextColor(getResources().getColor(R.color.white));
         setupToolbar();
         setupDrawerNav();
     }
@@ -74,7 +74,8 @@ public class BaseActvity extends AppCompatActivity {
         if (actionBar != null) {
             actionBar.setDisplayHomeAsUpEnabled(true);
             actionBar.setHomeAsUpIndicator(R.drawable.menu_icon);
-            actionBar.setTitle("StickerHero");
+//            actionBar.setDisplayShowTitleEnabled(true);
+//            actionBar.setTitle("StickerHero");
         }
 
 
