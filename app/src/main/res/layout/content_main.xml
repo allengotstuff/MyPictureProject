@@ -6,30 +6,44 @@
     android:layout_width="match_parent"
     android:orientation="vertical"
     android:layout_height="match_parent"
-    app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context="com.pheth.hasee.stickerhero.MainActivity"
     tools:showIn="@layout/activity_main">
 
-    <!--<Button-->
-        <!--android:id="@+id/category_button"-->
-        <!--android:layout_width="wrap_content"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:text="Category List"/>-->
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@color/main_top_banner"
+        android:fitsSystemWindows="true"
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
 
-    <!--<Button-->
-        <!--android:id="@+id/my_faviorite"-->
-        <!--android:layout_below="@+id/category_button"-->
-        <!--android:layout_width="wrap_content"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:text="Faviorite List"/>-->
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
 
+            <!--<TextView-->
+                <!--android:id="@+id/tv_app_title"-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:layout_alignParentLeft="true"-->
+                <!--android:layout_centerVertical="true"-->
+                <!--android:textColor="@color/white"-->
+                <!--android:text="@string/app_name"-->
+                <!--android:textSize="17dp" />-->
 
-    <!--<Button-->
-        <!--android:id="@+id/button_start_service"-->
-        <!--android:layout_below="@+id/my_faviorite"-->
-        <!--android:layout_width="wrap_content"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:text="Start Service"/>-->
+            <ImageView
+                android:id="@+id/iv_hero_mode"
+                android:layout_marginRight="20dp"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:scaleType="centerCrop"
+                android:layout_centerVertical="true"
+                android:layout_alignParentRight="true"
+                android:tint="@color/white"
+                android:src="@drawable/hero_mode" />
+        </RelativeLayout>
+    </android.support.v7.widget.Toolbar>
 
     <android.support.design.widget.TabLayout
         android:id="@+id/tabLayout"
