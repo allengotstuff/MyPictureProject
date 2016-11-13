@@ -17,4 +17,6 @@
     </string-array>
 
     <string name="whatsapp">com.whatsapp</string>
+
+    <string name="transition_one">detail_image</string>
 </resources>

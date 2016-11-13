@@ -30,6 +30,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import io.imoji.sdk.objects.Category;
+import io.imoji.sdk.objects.Imoji;
 
 /**
  * Created by allengotstuff on 10/30/2016.
@@ -126,18 +127,17 @@ public class CategoryFragment extends BaseFragment implements CardViewAdapter.Re
     }
 
     @Override
-    public void onItemClick(CardViewAdapter.MyViewHolder holder, int pos, String url ) {
+    public void onItemClick(CardViewAdapter.MyViewHolder holder, int pos, Imoji imoji ) {
         Log.e("onclikc",""+pos);
 
-        ViewCompat.setTransitionName(holder.categoryImage, "single_image");
+//        ViewCompat.setTransitionName(holder.categoryImage, getString(R.string.transition_one));
 
         Intent intent = new Intent(getActivity(), DetailViewActivity.class);
-        intent.putExtra(DetailViewActivity.URL,url);
-//        startActivity(intent);
+        intent.putExtra(DetailViewActivity.IMOJI,imoji);
 
         ActivityOptionsCompat options =
                 ActivityOptionsCompat.makeSceneTransitionAnimation(getActivity(),
-                        holder.categoryImage, "single_image");
+                        holder.categoryImage, getString(R.string.transition_one));
 
         ActivityCompat.startActivity(getActivity(), intent, options.toBundle());
     }
