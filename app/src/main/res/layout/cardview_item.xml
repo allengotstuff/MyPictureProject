@@ -24,10 +24,12 @@
             fresco:progressBarImageScaleType="center"
             fresco:viewAspectRatio="1.33" />
 
-
-        <View
+        <TextView
             android:id="@+id/under_bar"
             android:layout_width="match_parent"
+            android:textColor="@color/white"
+            android:gravity="center"
+            android:lines="1"
             android:layout_height="0dp"
             android:layout_weight="1" />
 

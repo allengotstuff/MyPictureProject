@@ -1,11 +1,15 @@
 package com.pheth.hasee.stickerhero.fragments;
 
+import android.content.Intent;
 import android.graphics.Canvas;
 import android.graphics.Rect;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.annotation.Nullable;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.ActivityOptionsCompat;
+import android.support.v4.view.ViewCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -15,6 +19,8 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.pheth.hasee.stickerhero.Adapter.CardViewAdapter;
+import com.pheth.hasee.stickerhero.DetailViewActivity;
+import com.pheth.hasee.stickerhero.MainActivity;
 import com.pheth.hasee.stickerhero.R;
 import com.pheth.hasee.stickerhero.iemoji.ImojiNetwork.ImojiCategoryData;
 import com.pheth.hasee.stickerhero.iemoji.ImojiNetwork.ImojiDataContainer;
@@ -120,8 +126,20 @@ public class CategoryFragment extends BaseFragment implements CardViewAdapter.Re
     }
 
     @Override
-    public void onItemClick(RecyclerView.ViewHolder holder, int pos) {
+    public void onItemClick(CardViewAdapter.MyViewHolder holder, int pos, String url ) {
         Log.e("onclikc",""+pos);
+
+        ViewCompat.setTransitionName(holder.categoryImage, "single_image");
+
+        Intent intent = new Intent(getActivity(), DetailViewActivity.class);
+        intent.putExtra(DetailViewActivity.URL,url);
+//        startActivity(intent);
+
+        ActivityOptionsCompat options =
+                ActivityOptionsCompat.makeSceneTransitionAnimation(getActivity(),
+                        holder.categoryImage, "single_image");
+
+        ActivityCompat.startActivity(getActivity(), intent, options.toBundle());
     }
 
 

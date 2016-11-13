@@ -2,13 +2,17 @@ package com.pheth.hasee.stickerhero.Adapter;
 
 import android.content.Context;
 import android.net.Uri;
+import android.os.Build;
+import android.support.v4.view.ViewCompat;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutCompat;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.facebook.drawee.backends.pipeline.Fresco;
 import com.facebook.drawee.interfaces.DraweeController;
@@ -56,7 +60,7 @@ public class CardViewAdapter extends RecyclerView.Adapter<CardViewAdapter.MyView
 
         Imoji imoji = categoryList.get(position).getPreviewImoji();
         RenderingOptions options = IemojiUtil.getRenderOption(imoji, RenderingOptions.Size.Thumbnail);
-        Uri uri = imoji.urlForRenderingOption(options);
+        final Uri uri = imoji.urlForRenderingOption(options);
         DraweeController controller = Fresco.newDraweeControllerBuilder()
                 .setUri(uri)
                 .setAutoPlayAnimations(true)
@@ -67,10 +71,23 @@ public class CardViewAdapter extends RecyclerView.Adapter<CardViewAdapter.MyView
         int colorCode = colors[position%5];
         holder.view_underBar.setBackgroundColor(colorCode);
 
+        String title = categoryList.get(position).getTitle();
+        if(!TextUtils.isEmpty(title)) {
+            holder.view_underBar.setText("#"+title);
+//            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+//                int colortext = position%5 + 1;
+//                if(colortext>4) {
+//                    colortext = 0;
+//                }
+//
+//                holder.view_underBar.setTextColor(colors[colortext]);
+//            }
+        }
+
         holder.cardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                onitemClickListener.onItemClick(holder, position);
+                onitemClickListener.onItemClick(holder, position,uri.toString());
             }
         });
     }
@@ -80,22 +97,22 @@ public class CardViewAdapter extends RecyclerView.Adapter<CardViewAdapter.MyView
         return categoryList.size();
     }
 
-    class MyViewHolder extends RecyclerView.ViewHolder {
+    public class MyViewHolder extends RecyclerView.ViewHolder {
 
-        private SimpleDraweeView categoryImage;
-        private CardView cardView;
-        private View view_underBar;
+        public SimpleDraweeView categoryImage;
+        public CardView cardView;
+        private TextView view_underBar;
 
         public MyViewHolder(View itemView) {
             super(itemView);
             categoryImage = (SimpleDraweeView) itemView.findViewById(R.id.iv_category);
             cardView = (CardView) itemView.findViewById(R.id.cardview);
-            view_underBar = itemView.findViewById(R.id.under_bar);
+            view_underBar = (TextView)itemView.findViewById(R.id.under_bar);
         }
     }
 
 
      public interface RecyclerViewOnitemClickListener{
-        void onItemClick(RecyclerView.ViewHolder holder,int pos);
+        void onItemClick(MyViewHolder holder,int pos,String url);
     }
 }

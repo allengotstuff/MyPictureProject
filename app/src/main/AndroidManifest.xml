@@ -33,6 +33,8 @@
             </intent-filter>
         </activity>
 
+        <activity android:name=".DetailViewActivity"  android:theme="@style/main_theme"/>
+
         <!--<activity android:name=".Myfavorite_Activity" android:theme="@style/Theme.AppCompat.Light.NoActionBar"/>-->
 
         <receiver android:name=".iemoji.ImojiCategoryLayoutSuitable$UpdateReceiver"></receiver>
