@@ -20,4 +20,10 @@
         fresco:progressBarImageScaleType="center"
         fresco:viewAspectRatio="1.33" />
 
+    <!--<ImageView-->
+        <!--android:layout_width="100dp"-->
+        <!--android:layout_height="100dp"-->
+        <!--android:transitionName="detail_drawee"-->
+        <!--android:src="@drawable/bobo2"/>-->
+
 </android.support.v7.widget.CardView>

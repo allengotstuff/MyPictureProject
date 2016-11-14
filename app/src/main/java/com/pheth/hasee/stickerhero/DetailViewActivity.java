@@ -8,11 +8,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import com.facebook.drawee.drawable.ScalingUtils;
-import com.facebook.drawee.interfaces.DraweeController;
 import com.facebook.drawee.view.DraweeTransition;
-import com.facebook.drawee.view.SimpleDraweeView;
 import com.pheth.hasee.stickerhero.Adapter.DetailViewAdapter;
-import com.pheth.hasee.stickerhero.utils.CommonUtils;
 
 import io.imoji.sdk.objects.Imoji;
 
@@ -27,7 +24,6 @@ public class DetailViewActivity extends AppCompatActivity {
     private RecyclerView recyclerView;
     private Imoji baseImoji;
 
-    private SimpleDraweeView simpleDraweeView;
     private Context mContext;
 
     @Override
@@ -53,13 +49,9 @@ public class DetailViewActivity extends AppCompatActivity {
         mContext = getBaseContext();
         baseImoji = getIntent().getParcelableExtra(IMOJI);
         recyclerView = (RecyclerView)findViewById(R.id.rv_detail);
-//        simpleDraweeView = (SimpleDraweeView)findViewById(R.id.detail_image);
     }
 
-    private void setupDrawee(){
-        DraweeController controller =  CommonUtils.getController(baseImoji);
-        simpleDraweeView.setController(controller);
-    }
+
 
     private void setRecyclerView(){
 
@@ -67,6 +59,7 @@ public class DetailViewActivity extends AppCompatActivity {
 
         recyclerView.setLayoutManager(new GridLayoutManager(mContext,1));
         recyclerView.setAdapter(adapter);
+
         recyclerView.post(new Runnable() {
             @Override
             public void run() {

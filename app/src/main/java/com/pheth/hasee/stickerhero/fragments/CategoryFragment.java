@@ -9,6 +9,7 @@ import android.os.Message;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.ActivityOptionsCompat;
+import android.support.v4.util.Pair;
 import android.support.v4.view.ViewCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.GridLayoutManager;
@@ -96,6 +97,7 @@ public class CategoryFragment extends BaseFragment implements CardViewAdapter.Re
         mDataList = new ArrayList();
         recyclerView = (RecyclerView) LayoutInflater.from(getContext()).inflate(R.layout.recycleview_layout, null);
         recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 3));
+        recyclerView.setHasFixedSize(true);
         recyclerView.addItemDecoration(new ItemDecoration(20));
         adapter = new CardViewAdapter(getContext(), mDataList);
         adapter.setOnitemClickListener(this);
@@ -135,11 +137,15 @@ public class CategoryFragment extends BaseFragment implements CardViewAdapter.Re
         Intent intent = new Intent(getActivity(), DetailViewActivity.class);
         intent.putExtra(DetailViewActivity.IMOJI,imoji);
 
+        Pair<View, String> pairValue_1 = Pair.create((View)holder.categoryImage,getString(R.string.transition_drawee));
+        Pair<View, String> pairValue_2 = Pair.create((View)holder.cardView,getString(R.string.transition_cardview));
+
         ActivityOptionsCompat options =
                 ActivityOptionsCompat.makeSceneTransitionAnimation(getActivity(),
-                        holder.categoryImage, getString(R.string.transition_one));
+                        pairValue_1,pairValue_2);
+        startActivity(intent);
 
-        ActivityCompat.startActivity(getActivity(), intent, options.toBundle());
+//        ActivityCompat.startActivity(getActivity(), intent, options.toBundle());
     }
 
 

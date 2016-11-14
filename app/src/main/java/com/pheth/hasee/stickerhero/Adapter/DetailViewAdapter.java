@@ -9,11 +9,14 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
 import com.facebook.drawee.interfaces.DraweeController;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.pheth.hasee.stickerhero.R;
 import com.pheth.hasee.stickerhero.utils.CommonUtils;
+
 import java.util.ArrayList;
+
 import io.imoji.sdk.objects.Imoji;
 
 
@@ -63,11 +66,12 @@ public class DetailViewAdapter extends RecyclerView.Adapter<DetailViewAdapter.De
     public void onBindViewHolder(DetailViewAdapter.DetailHolder holder, int position) {
 
         int viewType = getItemViewType(position);
-        setViewParam(holder.detailImage, viewType);
+        setDraweeParam(holder, viewType);
+
 
         switch (viewType) {
             case TYPE_HEADER:
-                DraweeController controller =  CommonUtils.getController(baseImoji);
+                DraweeController controller = CommonUtils.getController(baseImoji);
                 holder.detailImage.setController(controller);
                 break;
 
@@ -82,27 +86,32 @@ public class DetailViewAdapter extends RecyclerView.Adapter<DetailViewAdapter.De
     }
 
 
-    private void setViewParam(View view, int option) {
-        ViewGroup.LayoutParams params = view.getLayoutParams();
+    private void setDraweeParam(DetailViewAdapter.DetailHolder holder, int option) {
+        SimpleDraweeView tempDrawee = holder.detailImage;
+        CardView tempCardView = holder.cardView;
+
+        ViewGroup.LayoutParams params = tempDrawee.getLayoutParams();
 
         switch (option) {
             case TYPE_HEADER:
-                params.width =  CommonUtils.dpToPx(200);
+                params.width = CommonUtils.dpToPx(200);
                 params.height = CommonUtils.dpToPx(200);
-                ViewCompat.setTransitionName(view, mContext.getString(R.string.transition_one));
+                ViewCompat.setTransitionName(tempDrawee, mContext.getString(R.string.transition_drawee));
+                ViewCompat.setTransitionName(tempCardView, mContext.getString(R.string.transition_cardview));
                 break;
 
             case TYPE_BODY:
                 params.width = ViewGroup.LayoutParams.MATCH_PARENT;
                 params.height = CommonUtils.dpToPx(100);
-                ViewCompat.setTransitionName(view, "");
+                ViewCompat.setTransitionName(tempDrawee, "");
+                ViewCompat.setTransitionName(tempCardView,"");
                 break;
 
             default:
                 Log.e(TAG, "setViewParam option not recogonized");
                 break;
         }
-        view.setLayoutParams(params);
+        tempDrawee.setLayoutParams(params);
     }
 
     public class DetailHolder extends RecyclerView.ViewHolder {
