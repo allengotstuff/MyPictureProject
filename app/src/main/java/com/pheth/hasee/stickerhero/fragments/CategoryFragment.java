@@ -145,9 +145,9 @@ public class CategoryFragment extends BaseFragment implements CardViewAdapter.Re
         ActivityOptionsCompat options =
                 ActivityOptionsCompat.makeSceneTransitionAnimation(getActivity(),
                         pairValue_1,pairValue_2);
-        startActivity(intent);
+//        startActivity(intent);
 
-//        ActivityCompat.startActivity(getActivity(), intent, options.toBundle());
+        ActivityCompat.startActivity(getActivity(), intent, options.toBundle());
     }
 
 
