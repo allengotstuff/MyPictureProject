@@ -129,13 +129,15 @@ public class CategoryFragment extends BaseFragment implements CardViewAdapter.Re
     }
 
     @Override
-    public void onItemClick(CardViewAdapter.MyViewHolder holder, int pos, Imoji imoji ) {
+    public void onItemClick(CardViewAdapter.MyViewHolder holder, int pos, Imoji imoji, String categoryId ) {
         Log.e("onclikc",""+pos);
+        Log.e("onclick_serachID",""+categoryId);
 
 //        ViewCompat.setTransitionName(holder.categoryImage, getString(R.string.transition_one));
 
         Intent intent = new Intent(getActivity(), DetailViewActivity.class);
         intent.putExtra(DetailViewActivity.IMOJI,imoji);
+        intent.putExtra(DetailViewActivity.SEARCH_ID,categoryId);
 
         Pair<View, String> pairValue_1 = Pair.create((View)holder.categoryImage,getString(R.string.transition_drawee));
         Pair<View, String> pairValue_2 = Pair.create((View)holder.cardView,getString(R.string.transition_cardview));

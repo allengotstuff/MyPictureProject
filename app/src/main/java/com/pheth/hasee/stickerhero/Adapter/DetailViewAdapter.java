@@ -1,7 +1,6 @@
 package com.pheth.hasee.stickerhero.Adapter;
 
 import android.content.Context;
-import android.net.Uri;
 import android.support.v4.view.ViewCompat;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
@@ -13,9 +12,13 @@ import android.view.ViewGroup;
 import com.facebook.drawee.interfaces.DraweeController;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.pheth.hasee.stickerhero.R;
+import com.pheth.hasee.stickerhero.iemoji.ImojiNetwork.ImojiSearchListener;
+import com.pheth.hasee.stickerhero.iemoji.ImojiNetwork.ImojiSerachData;
+import com.pheth.hasee.stickerhero.iemoji.ImojiNetwork.RequestInfo;
 import com.pheth.hasee.stickerhero.utils.CommonUtils;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import io.imoji.sdk.objects.Imoji;
 
@@ -23,13 +26,13 @@ import io.imoji.sdk.objects.Imoji;
 /**
  * Created by allengotstuff on 11/13/2016.
  */
-public class DetailViewAdapter extends RecyclerView.Adapter<DetailViewAdapter.DetailHolder> {
+public class DetailViewAdapter extends RecyclerView.Adapter<DetailViewAdapter.DetailHolder> implements ImojiSearchListener {
 
     private Context mContext;
 
-    private static final int TYPE_HEADER = 1;
+    public static final int TYPE_HEADER = 1;
 
-    private static final int TYPE_BODY = 2;
+    public static final int TYPE_BODY = 2;
 
     private final static String TAG = "DetailViewAdapter";
 
@@ -37,12 +40,30 @@ public class DetailViewAdapter extends RecyclerView.Adapter<DetailViewAdapter.De
 
     private Imoji baseImoji;
 
-    public DetailViewAdapter(Context context, Imoji imoji) {
+    private String search_id;
+    private ImojiSerachData imojiSerachData;
+
+    public DetailViewAdapter(Context context, Imoji imoji,String id) {
         mContext = context;
         baseImoji = imoji;
+        search_id = id;
+
         mList = new ArrayList<>();
-        mList.add(baseImoji);
+
+        if(baseImoji!=null) {
+            mList.add(baseImoji);
+        }
+
+        //start requestiong emojis
+        initImojiRequest();
     }
+
+    private void initImojiRequest(){
+        RequestInfo info = new RequestInfo(search_id);
+        imojiSerachData = new ImojiSerachData(mContext,this);
+        imojiSerachData.startRequest(info);
+    }
+
 
 
     @Override
@@ -76,6 +97,8 @@ public class DetailViewAdapter extends RecyclerView.Adapter<DetailViewAdapter.De
                 break;
 
             case TYPE_BODY:
+                DraweeController controller_body = CommonUtils.getController(mList.get(position));
+                holder.detailImage.setController(controller_body);
                 break;
         }
     }
@@ -90,19 +113,22 @@ public class DetailViewAdapter extends RecyclerView.Adapter<DetailViewAdapter.De
         SimpleDraweeView tempDrawee = holder.detailImage;
         CardView tempCardView = holder.cardView;
 
-        ViewGroup.LayoutParams params = tempDrawee.getLayoutParams();
+        ViewGroup.LayoutParams params_drawee = tempDrawee.getLayoutParams();
+        ViewGroup.LayoutParams params_cardview = tempCardView.getLayoutParams();
 
         switch (option) {
             case TYPE_HEADER:
-                params.width = CommonUtils.dpToPx(200);
-                params.height = CommonUtils.dpToPx(200);
+                params_drawee.width = ViewGroup.LayoutParams.MATCH_PARENT;
+                params_drawee.height = CommonUtils.dpToPx(200);
                 ViewCompat.setTransitionName(tempDrawee, mContext.getString(R.string.transition_drawee));
                 ViewCompat.setTransitionName(tempCardView, mContext.getString(R.string.transition_cardview));
+
+                params_cardview.width = ViewGroup.LayoutParams.MATCH_PARENT;
                 break;
 
             case TYPE_BODY:
-                params.width = ViewGroup.LayoutParams.MATCH_PARENT;
-                params.height = CommonUtils.dpToPx(100);
+                params_drawee.width = ViewGroup.LayoutParams.MATCH_PARENT;
+                params_drawee.height = CommonUtils.dpToPx(100);
                 ViewCompat.setTransitionName(tempDrawee, "");
                 ViewCompat.setTransitionName(tempCardView,"");
                 break;
@@ -111,7 +137,21 @@ public class DetailViewAdapter extends RecyclerView.Adapter<DetailViewAdapter.De
                 Log.e(TAG, "setViewParam option not recogonized");
                 break;
         }
-        tempDrawee.setLayoutParams(params);
+        tempDrawee.setLayoutParams(params_drawee);
+        tempCardView.setLayoutParams(params_cardview);
+    }
+
+    @Override
+    public void onPostExecute(List arrayList) {
+        mList.addAll(arrayList);
+        notifyDataSetChanged();
+    }
+
+    @Override
+    public void onRequestCancle() {
+        if(imojiSerachData!=null){
+            imojiSerachData.onCancel();
+        }
     }
 
     public class DetailHolder extends RecyclerView.ViewHolder {

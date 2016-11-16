@@ -117,7 +117,6 @@ public class ImojiCategoryLayout extends FrameLayout {
                     .createSession(mContext.getApplicationContext())
                     .searchImojis(id)
                     .executeAsyncTaskOnExecutor(singleClickApiTask, MyApplication.getGlobelExector());
-
             return singleCategoryGridView;
         }
 

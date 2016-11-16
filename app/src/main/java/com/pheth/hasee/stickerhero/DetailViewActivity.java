@@ -7,6 +7,7 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+
 import com.facebook.drawee.drawable.ScalingUtils;
 import com.facebook.drawee.view.DraweeTransition;
 import com.pheth.hasee.stickerhero.Adapter.DetailViewAdapter;
@@ -20,11 +21,15 @@ public class DetailViewActivity extends AppCompatActivity {
 
     public static final String URL = "url";
     public static final String IMOJI = "imoji";
+    public static final String SEARCH_ID = "search_id";
 
     private RecyclerView recyclerView;
     private Imoji baseImoji;
 
     private Context mContext;
+    private String search_id;
+
+    private DetailViewAdapter adapter;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -48,6 +53,8 @@ public class DetailViewActivity extends AppCompatActivity {
     private void initView(){
         mContext = getBaseContext();
         baseImoji = getIntent().getParcelableExtra(IMOJI);
+        search_id = getIntent().getStringExtra(SEARCH_ID);
+
         recyclerView = (RecyclerView)findViewById(R.id.rv_detail);
     }
 
@@ -55,10 +62,27 @@ public class DetailViewActivity extends AppCompatActivity {
 
     private void setRecyclerView(){
 
-        DetailViewAdapter adapter = new DetailViewAdapter(getApplicationContext(),baseImoji);
+        adapter = new DetailViewAdapter(getApplicationContext(),baseImoji,search_id);
 
-        recyclerView.setLayoutManager(new GridLayoutManager(mContext,1));
+        GridLayoutManager layoutManager = new GridLayoutManager(mContext,3);
+        layoutManager.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup(){
+            @Override
+            public int getSpanSize(int position) {
+                switch (adapter.getItemViewType(position)){
+                    case DetailViewAdapter.TYPE_HEADER:
+                        return 3;
+
+                    case DetailViewAdapter.TYPE_BODY:
+                        return 1;
+
+                    default:
+                        return -1;
+                }
+            }
+        });
+        recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(adapter);
+
 
         recyclerView.post(new Runnable() {
             @Override
@@ -76,5 +100,6 @@ public class DetailViewActivity extends AppCompatActivity {
         super.onDestroy();
 
         baseImoji = null;
+        adapter.onRequestCancle();
     }
 }

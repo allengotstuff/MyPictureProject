@@ -58,7 +58,8 @@ public class CardViewAdapter extends RecyclerView.Adapter<CardViewAdapter.MyView
     @Override
     public void onBindViewHolder(final MyViewHolder holder, final int position) {
 
-        final Imoji imoji = categoryList.get(position).getPreviewImoji();
+        final Category tempCategory = categoryList.get(position);
+        final Imoji imoji = tempCategory.getPreviewImoji();
         RenderingOptions options = IemojiUtil.getRenderOption(imoji, RenderingOptions.Size.Thumbnail);
         final Uri uri = imoji.urlForRenderingOption(options);
         DraweeController controller = Fresco.newDraweeControllerBuilder()
@@ -87,7 +88,7 @@ public class CardViewAdapter extends RecyclerView.Adapter<CardViewAdapter.MyView
         holder.cardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                onitemClickListener.onItemClick(holder, position,imoji);
+                onitemClickListener.onItemClick(holder, position,imoji,tempCategory.getIdentifier());
             }
         });
     }
@@ -113,6 +114,6 @@ public class CardViewAdapter extends RecyclerView.Adapter<CardViewAdapter.MyView
 
 
      public interface RecyclerViewOnitemClickListener{
-        void onItemClick(MyViewHolder holder,int pos,Imoji imoji);
+        void onItemClick(MyViewHolder holder,int pos,Imoji imoji,String categoryID);
     }
 }

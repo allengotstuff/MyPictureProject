@@ -29,6 +29,12 @@ public class RequestInfo {
 
     public RequestInfo(Category.Classification op){
         option = op;
+        search_id = "";
+    }
+
+    public RequestInfo(String id ){
+        search_id = id;
+        option = Category.Classification.Trending;
     }
 
     public String getSearchId(){
