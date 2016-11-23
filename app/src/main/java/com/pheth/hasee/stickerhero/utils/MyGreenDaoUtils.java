@@ -1,7 +1,9 @@
 package com.pheth.hasee.stickerhero.utils;
 
+import com.pheth.hasee.stickerhero.greendao.Favorite;
 import com.pheth.hasee.stickerhero.greendao.FavoriteCategory;
 import com.pheth.hasee.stickerhero.greendao.FavoriteCategoryDao;
+import com.pheth.hasee.stickerhero.greendao.FavoriteDao;
 import com.pheth.hasee.stickerhero.greendao.History;
 import com.pheth.hasee.stickerhero.greendao.HistoryDao;
 
@@ -78,22 +80,28 @@ public class MyGreenDaoUtils {
         }
     }
 
-//    public static boolean updateHistory(HistoryDao historyDao, String identifier,String local_url){
-//        if (historyDao == null )
-//            return false;
-//
-//        QueryBuilder qb = historyDao.queryBuilder();
-//        Object result = qb.where(HistoryDao.Properties.Identifier.eq(identifier)).unique();
-//
-//        if(result==null){
-//            return false;
-//        }else{
-//            History history = (History)result;
-//            history.setUrl_send_local(local_url);
-//            historyDao.update(history);
-//            return true;
-//        }
-//    }
+
+    /**
+     * adding individual imoji to favorite list;
+     * @param favoriteDao
+     * @param mfavorite
+     * @return
+     */
+    public static boolean addSingleImojiFavorite(FavoriteDao favoriteDao, Favorite mfavorite){
+        if (favoriteDao == null || mfavorite==null )
+            return false;
+        QueryBuilder qb = favoriteDao.queryBuilder();
+        Object result = qb.where(FavoriteDao.Properties.Identifier.eq(mfavorite.getIdentifier())).unique();
+
+        if(result==null)
+        {
+            favoriteDao.insert(mfavorite);
+            return true;
+        }else
+        {
+            return false;
+        }
+    }
 
 
 }

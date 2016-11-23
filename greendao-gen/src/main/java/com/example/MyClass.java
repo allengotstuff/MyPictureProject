@@ -60,7 +60,7 @@ public class MyClass {
         favorite.addStringProperty("name");
         favorite.addStringProperty("url_full");
         favorite.addStringProperty("url_thumb");
-        favorite.addStringProperty("search_id");
+        favorite.addStringProperty("identifier");
 
         favorite.addStringProperty("url_full_local");
         favorite.addStringProperty("url_thumb_local");

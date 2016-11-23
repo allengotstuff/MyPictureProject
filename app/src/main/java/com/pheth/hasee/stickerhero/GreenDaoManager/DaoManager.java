@@ -5,7 +5,9 @@ import android.database.sqlite.SQLiteDatabase;
 
 import com.pheth.hasee.stickerhero.greendao.DaoMaster;
 import com.pheth.hasee.stickerhero.greendao.DaoSession;
+import com.pheth.hasee.stickerhero.greendao.Favorite;
 import com.pheth.hasee.stickerhero.greendao.FavoriteCategoryDao;
+import com.pheth.hasee.stickerhero.greendao.FavoriteDao;
 import com.pheth.hasee.stickerhero.greendao.HistoryDao;
 
 /**
@@ -17,22 +19,31 @@ public class DaoManager {
 
     private DaoMaster daoMaster;
     private DaoSession daoSessionHistory;
-    private DaoSession daoSessionFavorite;
+    private DaoSession daoSessionFavoriteCategory;
+    private DaoSession daoSessionFavoriteIndividual;
 
 
     private HistoryDao historyDao;
     private FavoriteCategoryDao favoriteCategoryDao;
+    private FavoriteDao favoriteDao;
 
     private DaoManager(){
     }
 
     public static DaoManager getManager(){
+
         if (manager==null){
-            manager = new DaoManager();
+            synchronized (DaoManager.class) {
+                manager = new DaoManager();
+            }
         }
         return manager;
     }
 
+    /**
+     * This is a application scope, should only use once in application scope
+     * @param context
+     */
     public void init(Context context){
         //初始化数据库·
         try {
@@ -44,6 +55,10 @@ public class DaoManager {
         }
     }
 
+
+    /**
+     * should call this every time client try to make a operation with db,
+     */
     public void initHistoryDao(){
         if (daoMaster != null) {
             daoSessionHistory = daoMaster.newSession();
@@ -56,14 +71,26 @@ public class DaoManager {
         return historyDao;
     }
 
-    public void initFavoriteDao(){
+    public void initFavoriteCategoryDao(){
         if (daoMaster != null) {
-            daoSessionFavorite = daoMaster.newSession();
-            favoriteCategoryDao = daoSessionFavorite.getFavoriteCategoryDao();
+            daoSessionFavoriteCategory = daoMaster.newSession();
+            favoriteCategoryDao = daoSessionFavoriteCategory.getFavoriteCategoryDao();
         }
     }
 
     public FavoriteCategoryDao getFavoriteCategoryDao(){
         return favoriteCategoryDao;
+    }
+
+
+    public void initFavoriteIndividualDao(){
+        if (daoMaster != null) {
+            daoSessionFavoriteIndividual = daoMaster.newSession();
+            favoriteDao = daoSessionFavoriteIndividual.getFavoriteDao();
+        }
+    }
+
+    public FavoriteDao getFavoriteIndividualDao(){
+        return favoriteDao;
     }
 }

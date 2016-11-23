@@ -1,12 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/cv_detail_container"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    card_view:cardBackgroundColor="@color/white"
-    card_view:cardCornerRadius="5dp"
-    card_view:cardElevation="2dp">
+    android:background="@color/colorAccent"
+    android:layout_width="match_parent"
+    android:layout_height="120dp">
 
     <com.facebook.drawee.view.SimpleDraweeView xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:fresco="http://schemas.android.com/apk/res-auto"
@@ -20,10 +17,34 @@
         fresco:progressBarImageScaleType="center"
         fresco:viewAspectRatio="1.33" />
 
+    <ImageView
+        android:id="@+id/iamgeview_1"
+        android:visibility="gone"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/bobo2"
+        android:layout_gravity="center"/>
+
+    <ImageView
+        android:id="@+id/iamgeview_2"
+        android:visibility="gone"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/bobo2"
+        android:layout_gravity="center"/>
+
+    <ImageView
+        android:id="@+id/iamgeview_3"
+        android:visibility="gone"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/bobo2"
+        android:layout_gravity="center"/>
+
     <!--<ImageView-->
         <!--android:layout_width="100dp"-->
         <!--android:layout_height="100dp"-->
         <!--android:transitionName="detail_drawee"-->
         <!--android:src="@drawable/bobo2"/>-->
 
-</android.support.v7.widget.CardView>
+</FrameLayout>

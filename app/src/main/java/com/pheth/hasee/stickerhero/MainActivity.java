@@ -8,6 +8,8 @@ import android.provider.Settings;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
+
+import com.pheth.hasee.stickerhero.Activities.BaseActvity;
 import com.pheth.hasee.stickerhero.Adapter.FragmentPageAdapter;
 
 public class MainActivity extends BaseActvity {

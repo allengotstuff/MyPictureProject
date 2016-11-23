@@ -281,7 +281,7 @@ public class ImojiCategoryLayoutSuitable extends FrameLayout {
     private void initdatabase() {
 
         daoManager = DaoManager.getManager();
-        daoManager.initFavoriteDao();
+        daoManager.initFavoriteCategoryDao();
     }
 
     public class UpdateReceiver extends BroadcastReceiver {

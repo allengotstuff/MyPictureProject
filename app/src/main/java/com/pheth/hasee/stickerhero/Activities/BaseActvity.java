@@ -1,4 +1,4 @@
-package com.pheth.hasee.stickerhero;
+package com.pheth.hasee.stickerhero.Activities;
 
 import android.graphics.Color;
 import android.os.Build;
@@ -15,6 +15,8 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
+
+import com.pheth.hasee.stickerhero.R;
 
 /**
  * Created by allengotstuff on 11/8/2016.

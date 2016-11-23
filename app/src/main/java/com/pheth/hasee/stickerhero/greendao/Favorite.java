@@ -13,7 +13,7 @@ public class Favorite {
     private String name;
     private String url_full;
     private String url_thumb;
-    private String search_id;
+    private String identifier;
     private String url_full_local;
     private String url_thumb_local;
     private java.util.Date add_date;
@@ -28,12 +28,12 @@ public class Favorite {
         this.id = id;
     }
 
-    public Favorite(Long id, String name, String url_full, String url_thumb, String search_id, String url_full_local, String url_thumb_local, java.util.Date add_date) {
+    public Favorite(Long id, String name, String url_full, String url_thumb, String identifier, String url_full_local, String url_thumb_local, java.util.Date add_date) {
         this.id = id;
         this.name = name;
         this.url_full = url_full;
         this.url_thumb = url_thumb;
-        this.search_id = search_id;
+        this.identifier = identifier;
         this.url_full_local = url_full_local;
         this.url_thumb_local = url_thumb_local;
         this.add_date = add_date;
@@ -71,12 +71,12 @@ public class Favorite {
         this.url_thumb = url_thumb;
     }
 
-    public String getSearch_id() {
-        return search_id;
+    public String getIdentifier() {
+        return identifier;
     }
 
-    public void setSearch_id(String search_id) {
-        this.search_id = search_id;
+    public void setIdentifier(String identifier) {
+        this.identifier = identifier;
     }
 
     public String getUrl_full_local() {

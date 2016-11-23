@@ -70,7 +70,7 @@ public class CategoryStickAdapter extends BaseAdapter implements AdapterView.OnI
         dpSizeSmall = ScreenUtils.convertDpToPixel(30, mContext);
         dpSize62 = ScreenUtils.convertDpToPixel(65, mContext);
         daoManager = DaoManager.getManager();
-        daoManager.initFavoriteDao();
+        daoManager.initFavoriteCategoryDao();
     }
 
 

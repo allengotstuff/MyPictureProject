@@ -5,12 +5,10 @@ import android.graphics.Canvas;
 import android.graphics.Rect;
 import android.os.Bundle;
 import android.os.Handler;
-import android.os.Message;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.util.Pair;
-import android.support.v4.view.ViewCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -20,8 +18,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.pheth.hasee.stickerhero.Adapter.CardViewAdapter;
-import com.pheth.hasee.stickerhero.DetailViewActivity;
-import com.pheth.hasee.stickerhero.MainActivity;
+import com.pheth.hasee.stickerhero.Activities.DetailViewActivity;
 import com.pheth.hasee.stickerhero.R;
 import com.pheth.hasee.stickerhero.iemoji.ImojiNetwork.ImojiCategoryData;
 import com.pheth.hasee.stickerhero.iemoji.ImojiNetwork.ImojiDataContainer;
@@ -134,17 +131,18 @@ public class CategoryFragment extends BaseFragment implements CardViewAdapter.Re
         Log.e("onclick_serachID",""+categoryId);
 
 //        ViewCompat.setTransitionName(holder.categoryImage, getString(R.string.transition_one));
+       Category category = (Category)mDataList.get(pos);
 
         Intent intent = new Intent(getActivity(), DetailViewActivity.class);
         intent.putExtra(DetailViewActivity.IMOJI,imoji);
         intent.putExtra(DetailViewActivity.SEARCH_ID,categoryId);
+        intent.putExtra(DetailViewActivity.CATEGORY_TITLE,category.getTitle());
 
         Pair<View, String> pairValue_1 = Pair.create((View)holder.categoryImage,getString(R.string.transition_drawee));
-        Pair<View, String> pairValue_2 = Pair.create((View)holder.cardView,getString(R.string.transition_cardview));
 
         ActivityOptionsCompat options =
                 ActivityOptionsCompat.makeSceneTransitionAnimation(getActivity(),
-                        pairValue_1,pairValue_2);
+                        pairValue_1);
 //        startActivity(intent);
 
         ActivityCompat.startActivity(getActivity(), intent, options.toBundle());
