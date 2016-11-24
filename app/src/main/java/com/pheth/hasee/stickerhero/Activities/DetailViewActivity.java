@@ -11,9 +11,7 @@ import android.util.Log;
 import com.facebook.drawee.drawable.ScalingUtils;
 import com.facebook.drawee.view.DraweeTransition;
 import com.pheth.hasee.stickerhero.Adapter.DetailViewAdapter;
-import com.pheth.hasee.stickerhero.Animation.CardHolderAnimation;
-import com.pheth.hasee.stickerhero.ClickHandler.BaseClickHandler;
-import com.pheth.hasee.stickerhero.ClickHandler.DetailClickHandler;
+import com.pheth.hasee.stickerhero.Animation.HolderAnimation;
 import com.pheth.hasee.stickerhero.R;
 
 
@@ -33,7 +31,8 @@ public class DetailViewActivity extends BaseSecondaryActivity implements DetailV
 
     private DetailViewAdapter adapter;
 
-    private CardHolderAnimation animationHolder;
+//    private CardHolderAnimation animationHolder;
+    private HolderAnimation holderAnimation;
 
     private static final String TAG = "DetailViewActivity";
 
@@ -56,7 +55,8 @@ public class DetailViewActivity extends BaseSecondaryActivity implements DetailV
 
 
     private void initView(){
-        animationHolder = new CardHolderAnimation();
+
+        holderAnimation = new HolderAnimation();
 
         mContext = getBaseContext();
         baseImoji = getIntent().getParcelableExtra(IMOJI);
@@ -70,11 +70,9 @@ public class DetailViewActivity extends BaseSecondaryActivity implements DetailV
 
     private void setRecyclerView(){
 
-//        animation = new CardHolderAnimation();
-
         adapter = new DetailViewAdapter(getApplicationContext(),baseImoji,search_id);
         adapter.setOnHolderClickListener(this);
-        adapter.setHolderAnimation(animationHolder);
+        adapter.setHolderAnimation(holderAnimation);
 
         GridLayoutManager layoutManager = new GridLayoutManager(mContext,3);
         layoutManager.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup(){
@@ -118,8 +116,7 @@ public class DetailViewActivity extends BaseSecondaryActivity implements DetailV
     public void onHolderClick(int pos, RecyclerView.ViewHolder holder) {
 
         Log.e(TAG, "onclick"+pos );
-        animationHolder.setHolderPositon((DetailViewAdapter.DetailHolder)holder,pos);
-        animationHolder.startAnimation();
+        holderAnimation.setViewHolder(holder, pos);
     }
 
 }

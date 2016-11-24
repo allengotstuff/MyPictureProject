@@ -19,13 +19,11 @@ public class CardHolderAnimation {
     private static final String TAG = "CardHolderAnimation";
 
     private DetailViewAdapter.DetailHolder last_click_holder;
-    private int click_position = -10;
+    private int click_position = -999;
 
     private ImageView fuction_1, fuction_2, fuction_3;
 
-    public CardHolderAnimation() {
-
-    }
+    public CardHolderAnimation() {}
 
 
     public void setHolderPositon(DetailViewAdapter.DetailHolder holder, int pos) {

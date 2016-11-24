@@ -13,6 +13,7 @@ import android.widget.ImageView;
 
 import com.facebook.drawee.interfaces.DraweeController;
 import com.facebook.drawee.view.SimpleDraweeView;
+import com.pheth.hasee.stickerhero.Animation.AdapterSelector;
 import com.pheth.hasee.stickerhero.Animation.CardHolderAnimation;
 import com.pheth.hasee.stickerhero.ClickHandler.DetailClickHandler;
 import com.pheth.hasee.stickerhero.R;
@@ -59,7 +60,7 @@ public class DetailViewAdapter extends RecyclerView.Adapter<DetailViewAdapter.De
         }
     };
 
-    private CardHolderAnimation cardHolderAnimation;
+    private AdapterSelector cardHolderAnimation;
 
     public DetailViewAdapter(Context context, Imoji imoji, String id) {
         mContext = context;
@@ -76,7 +77,7 @@ public class DetailViewAdapter extends RecyclerView.Adapter<DetailViewAdapter.De
         initImojiRequest();
     }
 
-    public void setHolderAnimation(CardHolderAnimation holderAnimation){
+    public void setHolderAnimation(AdapterSelector holderAnimation){
         cardHolderAnimation =holderAnimation;
     }
 
@@ -111,7 +112,7 @@ public class DetailViewAdapter extends RecyclerView.Adapter<DetailViewAdapter.De
     @Override
     public void onBindViewHolder(final DetailViewAdapter.DetailHolder holder, final int position) {
 
-        cardHolderAnimation.isHolderNeedExpand(position,holder);
+        cardHolderAnimation.prepareHolder(position,holder);
 
         int viewType = getItemViewType(position);
         setDraweeParam(holder, viewType);
