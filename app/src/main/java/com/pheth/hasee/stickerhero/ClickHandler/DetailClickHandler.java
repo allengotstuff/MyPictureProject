@@ -1,8 +1,12 @@
 package com.pheth.hasee.stickerhero.ClickHandler;
+import android.content.Context;
 import android.net.Uri;
+import android.view.View;
+import android.widget.Toast;
 
 import com.pheth.hasee.stickerhero.Adapter.DetailViewAdapter;
 import com.pheth.hasee.stickerhero.GreenDaoManager.DaoManager;
+import com.pheth.hasee.stickerhero.R;
 import com.pheth.hasee.stickerhero.greendao.Favorite;
 import com.pheth.hasee.stickerhero.greendao.FavoriteDao;
 import com.pheth.hasee.stickerhero.iemoji.IemojiUtil;
@@ -16,22 +20,46 @@ import io.imoji.sdk.objects.RenderingOptions;
 /**
  * Created by allengotstuff on 11/21/2016.
  */
-public class DetailClickHandler implements ClickHandler<DetailViewAdapter.DetailHolder> {
+public class DetailClickHandler implements ClickHandler<DetailViewAdapter.DetailHolder,Imoji>,View.OnClickListener{
 
     private Imoji dataImoji;
     private DetailViewAdapter.DetailHolder myHolder;
     private DaoManager daoManager;
     private Favorite myFavorite;
+    private Context mContext;
+    private int position;
 
 
-    public DetailClickHandler(Imoji imoji, DaoManager daoManager) {
+
+    public DetailClickHandler(DaoManager daoManager,Context context) {
         this.daoManager = daoManager;
-        dataImoji = imoji;
+        mContext = context;
+        position = -999;
+    }
+
+    private void registerOnClick(){
+
+        myHolder.favorite_function.setOnClickListener(this);
+
+        myHolder.share_function.setOnClickListener(this);
+    }
+
+    //need to called this in onbindview recyclerview adapter
+    public void prepareHolder(DetailViewAdapter.DetailHolder myHolder,int pos){
+        if(position==pos) {
+            myHolder.favorite_function.setOnClickListener(this);
+            myHolder.share_function.setOnClickListener(this);
+        }else{
+            myHolder.favorite_function.setOnClickListener(null);
+            myHolder.share_function.setOnClickListener(null);
+        }
     }
 
     @Override
-    public void setViewHolder(DetailViewAdapter.DetailHolder holder) {
+    public void setViewHolder(DetailViewAdapter.DetailHolder holder, int pos ) {
         myHolder = holder;
+        position = pos;
+        registerOnClick();
     }
 
     @Override
@@ -39,6 +67,15 @@ public class DetailClickHandler implements ClickHandler<DetailViewAdapter.Detail
         return myHolder;
     }
 
+    @Override
+    public void setData(Imoji data) {
+        dataImoji = data;
+    }
+
+    @Override
+    public Imoji getData() {
+        return dataImoji;
+    }
 
 
     @Override
@@ -83,5 +120,23 @@ public class DetailClickHandler implements ClickHandler<DetailViewAdapter.Detail
         myFavorite.setUrl_thumb(uri_thumb.toString());
         myFavorite.setUrl_full(uri_full.toString());
         return myFavorite;
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()){
+
+            //add to favorite
+            case R.id.iamgeview_1:
+                //                addToFavorite();
+                Toast.makeText(mContext,"Add to favorite: "+ position ,Toast.LENGTH_SHORT).show();
+                break;
+
+            //share option.
+            case R.id.iamgeview_2:
+                //                shareAction();
+                Toast.makeText(mContext,"Share Action: "+position,Toast.LENGTH_SHORT).show();
+                break;
+        }
     }
 }

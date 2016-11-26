@@ -12,7 +12,12 @@ import com.facebook.drawee.drawable.ScalingUtils;
 import com.facebook.drawee.view.DraweeTransition;
 import com.pheth.hasee.stickerhero.Adapter.DetailViewAdapter;
 import com.pheth.hasee.stickerhero.Animation.HolderAnimation;
+import com.pheth.hasee.stickerhero.ClickHandler.ClickHandler;
+import com.pheth.hasee.stickerhero.ClickHandler.DetailClickHandler;
+import com.pheth.hasee.stickerhero.GreenDaoManager.DaoManager;
 import com.pheth.hasee.stickerhero.R;
+
+import io.imoji.sdk.objects.Imoji;
 
 
 /**
@@ -31,8 +36,9 @@ public class DetailViewActivity extends BaseSecondaryActivity implements DetailV
 
     private DetailViewAdapter adapter;
 
-//    private CardHolderAnimation animationHolder;
     private HolderAnimation holderAnimation;
+
+    private ClickHandler clickHandler;
 
     private static final String TAG = "DetailViewActivity";
 
@@ -58,6 +64,8 @@ public class DetailViewActivity extends BaseSecondaryActivity implements DetailV
 
         holderAnimation = new HolderAnimation();
 
+        clickHandler = new DetailClickHandler(DaoManager.getManager(),getBaseContext());
+
         mContext = getBaseContext();
         baseImoji = getIntent().getParcelableExtra(IMOJI);
         search_id = getIntent().getStringExtra(SEARCH_ID);
@@ -73,6 +81,7 @@ public class DetailViewActivity extends BaseSecondaryActivity implements DetailV
         adapter = new DetailViewAdapter(getApplicationContext(),baseImoji,search_id);
         adapter.setOnHolderClickListener(this);
         adapter.setHolderAnimation(holderAnimation);
+        adapter.setClickHandler(clickHandler);
 
         GridLayoutManager layoutManager = new GridLayoutManager(mContext,3);
         layoutManager.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup(){
@@ -116,7 +125,14 @@ public class DetailViewActivity extends BaseSecondaryActivity implements DetailV
     public void onHolderClick(int pos, RecyclerView.ViewHolder holder) {
 
         Log.e(TAG, "onclick"+pos );
+        Imoji imoji = adapter.getPosImoji(pos);
+
+        //控制点击动画
         holderAnimation.setViewHolder(holder, pos);
+
+        //控制点击的操作
+        clickHandler.setViewHolder(holder,pos);
+        clickHandler.setData(imoji);
     }
 
 }

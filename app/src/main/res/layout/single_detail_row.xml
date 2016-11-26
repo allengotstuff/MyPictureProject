@@ -17,34 +17,28 @@
         fresco:progressBarImageScaleType="center"
         fresco:viewAspectRatio="1.33" />
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:orientation="horizontal"
+        android:layout_height="60dp">
+
     <ImageView
         android:id="@+id/iamgeview_1"
         android:visibility="gone"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@drawable/bobo2"
+        android:layout_weight="1"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:src="@color/purple"
         android:layout_gravity="center"/>
 
     <ImageView
         android:id="@+id/iamgeview_2"
+        android:layout_weight="1"
         android:visibility="gone"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@drawable/bobo2"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:src="@color/green"
         android:layout_gravity="center"/>
-
-    <ImageView
-        android:id="@+id/iamgeview_3"
-        android:visibility="gone"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@drawable/bobo2"
-        android:layout_gravity="center"/>
-
-    <!--<ImageView-->
-        <!--android:layout_width="100dp"-->
-        <!--android:layout_height="100dp"-->
-        <!--android:transitionName="detail_drawee"-->
-        <!--android:src="@drawable/bobo2"/>-->
+    </LinearLayout>
 
 </FrameLayout>

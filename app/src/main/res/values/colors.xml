@@ -12,6 +12,10 @@
     <color name="main_bg_color">#eeeeee</color>
     <color name="tab_layout_underline">#ffff8c</color>
 
+    <color name="green">#7bc982</color>
+    <color name="purple">#cd7ec1</color>
+    <color name="cyan">#00c6ff</color>
+    <color name="blue">#8cb5ee</color>
 
     <array name="color_array">
         <item name="green">#7bc982</item>

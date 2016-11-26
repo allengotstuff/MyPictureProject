@@ -34,7 +34,9 @@ public class DaoManager {
 
         if (manager==null){
             synchronized (DaoManager.class) {
-                manager = new DaoManager();
+                if(manager==null) {
+                    manager = new DaoManager();
+                }
             }
         }
         return manager;

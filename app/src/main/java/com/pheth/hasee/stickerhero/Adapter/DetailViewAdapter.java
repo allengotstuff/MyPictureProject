@@ -15,6 +15,7 @@ import com.facebook.drawee.interfaces.DraweeController;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.pheth.hasee.stickerhero.Animation.AdapterSelector;
 import com.pheth.hasee.stickerhero.Animation.CardHolderAnimation;
+import com.pheth.hasee.stickerhero.ClickHandler.ClickHandler;
 import com.pheth.hasee.stickerhero.ClickHandler.DetailClickHandler;
 import com.pheth.hasee.stickerhero.R;
 import com.pheth.hasee.stickerhero.iemoji.ImojiNetwork.ImojiSearchListener;
@@ -62,6 +63,8 @@ public class DetailViewAdapter extends RecyclerView.Adapter<DetailViewAdapter.De
 
     private AdapterSelector cardHolderAnimation;
 
+    private ClickHandler clickHandler;
+
     public DetailViewAdapter(Context context, Imoji imoji, String id) {
         mContext = context;
         baseImoji = imoji;
@@ -77,6 +80,10 @@ public class DetailViewAdapter extends RecyclerView.Adapter<DetailViewAdapter.De
         initImojiRequest();
     }
 
+    public void setClickHandler(ClickHandler clickHandler){
+        this.clickHandler = clickHandler;
+    }
+
     public void setHolderAnimation(AdapterSelector holderAnimation){
         cardHolderAnimation =holderAnimation;
     }
@@ -89,6 +96,11 @@ public class DetailViewAdapter extends RecyclerView.Adapter<DetailViewAdapter.De
         RequestInfo info = new RequestInfo(search_id);
         imojiSerachData = new ImojiSerachData(mContext, this);
         imojiSerachData.startRequest(info);
+    }
+
+    public Imoji getPosImoji(int pos){
+
+        return mList.get(pos);
     }
 
 
@@ -113,6 +125,7 @@ public class DetailViewAdapter extends RecyclerView.Adapter<DetailViewAdapter.De
     public void onBindViewHolder(final DetailViewAdapter.DetailHolder holder, final int position) {
 
         cardHolderAnimation.prepareHolder(position,holder);
+        clickHandler.prepareHolder(holder,position);
 
         int viewType = getItemViewType(position);
         setDraweeParam(holder, viewType);
@@ -193,7 +206,7 @@ public class DetailViewAdapter extends RecyclerView.Adapter<DetailViewAdapter.De
         public SimpleDraweeView detailImage;
 
 
-        public ImageView functin_1, functin_2, functin_3;
+        public ImageView favorite_function,share_function;
 
         public DetailHolder(View itemView) {
             super(itemView);
@@ -203,9 +216,8 @@ public class DetailViewAdapter extends RecyclerView.Adapter<DetailViewAdapter.De
         }
 
         private void setupControllor(View itemView) {
-            functin_1 = (ImageView) itemView.findViewById(R.id.iamgeview_1);
-            functin_2 = (ImageView) itemView.findViewById(R.id.iamgeview_2);
-            functin_3 = (ImageView) itemView.findViewById(R.id.iamgeview_3);
+            favorite_function = (ImageView) itemView.findViewById(R.id.iamgeview_1);
+            share_function = (ImageView) itemView.findViewById(R.id.iamgeview_2);
         }
     }
 
