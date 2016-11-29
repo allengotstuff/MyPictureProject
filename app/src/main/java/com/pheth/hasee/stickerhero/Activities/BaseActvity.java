@@ -1,5 +1,6 @@
 package com.pheth.hasee.stickerhero.Activities;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
@@ -16,6 +17,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
 
+import com.pheth.hasee.stickerhero.AboutActicity;
 import com.pheth.hasee.stickerhero.R;
 
 /**
@@ -49,18 +51,23 @@ public class BaseActvity extends AppCompatActivity {
 
                     @Override
                     public boolean onNavigationItemSelected(MenuItem menuItem) {
-                        menuItem.setChecked(true);
+//                        menuItem.setChecked(true);
                         mDrawerLayout.closeDrawers();
 
                         switch(menuItem.getItemId()){
                             case R.id.nav_home:
                                 Log.e("Drawer","homeClick");
                                 break;
+
+                            case R.id.nav_about:
+                                Intent intent = new Intent(getBaseContext(), AboutActicity.class);
+                                startActivity(intent);
+                                break;
                         }
                         return true;
                     }
                 });
-
+        mNavigationView.setCheckedItem(R.id.nav_home);
         mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

@@ -24,14 +24,30 @@ public class ImojiDataContainer {
      */
     private static List categoryList;
 
-
     public static  List getCategoryList(){
-        synchronized (ImojiDataContainer.class) {
-            if (categoryList == null) {
-                categoryList = new ArrayList();
+        if (categoryList == null) {
+            synchronized (ImojiDataContainer.class) {
+                if (categoryList == null) {
+                    categoryList = new ArrayList();
+                }
             }
-            return categoryList;
         }
+        return categoryList;
     }
+
+
+    private static List featureImojiList;
+
+    public static  List getFeatureImojiListList(){
+        if (featureImojiList == null) {
+            synchronized (ImojiDataContainer.class) {
+                if (featureImojiList == null) {
+                    featureImojiList = new ArrayList();
+                }
+            }
+        }
+        return featureImojiList;
+    }
+
 
 }

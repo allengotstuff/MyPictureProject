@@ -19,7 +19,7 @@ import io.imoji.sdk.objects.Imoji;
 public class BaseSecondaryActivity extends AppCompatActivity {
 
     private ImageView backbutton;
-    private TextView title_textview;
+    protected TextView title_textview;
 
     protected String search_id;
     protected Imoji baseImoji;
@@ -27,9 +27,8 @@ public class BaseSecondaryActivity extends AppCompatActivity {
     protected String category_title;
 
     @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
+    public void setContentView(@LayoutRes int layoutResID) {
+        super.setContentView(layoutResID);
         backbutton = (ImageView)findViewById(R.id.back_button);
         title_textview = (TextView)findViewById(R.id.tv_pageid);
 
@@ -39,8 +38,5 @@ public class BaseSecondaryActivity extends AppCompatActivity {
                 onBackPressed();
             }
         });
-        title_textview.setText(category_title);
     }
-
-
 }

@@ -5,6 +5,7 @@ import android.util.Log;
 
 import com.pheth.hasee.stickerhero.MyApplication;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
@@ -35,6 +36,7 @@ public abstract class ImojiCategoryData implements ImojiBaseData {
     private List categoryList;
     private RequestInfo info;
     private ApiTask.WrappedAsyncTask apiTask;
+    private List oneRequestList;
 
     /**
      *
@@ -44,6 +46,7 @@ public abstract class ImojiCategoryData implements ImojiBaseData {
     public ImojiCategoryData(Context context, List list){
         mContext = context.getApplicationContext();
         categoryList = list;
+        oneRequestList = new ArrayList<Category>();
     }
 
     @Override
@@ -63,13 +66,19 @@ public abstract class ImojiCategoryData implements ImojiBaseData {
                 protected void onPostExecute(CategoriesResponse imojisResponse) {
                     //Bind the results to an adapter of sorts
 
+
+                    //记录下来每次刷新之后的数据
+                    oneRequestList.clear();
+                    oneRequestList.addAll(imojisResponse.getCategories());
+
                     //如果键盘界面和Imoji Fragment申请的话，防止重复添加数据
                     categoryList.clear();
 
-                    List<Category> tempList = imojisResponse.getCategories();
+
                     for (int i = 0; i < 21; i++) {
-                        categoryList.add(tempList.remove(new Random().nextInt(tempList.size() - 20)));
+                        categoryList.add(oneRequestList.remove(0));
                     }
+
                     ImojiCategoryData.this.onPostExecute(categoryList);
                 }
             };
@@ -84,8 +93,13 @@ public abstract class ImojiCategoryData implements ImojiBaseData {
     @Override
     public void onRefresh() {
         categoryList.clear();
-        if(this.info!=null) {
+
+        //if local data from last requst is more than 21
+       boolean islocal =  isFromLocal();
+
+        if(this.info!=null && !islocal) {
             startRequest(info);
+            Log.e(TAG,"onRefresh: refreshing data remotely");
         }
     }
 
@@ -99,5 +113,20 @@ public abstract class ImojiCategoryData implements ImojiBaseData {
 
         mContext = null;
         categoryList = null;
+    }
+
+    private boolean isFromLocal(){
+        if(oneRequestList.size()>22){
+
+            for (int i = 0; i < 21; i++) {
+                categoryList.add(oneRequestList.remove(0));
+            }
+
+            ImojiCategoryData.this.onPostExecute(categoryList);
+
+            Log.e(TAG,"onRefresh: refreshing data local");
+            return true;
+        }
+        return false;
     }
 }

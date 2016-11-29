@@ -57,7 +57,7 @@ public class MyApplication extends Application {
         ImagePipelineConfig pipelineConfig = ImagePipelineConfigFactory.getOkHttpImagePipelineConfig(this);
         Fresco.initialize(this, pipelineConfig);
 
-        threadPoolExecutor =  new ThreadPoolExecutor(10, 20, 10, TimeUnit.SECONDS, new LinkedBlockingDeque<Runnable>());
+        threadPoolExecutor =  new ThreadPoolExecutor(20, 35, 20, TimeUnit.SECONDS, new LinkedBlockingDeque<Runnable>());
 
         initImojiSdk();
 

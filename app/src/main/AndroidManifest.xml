@@ -34,6 +34,7 @@
         </activity>
 
         <activity android:name=".Activities.DetailViewActivity"  android:theme="@style/main_theme"/>
+        <activity android:name=".AboutActicity"  android:theme="@style/main_theme"/>
 
         <!--<activity android:name=".Myfavorite_Activity" android:theme="@style/Theme.AppCompat.Light.NoActionBar"/>-->
 

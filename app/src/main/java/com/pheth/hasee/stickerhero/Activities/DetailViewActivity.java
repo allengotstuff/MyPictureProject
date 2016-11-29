@@ -4,6 +4,7 @@ import android.content.Context;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.Snackbar;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -71,6 +72,7 @@ public class DetailViewActivity extends BaseSecondaryActivity implements DetailV
         search_id = getIntent().getStringExtra(SEARCH_ID);
         category_title = getIntent().getStringExtra(CATEGORY_TITLE);
 
+        title_textview.setText(category_title);
         recyclerView = (RecyclerView)findViewById(R.id.rv_detail);
     }
 
@@ -133,6 +135,7 @@ public class DetailViewActivity extends BaseSecondaryActivity implements DetailV
         //控制点击的操作
         clickHandler.setViewHolder(holder,pos);
         clickHandler.setData(imoji);
+
     }
 
 }

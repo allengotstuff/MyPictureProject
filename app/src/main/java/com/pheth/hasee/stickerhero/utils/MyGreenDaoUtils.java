@@ -93,6 +93,7 @@ public class MyGreenDaoUtils {
         QueryBuilder qb = favoriteDao.queryBuilder();
         Object result = qb.where(FavoriteDao.Properties.Identifier.eq(mfavorite.getIdentifier())).unique();
 
+
         if(result==null)
         {
             favoriteDao.insert(mfavorite);

@@ -1,6 +1,9 @@
 package com.pheth.hasee.stickerhero.ClickHandler;
+
 import android.content.Context;
 import android.net.Uri;
+import android.support.design.widget.Snackbar;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.Toast;
 
@@ -20,24 +23,22 @@ import io.imoji.sdk.objects.RenderingOptions;
 /**
  * Created by allengotstuff on 11/21/2016.
  */
-public class DetailClickHandler implements ClickHandler<DetailViewAdapter.DetailHolder,Imoji>,View.OnClickListener{
+public class DetailClickHandler implements ClickHandler<DetailViewAdapter.DetailHolder, Imoji>, View.OnClickListener {
 
     private Imoji dataImoji;
     private DetailViewAdapter.DetailHolder myHolder;
     private DaoManager daoManager;
-    private Favorite myFavorite;
     private Context mContext;
     private int position;
 
 
-
-    public DetailClickHandler(DaoManager daoManager,Context context) {
+    public DetailClickHandler(DaoManager daoManager, Context context) {
         this.daoManager = daoManager;
         mContext = context;
         position = -999;
     }
 
-    private void registerOnClick(){
+    private void registerOnClick() {
 
         myHolder.favorite_function.setOnClickListener(this);
 
@@ -45,18 +46,18 @@ public class DetailClickHandler implements ClickHandler<DetailViewAdapter.Detail
     }
 
     //need to called this in onbindview recyclerview adapter
-    public void prepareHolder(DetailViewAdapter.DetailHolder myHolder,int pos){
-        if(position==pos) {
+    public void prepareHolder(DetailViewAdapter.DetailHolder myHolder, int pos) {
+        if (position == pos) {
             myHolder.favorite_function.setOnClickListener(this);
             myHolder.share_function.setOnClickListener(this);
-        }else{
+        } else {
             myHolder.favorite_function.setOnClickListener(null);
             myHolder.share_function.setOnClickListener(null);
         }
     }
 
     @Override
-    public void setViewHolder(DetailViewAdapter.DetailHolder holder, int pos ) {
+    public void setViewHolder(DetailViewAdapter.DetailHolder holder, int pos) {
         myHolder = holder;
         position = pos;
         registerOnClick();
@@ -83,9 +84,15 @@ public class DetailClickHandler implements ClickHandler<DetailViewAdapter.Detail
 
         daoManager.initFavoriteIndividualDao();
         FavoriteDao favoriteDao = daoManager.getFavoriteIndividualDao();
-        mapFavoriteItem();
 
-        MyGreenDaoUtils.addSingleImojiFavorite(favoriteDao,myFavorite);
+        Favorite favorite = mapFavoriteItem();
+
+        boolean isSuccess = MyGreenDaoUtils.addSingleImojiFavorite(favoriteDao, favorite);
+        if (isSuccess) {
+            Toast.makeText(mContext, "Add to favorite: " + position, Toast.LENGTH_SHORT).show();
+        } else {
+            Toast.makeText(mContext, "fail to add to favorite", Toast.LENGTH_SHORT).show();
+        }
     }
 
     @Override
@@ -114,28 +121,33 @@ public class DetailClickHandler implements ClickHandler<DetailViewAdapter.Detail
         RenderingOptions option_full = IemojiUtil.getRenderOption(dataImoji, RenderingOptions.Size.Resolution320);
         Uri uri_full = dataImoji.urlForRenderingOption(option_full);
 
-        myFavorite = new Favorite();
+        Favorite myFavorite = new Favorite();
         myFavorite.setIdentifier(dataImoji.getIdentifier());
         myFavorite.setAdd_date(Calendar.getInstance().getTime());
         myFavorite.setUrl_thumb(uri_thumb.toString());
         myFavorite.setUrl_full(uri_full.toString());
+
+        String name = dataImoji.getTags().get(0);
+        if(!TextUtils.isEmpty(name)){
+            myFavorite.setName(name);
+        }
         return myFavorite;
     }
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()){
+        switch (v.getId()) {
 
             //add to favorite
             case R.id.iamgeview_1:
-                //                addToFavorite();
-                Toast.makeText(mContext,"Add to favorite: "+ position ,Toast.LENGTH_SHORT).show();
+                addToFavorite();
+
                 break;
 
             //share option.
             case R.id.iamgeview_2:
-                //                shareAction();
-                Toast.makeText(mContext,"Share Action: "+position,Toast.LENGTH_SHORT).show();
+                shareAction();
+//                Toast.makeText(mContext, "Share Action: " + position, Toast.LENGTH_SHORT).show();
                 break;
         }
     }

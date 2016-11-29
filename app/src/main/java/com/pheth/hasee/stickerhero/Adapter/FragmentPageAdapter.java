@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 
 import com.pheth.hasee.stickerhero.fragments.CategoryFragment;
 import com.pheth.hasee.stickerhero.fragments.PageFragment;
+import com.pheth.hasee.stickerhero.fragments.TrendingFragment;
 
 /**
  * Created by allengotstuff on 9/5/2016.
@@ -27,6 +28,11 @@ public class FragmentPageAdapter extends FragmentPagerAdapter {
     public Fragment getItem(int position) {
         if(position==0){
             CategoryFragment fragment = new CategoryFragment();
+            return fragment;
+        }
+
+        if(position==1){
+            TrendingFragment fragment = new TrendingFragment();
             return fragment;
         }
         return PageFragment.newInstance(position);
