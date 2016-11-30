@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/cv_detail_container"
+    android:layout_width="match_parent"
+    android:layout_height="120dp">
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:orientation="vertical">
+    <com.facebook.drawee.view.SimpleDraweeView xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:fresco="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/dv_detail_image"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_gravity="center"
+        android:adjustViewBounds="true"
+        fresco:actualImageScaleType="fitCenter"
+        fresco:progressBarImage="@drawable/foto_gif_loading_icon"
+        fresco:progressBarImageScaleType="center"
+        fresco:viewAspectRatio="1.33" />
+
+        <TextView
+            android:id="@+id/title_tv"
+            android:background="@drawable/imoji_title_background"
+            android:layout_width="80dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:text="sdfsdf"
+            android:gravity="center"
+            android:textColor="#ffffff"
+            android:textSize="13dp"
+            android:lines="1" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:orientation="horizontal"
+        android:layout_height="60dp">
+
+        <ImageView
+            android:id="@+id/iamgeview_1"
+            android:visibility="gone"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:src="@color/purple"
+            android:layout_gravity="center"/>
+
+        <ImageView
+            android:id="@+id/iamgeview_2"
+            android:layout_weight="1"
+            android:visibility="gone"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:src="@color/green"
+            android:layout_gravity="center"/>
+    </LinearLayout>
+
+</FrameLayout>
