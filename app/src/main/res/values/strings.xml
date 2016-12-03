@@ -20,4 +20,10 @@
 
     <string name="transition_drawee">detail_drawee</string>
     <string name="transition_cardview">detail_cardview</string>
+
+
+    <!--navigation bar-->
+    <string name="navigation_home">Home</string>
+    <string name="navigation_favitie_imoji">Favorite Stickers</string>
+    <string name="navigation_about">About</string>
 </resources>

@@ -5,12 +5,18 @@
             android:id="@+id/nav_home"
             android:icon="@drawable/bobo2"
             android:checkable="true"
-            android:title="Home"/>
+            android:title="@string/navigation_home"/>
+
+        <item
+            android:id="@+id/nav_favorite_imoji"
+            android:icon="@drawable/bobo2"
+            android:checkable="false"
+            android:title="@string/navigation_favitie_imoji"/>
 
         <item
             android:id="@+id/nav_about"
             android:icon="@drawable/bobo2"
             android:checkable="false"
-            android:title="About"/>
+            android:title="@string/navigation_about"/>
     </group>
 </menu>
