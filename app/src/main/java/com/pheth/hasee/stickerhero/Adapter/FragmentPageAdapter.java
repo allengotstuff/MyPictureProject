@@ -8,8 +8,10 @@ import android.support.v4.app.FragmentTransaction;
 import android.view.ViewGroup;
 
 import com.pheth.hasee.stickerhero.fragments.CategoryFragment;
+import com.pheth.hasee.stickerhero.fragments.FavoritImojiFragment;
 import com.pheth.hasee.stickerhero.fragments.PageFragment;
 import com.pheth.hasee.stickerhero.fragments.TrendingFragment;
+import com.pheth.hasee.stickerhero.greendao.Favorite;
 
 /**
  * Created by allengotstuff on 9/5/2016.
@@ -35,6 +37,11 @@ public class FragmentPageAdapter extends FragmentPagerAdapter {
             TrendingFragment fragment = new TrendingFragment();
             return fragment;
         }
+
+//        if(position==2){
+//            FavoritImojiFragment favoritImojiFragment = new FavoritImojiFragment();
+//            return  favoritImojiFragment;
+//        }
         return PageFragment.newInstance(position);
     }
 

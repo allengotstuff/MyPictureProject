@@ -6,25 +6,19 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.util.Log;
-import android.util.SparseArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-
 import com.facebook.drawee.interfaces.DraweeController;
 import com.facebook.drawee.view.SimpleDraweeView;
-import com.pheth.hasee.stickerhero.Animation.HolderAnimation;
-import com.pheth.hasee.stickerhero.ClickHandler.ClickHandler;
 import com.pheth.hasee.stickerhero.R;
 import com.pheth.hasee.stickerhero.utils.CommonUtils;
 
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
-import java.util.TreeSet;
 
 import io.imoji.sdk.objects.Imoji;
 
@@ -54,6 +48,7 @@ public class FlexSpanAdapter extends AnimationAdapter<FlexSpanAdapter.MyHolder> 
         ArrayList<Imoji> temp = (ArrayList<Imoji>)list;
         imojiList.clear();
         imojiList.addAll(temp);
+        this.notifyDataSetChanged();
     }
 
 //    public void setLayoutManager(GridLayoutManager manager, final HashSet<Integer> fullSpanCount){
@@ -154,8 +149,6 @@ public class FlexSpanAdapter extends AnimationAdapter<FlexSpanAdapter.MyHolder> 
                 Log.e(TAG, "setViewParam option not recogonized");
                 break;
         }
-//        tempDrawee.setLayoutParams(params_drawee);
-
     }
 
     public class MyHolder extends RecyclerView.ViewHolder {

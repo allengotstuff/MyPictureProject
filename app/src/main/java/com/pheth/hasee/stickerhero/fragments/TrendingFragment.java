@@ -1,6 +1,4 @@
 package com.pheth.hasee.stickerhero.fragments;
-
-import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.GridLayoutManager;
@@ -11,7 +9,6 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.pheth.hasee.stickerhero.Adapter.FlexSpanAdapter;
-import com.pheth.hasee.stickerhero.Animation.HolderAnimation;
 import com.pheth.hasee.stickerhero.Animation.TrendingHolderAnimation;
 import com.pheth.hasee.stickerhero.ClickHandler.ClickHandler;
 import com.pheth.hasee.stickerhero.ClickHandler.DetailClickHandler;
@@ -90,7 +87,6 @@ public class TrendingFragment extends BaseFragment implements FlexSpanAdapter.On
 
                 Log.e(NAMETAG,"featureImojis size ："+featureImojis.size() );
                 adapter.setData(featureImojis);
-                adapter.notifyDataSetChanged();
             }
         };
         imojiData.startRequest(null);
