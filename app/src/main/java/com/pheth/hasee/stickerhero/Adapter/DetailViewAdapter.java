@@ -30,7 +30,7 @@ import io.imoji.sdk.objects.Imoji;
 /**
  * Created by allengotstuff on 11/13/2016.
  */
-public class DetailViewAdapter extends RecyclerView.Adapter<DetailViewAdapter.DetailHolder> implements ImojiSearchListener {
+public class DetailViewAdapter extends AnimationAdapter<DetailViewAdapter.DetailHolder> implements ImojiSearchListener {
 
     private Context mContext;
 
@@ -59,9 +59,6 @@ public class DetailViewAdapter extends RecyclerView.Adapter<DetailViewAdapter.De
         }
     };
 
-    private AdapterSelector cardHolderAnimation;
-
-    private ClickHandler clickHandler;
 
     public DetailViewAdapter(Context context, Imoji imoji, String id) {
         mContext = context;
@@ -76,14 +73,6 @@ public class DetailViewAdapter extends RecyclerView.Adapter<DetailViewAdapter.De
 
         //start requestiong emojis
         initImojiRequest();
-    }
-
-    public void setClickHandler(ClickHandler clickHandler){
-        this.clickHandler = clickHandler;
-    }
-
-    public void setHolderAnimation(AdapterSelector holderAnimation){
-        cardHolderAnimation =holderAnimation;
     }
 
     public void setOnHolderClickListener(OnHolderClickListener listener) {
@@ -122,13 +111,7 @@ public class DetailViewAdapter extends RecyclerView.Adapter<DetailViewAdapter.De
     @Override
     public void onBindViewHolder(final DetailViewAdapter.DetailHolder holder, final int position) {
 
-        if(cardHolderAnimation!=null) {
-            cardHolderAnimation.prepareHolder(position, holder);
-        }
-
-        if(clickHandler!=null) {
-            clickHandler.prepareHolder(holder, position);
-        }
+       super.onBindViewHolder(holder,position);
 
         int viewType = getItemViewType(position);
         setDraweeParam(holder, viewType);

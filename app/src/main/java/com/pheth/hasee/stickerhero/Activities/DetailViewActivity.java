@@ -82,7 +82,7 @@ public class DetailViewActivity extends BaseSecondaryActivity implements DetailV
 
         adapter = new DetailViewAdapter(getApplicationContext(),baseImoji,search_id);
         adapter.setOnHolderClickListener(this);
-        adapter.setHolderAnimation(holderAnimation);
+        adapter.setAnimationHolder(holderAnimation);
         adapter.setClickHandler(clickHandler);
 
         GridLayoutManager layoutManager = new GridLayoutManager(mContext,3);

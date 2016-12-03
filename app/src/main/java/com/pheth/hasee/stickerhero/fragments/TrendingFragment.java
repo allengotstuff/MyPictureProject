@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 
 import com.pheth.hasee.stickerhero.Adapter.FlexSpanAdapter;
 import com.pheth.hasee.stickerhero.Animation.HolderAnimation;
+import com.pheth.hasee.stickerhero.Animation.TrendingHolderAnimation;
 import com.pheth.hasee.stickerhero.ClickHandler.ClickHandler;
 import com.pheth.hasee.stickerhero.ClickHandler.DetailClickHandler;
 import com.pheth.hasee.stickerhero.GreenDaoManager.DaoManager;
@@ -37,7 +38,7 @@ public class TrendingFragment extends BaseFragment implements FlexSpanAdapter.On
 
     private ClickHandler clickHandler;
 
-    private HolderAnimation holderAnimation;
+    private TrendingHolderAnimation holderAnimation;
 
     public TrendingFragment(){
     }
@@ -47,6 +48,7 @@ public class TrendingFragment extends BaseFragment implements FlexSpanAdapter.On
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
+        initView();
         RecyclerView recyclerView = (RecyclerView) LayoutInflater.from(getContext()).inflate(R.layout.recycleview_layout, null);
         setupRecyclerView(recyclerView);
         initData();
@@ -59,12 +61,18 @@ public class TrendingFragment extends BaseFragment implements FlexSpanAdapter.On
         clickHandler = new DetailClickHandler(DaoManager.getManager(),getContext());
 
         adapter = new FlexSpanAdapter(getContext());
+        adapter.setAnimationHolder(holderAnimation);
         GridLayoutManager layoutManager = new GridLayoutManager(getContext(),3);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(layoutManager);
         adapter.setOnItemClickListener(this);
         recyclerView.setAdapter(adapter);
 
+    }
+
+
+    private void initView(){
+        holderAnimation = new TrendingHolderAnimation();
     }
 
     private void initData(){
@@ -108,5 +116,8 @@ public class TrendingFragment extends BaseFragment implements FlexSpanAdapter.On
     public void onItemClick(RecyclerView.ViewHolder holder, int pos) {
 
         Log.e("Trending", ""+pos);
+
+        //控制点击动画
+        holderAnimation.setViewHolder(holder, pos);
     }
 }

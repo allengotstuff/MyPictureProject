@@ -15,6 +15,7 @@ import android.widget.TextView;
 
 import com.facebook.drawee.interfaces.DraweeController;
 import com.facebook.drawee.view.SimpleDraweeView;
+import com.pheth.hasee.stickerhero.Animation.HolderAnimation;
 import com.pheth.hasee.stickerhero.ClickHandler.ClickHandler;
 import com.pheth.hasee.stickerhero.R;
 import com.pheth.hasee.stickerhero.utils.CommonUtils;
@@ -30,7 +31,7 @@ import io.imoji.sdk.objects.Imoji;
 /**
  * Created by allengotstuff on 11/29/2016.
  */
-public class FlexSpanAdapter extends RecyclerView.Adapter<FlexSpanAdapter.MyHolder> {
+public class FlexSpanAdapter extends AnimationAdapter<FlexSpanAdapter.MyHolder> {
 
     public static final int TYPE_HEADER = 1;
     public static final int TYPE_BODY = 2;
@@ -41,9 +42,8 @@ public class FlexSpanAdapter extends RecyclerView.Adapter<FlexSpanAdapter.MyHold
     private static final String TAG = "FlexSpanAdapter";
     private ArrayList<Imoji> imojiList;
 
-    private ClickHandler clickHandler;
-
     private OnItemClickListener onItemClickListener;
+
 
     public FlexSpanAdapter(Context context){
         mContext= context;
@@ -76,10 +76,6 @@ public class FlexSpanAdapter extends RecyclerView.Adapter<FlexSpanAdapter.MyHold
         onItemClickListener = listener;
     }
 
-    public void setClickHandler(ClickHandler clickHandler){
-        this.clickHandler = clickHandler;
-    }
-
 
     @Override
     public int getItemViewType(int position) {
@@ -99,11 +95,7 @@ public class FlexSpanAdapter extends RecyclerView.Adapter<FlexSpanAdapter.MyHold
 
     @Override
     public void onBindViewHolder(final MyHolder holder, final int position) {
-
-
-        if(clickHandler!=null) {
-            clickHandler.prepareHolder(holder, position);
-        }
+        super.onBindViewHolder(holder,position);
 
         int viewType = getItemViewType(position);
         setDraweeParam(holder, viewType);
@@ -177,13 +169,13 @@ public class FlexSpanAdapter extends RecyclerView.Adapter<FlexSpanAdapter.MyHold
             super(itemView);
             detailImage = (SimpleDraweeView) itemView.findViewById(R.id.dv_detail_image);
             imojiTitle = (TextView)itemView.findViewById(R.id.title_tv);
-//            setupControllor(itemView);
+            setupControllor(itemView);
         }
 
-//        private void setupControllor(View itemView) {
-//            favorite_function = (ImageView) itemView.findViewById(R.id.iamgeview_1);
-//            share_function = (ImageView) itemView.findViewById(R.id.iamgeview_2);
-//        }
+        private void setupControllor(View itemView) {
+            favorite_function = (ImageView) itemView.findViewById(R.id.iamgeview_1);
+            share_function = (ImageView) itemView.findViewById(R.id.iamgeview_2);
+        }
     }
 
     public interface OnItemClickListener{
