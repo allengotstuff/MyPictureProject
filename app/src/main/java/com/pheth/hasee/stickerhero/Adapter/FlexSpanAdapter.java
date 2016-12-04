@@ -30,7 +30,7 @@ public class FlexSpanAdapter extends AnimationAdapter<FlexSpanAdapter.MyHolder> 
     public static final int TYPE_HEADER = 1;
     public static final int TYPE_BODY = 2;
 
-    private GridLayoutManager layoutManager;
+//    private GridLayoutManager layoutManager;
     private Context mContext;
     private HashSet<Integer> spanPositionSet;
     private static final String TAG = "FlexSpanAdapter";
@@ -45,7 +45,8 @@ public class FlexSpanAdapter extends AnimationAdapter<FlexSpanAdapter.MyHolder> 
     }
 
     public void setData(List list){
-        ArrayList<Imoji> temp = (ArrayList<Imoji>)list;
+        ArrayList<Imoji> temp =  (ArrayList<Imoji>)list;
+
         imojiList.clear();
         imojiList.addAll(temp);
         this.notifyDataSetChanged();

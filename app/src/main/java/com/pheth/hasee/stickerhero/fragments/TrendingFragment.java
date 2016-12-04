@@ -83,6 +83,11 @@ public class TrendingFragment extends BaseFragment implements FlexSpanAdapter.On
                 }else{
                     featureImojis.clear();
                 }
+
+                if(arrayList==null || arrayList.size()<=0)
+                    return;
+
+
                 featureImojis.addAll(arrayList);
 
                 Log.e(NAMETAG,"featureImojis size ："+featureImojis.size() );

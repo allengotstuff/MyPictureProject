@@ -111,7 +111,7 @@ public class BaseActvity extends AppCompatActivity {
 
         if (actionBar != null) {
             actionBar.setDisplayHomeAsUpEnabled(true);
-            actionBar.setHomeAsUpIndicator(R.drawable.menu_icon);
+            actionBar.setHomeAsUpIndicator(R.drawable.ic_menu);
 //            actionBar.setDisplayShowTitleEnabled(true);
 //            actionBar.setTitle("StickerHero");
         }

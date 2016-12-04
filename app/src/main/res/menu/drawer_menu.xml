@@ -3,19 +3,19 @@
     <group android:checkableBehavior="single">
         <item
             android:id="@+id/nav_home"
-            android:icon="@drawable/bobo2"
+            android:icon="@drawable/ic_home"
             android:checkable="true"
             android:title="@string/navigation_home"/>
 
         <item
             android:id="@+id/nav_favorite_imoji"
-            android:icon="@drawable/bobo2"
+            android:icon="@drawable/ic_love"
             android:checkable="false"
             android:title="@string/navigation_favitie_imoji"/>
 
         <item
             android:id="@+id/nav_about"
-            android:icon="@drawable/bobo2"
+            android:icon="@drawable/ic_info"
             android:checkable="false"
             android:title="@string/navigation_about"/>
     </group>

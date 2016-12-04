@@ -107,7 +107,7 @@ public class CategoryFragment extends BaseFragment implements CardViewAdapter.Re
             @Override
             public void onPostExecute(List arrayList) {
 
-                if(mDataList!=null || arrayList!=null || arrayList.size()==0) {
+                if(mDataList!=null || (arrayList!=null && arrayList.size()>0)) {
                     mDataList.clear();
                     mDataList.addAll(arrayList);
                 }

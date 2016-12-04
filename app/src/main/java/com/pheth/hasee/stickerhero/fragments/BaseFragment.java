@@ -7,6 +7,7 @@ import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 
 
 /**
@@ -43,10 +44,14 @@ public abstract class BaseFragment extends Fragment {
 //        return view;
 //    }
 
+
+
     @Override
     public void onDestroy() {
         super.onDestroy();
         clearReference();
+
+        Log.e("onDestroy", this.getClass().getName());
 
         if (updateReceiver != null)
             getContext().unregisterReceiver(updateReceiver);
