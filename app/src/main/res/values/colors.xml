@@ -17,6 +17,9 @@
     <color name="cyan">#00c6ff</color>
     <color name="blue">#8cb5ee</color>
 
+
+    <color name="separate_line">#808080</color>
+
     <array name="color_array">
         <item name="green">#7bc982</item>
         <item name="purple">#cd7ec1</item>

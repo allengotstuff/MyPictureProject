@@ -19,10 +19,13 @@ import android.view.ViewGroup;
 
 import com.pheth.hasee.stickerhero.Adapter.CardViewAdapter;
 import com.pheth.hasee.stickerhero.Activities.DetailViewActivity;
+import com.pheth.hasee.stickerhero.BaseData.Data.BaseData;
+import com.pheth.hasee.stickerhero.BaseData.Data.DataContainer;
 import com.pheth.hasee.stickerhero.R;
 import com.pheth.hasee.stickerhero.iemoji.ImojiNetwork.ImojiCategoryData;
 import com.pheth.hasee.stickerhero.iemoji.ImojiNetwork.ImojiDataContainer;
 import com.pheth.hasee.stickerhero.iemoji.ImojiNetwork.RequestInfo;
+import com.pheth.hasee.stickerhero.utils.DataConverter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -108,8 +111,12 @@ public class CategoryFragment extends BaseFragment implements CardViewAdapter.Re
             public void onPostExecute(List arrayList) {
 
                 if(mDataList!=null || (arrayList!=null && arrayList.size()>0)) {
+
+                    //转化数据
+                    List<BaseData> convertData = DataConverter.convertData(arrayList);
+
                     mDataList.clear();
-                    mDataList.addAll(arrayList);
+                    mDataList.addAll(convertData);
                 }
 
                 adapter.notifyDataSetChanged();
@@ -125,25 +132,25 @@ public class CategoryFragment extends BaseFragment implements CardViewAdapter.Re
         imojiCategoryData.startRequest(requestInfo);
     }
 
+
     @Override
-    public void onItemClick(CardViewAdapter.MyViewHolder holder, int pos, Imoji imoji, String categoryId ) {
+    public void onItemClick(CardViewAdapter.MyViewHolder holder, int pos, BaseData baseData, String categoryId ) {
         Log.e("onclikc",""+pos);
         Log.e("onclick_serachID",""+categoryId);
 
-//        ViewCompat.setTransitionName(holder.categoryImage, getString(R.string.transition_one));
-       Category category = (Category)mDataList.get(pos);
+//       Category category = (Category)mDataList.get(pos);
+        DataContainer container = (DataContainer)baseData;
 
         Intent intent = new Intent(getActivity(), DetailViewActivity.class);
-        intent.putExtra(DetailViewActivity.IMOJI,imoji);
+        intent.putExtra(DetailViewActivity.DATACONTAINER,container);
         intent.putExtra(DetailViewActivity.SEARCH_ID,categoryId);
-        intent.putExtra(DetailViewActivity.CATEGORY_TITLE,category.getTitle());
+        intent.putExtra(DetailViewActivity.CATEGORY_TITLE,container.getName());
 
         Pair<View, String> pairValue_1 = Pair.create((View)holder.categoryImage,getString(R.string.transition_drawee));
 
         ActivityOptionsCompat options =
                 ActivityOptionsCompat.makeSceneTransitionAnimation(getActivity(),
                         pairValue_1);
-//        startActivity(intent);
 
         ActivityCompat.startActivity(getActivity(), intent, options.toBundle());
     }

@@ -14,12 +14,14 @@ import android.widget.ImageView;
 import com.facebook.drawee.interfaces.DraweeController;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.pheth.hasee.stickerhero.Animation.AdapterSelector;
+import com.pheth.hasee.stickerhero.BaseData.Data.BaseData;
 import com.pheth.hasee.stickerhero.ClickHandler.ClickHandler;
 import com.pheth.hasee.stickerhero.R;
 import com.pheth.hasee.stickerhero.iemoji.ImojiNetwork.ImojiSearchListener;
 import com.pheth.hasee.stickerhero.iemoji.ImojiNetwork.ImojiSerachData;
 import com.pheth.hasee.stickerhero.iemoji.ImojiNetwork.RequestInfo;
 import com.pheth.hasee.stickerhero.utils.CommonUtils;
+import com.pheth.hasee.stickerhero.utils.DataConverter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -40,9 +42,9 @@ public class DetailViewAdapter extends AnimationAdapter<DetailViewAdapter.Detail
 
     private final static String TAG = "DetailViewAdapter";
 
-    private ArrayList<Imoji> mList;
+    private ArrayList<BaseData> mList;
 
-    private Imoji baseImoji;
+    private BaseData headData;
 
     private String search_id;
     private ImojiSerachData imojiSerachData;
@@ -60,15 +62,15 @@ public class DetailViewAdapter extends AnimationAdapter<DetailViewAdapter.Detail
     };
 
 
-    public DetailViewAdapter(Context context, Imoji imoji, String id) {
+    public DetailViewAdapter(Context context, BaseData imoji, String id) {
         mContext = context;
-        baseImoji = imoji;
+        headData = imoji;
         search_id = id;
 
         mList = new ArrayList<>();
 
-        if (baseImoji != null) {
-            mList.add(baseImoji);
+        if (headData != null) {
+            mList.add(headData);
         }
 
         //start requestiong emojis
@@ -85,7 +87,7 @@ public class DetailViewAdapter extends AnimationAdapter<DetailViewAdapter.Detail
         imojiSerachData.startRequest(info);
     }
 
-    public Imoji getPosImoji(int pos){
+    public BaseData getPosImoji(int pos){
 
         return mList.get(pos);
     }
@@ -118,14 +120,16 @@ public class DetailViewAdapter extends AnimationAdapter<DetailViewAdapter.Detail
 
         switch (viewType) {
             case TYPE_HEADER:
-                DraweeController controller = CommonUtils.getController(baseImoji);
-                holder.detailImage.setController(controller);
+//                DraweeController controller = CommonUtils.getController(headData);
+                holder.detailImage.setImageURI(headData.getOnlineThumbUrl());
                 holder.itemView.setOnClickListener(null);
                 break;
 
             case TYPE_BODY:
-                DraweeController controller_body = CommonUtils.getController(mList.get(position));
-                holder.detailImage.setController(controller_body);
+//                DraweeController controller_body = CommonUtils.getController(mList.get(position));
+//                holder.detailImage.setController(controller_body);
+                BaseData temp = mList.get(position);
+                holder.detailImage.setImageURI(temp.getOnlineThumbUrl());
 
                 holder.itemView.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -171,7 +175,9 @@ public class DetailViewAdapter extends AnimationAdapter<DetailViewAdapter.Detail
 
     @Override
     public void onPostExecute(List arrayList) {
-        mList.addAll(arrayList);
+
+        ArrayList<BaseData> convertData =( ArrayList<BaseData>) DataConverter.convertData(arrayList);
+        mList.addAll(convertData);
 
         handler.postDelayed(runnable,500);
     }

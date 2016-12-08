@@ -17,6 +17,7 @@ import android.widget.TextView;
 import com.facebook.drawee.backends.pipeline.Fresco;
 import com.facebook.drawee.interfaces.DraweeController;
 import com.facebook.drawee.view.SimpleDraweeView;
+import com.pheth.hasee.stickerhero.BaseData.Data.BaseData;
 import com.pheth.hasee.stickerhero.R;
 import com.pheth.hasee.stickerhero.iemoji.IemojiUtil;
 
@@ -34,13 +35,13 @@ import io.imoji.sdk.objects.RenderingOptions;
 public class CardViewAdapter extends RecyclerView.Adapter<CardViewAdapter.MyViewHolder> {
 
     private Context mContext;
-    private ArrayList<Category> categoryList;
+    private ArrayList<BaseData> dataList;
     private int[] colors;
     private RecyclerViewOnitemClickListener onitemClickListener;
 
     public CardViewAdapter(Context context, List categoryList) {
         mContext = context;
-        this.categoryList = (ArrayList<Category>) categoryList;
+        this.dataList = (ArrayList<BaseData>) categoryList;
         colors = mContext.getResources().getIntArray(R.array.color_array);
     }
 
@@ -58,12 +59,12 @@ public class CardViewAdapter extends RecyclerView.Adapter<CardViewAdapter.MyView
     @Override
     public void onBindViewHolder(final MyViewHolder holder, final int position) {
 
-        final Category tempCategory = categoryList.get(position);
-        final Imoji imoji = tempCategory.getPreviewImoji();
-        RenderingOptions options = IemojiUtil.getRenderOption(imoji, RenderingOptions.Size.Thumbnail);
-        final Uri uri = imoji.urlForRenderingOption(options);
+        final BaseData baseData = dataList.get(position);
+//        final Imoji imoji = tempCategory.getPreviewImoji();
+//        RenderingOptions options = IemojiUtil.getRenderOption(imoji, RenderingOptions.Size.Thumbnail);
+//        final Uri uri = imoji.urlForRenderingOption(options);
         DraweeController controller = Fresco.newDraweeControllerBuilder()
-                .setUri(uri)
+                .setUri(baseData.getOnlineThumbUrl())
                 .setAutoPlayAnimations(true)
                 .build();
 
@@ -72,7 +73,7 @@ public class CardViewAdapter extends RecyclerView.Adapter<CardViewAdapter.MyView
         int colorCode = colors[position%5];
         holder.view_underBar.setBackgroundColor(colorCode);
 
-        String title = categoryList.get(position).getTitle();
+        String title = baseData.getName();
         if(!TextUtils.isEmpty(title)) {
             holder.view_underBar.setText("#"+title);
 //            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
@@ -88,14 +89,14 @@ public class CardViewAdapter extends RecyclerView.Adapter<CardViewAdapter.MyView
         holder.cardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                onitemClickListener.onItemClick(holder, position,imoji,tempCategory.getIdentifier());
+                onitemClickListener.onItemClick(holder, position,baseData,baseData.getIdentifier());
             }
         });
     }
 
     @Override
     public int getItemCount() {
-        return categoryList.size();
+        return dataList.size();
     }
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
@@ -114,6 +115,6 @@ public class CardViewAdapter extends RecyclerView.Adapter<CardViewAdapter.MyView
 
 
      public interface RecyclerViewOnitemClickListener{
-        void onItemClick(MyViewHolder holder,int pos,Imoji imoji,String categoryID);
+        void onItemClick(MyViewHolder holder,int pos,BaseData baseData,String categoryID);
     }
 }

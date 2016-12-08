@@ -14,7 +14,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_marginBottom="16dp"
-        android:text="http://blog.csdn.net/lmj623565791"/>
+        android:text="Making a quantum leap"/>
 
     <TextView
         android:id="@+id/id_username"

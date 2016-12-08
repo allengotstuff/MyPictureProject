@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.pheth.hasee.stickerhero.BaseData.Data.BaseData;
 import com.pheth.hasee.stickerhero.R;
 
 import io.imoji.sdk.objects.Imoji;
@@ -22,7 +23,7 @@ public class BaseSecondaryActivity extends AppCompatActivity {
     protected TextView title_textview;
 
     protected String search_id;
-    protected Imoji baseImoji;
+    protected BaseData baseData;
 
     protected String category_title;
 

@@ -13,6 +13,7 @@ import com.facebook.drawee.drawable.ScalingUtils;
 import com.facebook.drawee.view.DraweeTransition;
 import com.pheth.hasee.stickerhero.Adapter.DetailViewAdapter;
 import com.pheth.hasee.stickerhero.Animation.HolderAnimation;
+import com.pheth.hasee.stickerhero.BaseData.Data.BaseData;
 import com.pheth.hasee.stickerhero.ClickHandler.ClickHandler;
 import com.pheth.hasee.stickerhero.ClickHandler.DetailClickHandler;
 import com.pheth.hasee.stickerhero.GreenDaoManager.DaoManager;
@@ -27,7 +28,7 @@ import io.imoji.sdk.objects.Imoji;
 public class DetailViewActivity extends BaseSecondaryActivity implements DetailViewAdapter.OnHolderClickListener{
 
     public static final String URL = "url";
-    public static final String IMOJI = "imoji";
+    public static final String DATACONTAINER = "imoji";
     public static final String SEARCH_ID = "search_id";
     public static final String CATEGORY_TITLE = "category_title";
 
@@ -68,7 +69,7 @@ public class DetailViewActivity extends BaseSecondaryActivity implements DetailV
         clickHandler = new DetailClickHandler(DaoManager.getManager(),getBaseContext());
 
         mContext = getBaseContext();
-        baseImoji = getIntent().getParcelableExtra(IMOJI);
+        baseData = getIntent().getParcelableExtra(DATACONTAINER);
         search_id = getIntent().getStringExtra(SEARCH_ID);
         category_title = getIntent().getStringExtra(CATEGORY_TITLE);
 
@@ -80,7 +81,7 @@ public class DetailViewActivity extends BaseSecondaryActivity implements DetailV
 
     private void setRecyclerView(){
 
-        adapter = new DetailViewAdapter(getApplicationContext(),baseImoji,search_id);
+        adapter = new DetailViewAdapter(getApplicationContext(),baseData,search_id);
         adapter.setOnHolderClickListener(this);
         adapter.setAnimationHolder(holderAnimation);
         adapter.setClickHandler(clickHandler);
@@ -119,7 +120,7 @@ public class DetailViewActivity extends BaseSecondaryActivity implements DetailV
     protected void onDestroy() {
         super.onDestroy();
 
-        baseImoji = null;
+        baseData = null;
         adapter.onRequestCancle();
     }
 
@@ -127,12 +128,14 @@ public class DetailViewActivity extends BaseSecondaryActivity implements DetailV
     public void onHolderClick(int pos, RecyclerView.ViewHolder holder) {
 
         Log.e(TAG, "onclick"+pos );
-        Imoji imoji = adapter.getPosImoji(pos);
+
 
         //控制点击动画
         holderAnimation.setViewHolder(holder, pos);
 
-        //控制点击的操作
+        //控制点击的操
+        BaseData imoji = adapter.getPosImoji(pos);
+
         clickHandler.setViewHolder(holder,pos);
         clickHandler.setData(imoji);
 

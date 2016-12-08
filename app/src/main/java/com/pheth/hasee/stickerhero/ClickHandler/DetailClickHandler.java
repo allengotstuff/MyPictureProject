@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.pheth.hasee.stickerhero.Adapter.DetailViewAdapter;
+import com.pheth.hasee.stickerhero.BaseData.Data.BaseData;
 import com.pheth.hasee.stickerhero.GreenDaoManager.DaoManager;
 import com.pheth.hasee.stickerhero.R;
 import com.pheth.hasee.stickerhero.greendao.Favorite;
@@ -23,9 +24,9 @@ import io.imoji.sdk.objects.RenderingOptions;
 /**
  * Created by allengotstuff on 11/21/2016.
  */
-public class DetailClickHandler implements ClickHandler<DetailViewAdapter.DetailHolder, Imoji>, View.OnClickListener {
+public class DetailClickHandler implements ClickHandler<DetailViewAdapter.DetailHolder, BaseData>, View.OnClickListener {
 
-    private Imoji dataImoji;
+    private BaseData dataImoji;
     private DetailViewAdapter.DetailHolder myHolder;
     private DaoManager daoManager;
     private Context mContext;
@@ -69,12 +70,12 @@ public class DetailClickHandler implements ClickHandler<DetailViewAdapter.Detail
     }
 
     @Override
-    public void setData(Imoji data) {
+    public void setData(BaseData data) {
         dataImoji = data;
     }
 
     @Override
-    public Imoji getData() {
+    public BaseData getData() {
         return dataImoji;
     }
 
@@ -115,19 +116,19 @@ public class DetailClickHandler implements ClickHandler<DetailViewAdapter.Detail
             throw new RuntimeException("ClickHandler: dataImoji can not be null");
         }
 
-        RenderingOptions options_thumb = IemojiUtil.getRenderOption(dataImoji, RenderingOptions.Size.Thumbnail);
-        Uri uri_thumb = dataImoji.urlForRenderingOption(options_thumb);
-
-        RenderingOptions option_full = IemojiUtil.getRenderOption(dataImoji, RenderingOptions.Size.Resolution320);
-        Uri uri_full = dataImoji.urlForRenderingOption(option_full);
+//        RenderingOptions options_thumb = IemojiUtil.getRenderOption(dataImoji, RenderingOptions.Size.Thumbnail);
+//        Uri uri_thumb = dataImoji.urlForRenderingOption(options_thumb);
+//
+//        RenderingOptions option_full = IemojiUtil.getRenderOption(dataImoji, RenderingOptions.Size.Resolution320);
+//        Uri uri_full = dataImoji.urlForRenderingOption(option_full);
 
         Favorite myFavorite = new Favorite();
         myFavorite.setIdentifier(dataImoji.getIdentifier());
         myFavorite.setAdd_date(Calendar.getInstance().getTime());
-        myFavorite.setUrl_thumb(uri_thumb.toString());
-        myFavorite.setUrl_full(uri_full.toString());
+        myFavorite.setUrl_thumb(dataImoji.getOnlineThumbUrl());
+        myFavorite.setUrl_full(dataImoji.getOnlineFullUrl());
 
-        String name = dataImoji.getTags().get(0);
+        String name = dataImoji.getName();
         if(!TextUtils.isEmpty(name)){
             myFavorite.setName(name);
         }

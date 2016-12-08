@@ -41,6 +41,9 @@ public class ImojiSerachData implements ImojiBaseData{
         singleClickApiTask = new ApiTask.WrappedAsyncTask<ImojisResponse>() {
             @Override
             protected void onPostExecute(ImojisResponse imojisResponse) {
+                if(imojisResponse==null || imojisResponse.getImojis().size()<=0)
+                    return;
+
                 ArrayList<Imoji> newResults = new ArrayList<Imoji>();
                 for (Imoji imoji : imojisResponse.getImojis()) {
                     newResults.add(imoji);

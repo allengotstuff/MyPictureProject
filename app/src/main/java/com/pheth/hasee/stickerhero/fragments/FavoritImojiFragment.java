@@ -30,7 +30,6 @@ public class FavoritImojiFragment extends BaseFragment {
     private DaoManager daoManager;
     private List<Favorite> favoriteImojiList;
 
-//    private
 
 
     @Override

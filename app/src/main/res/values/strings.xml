@@ -26,4 +26,14 @@
     <string name="navigation_home">Home</string>
     <string name="navigation_favitie_imoji">Favorite Stickers</string>
     <string name="navigation_about">About</string>
+
+    <!--social sharing platform-->
+    <string name="facebook">Facebook</string>
+    <string name="facebook_messenger">Messenger</string>
+    <string name="share_sms">SMS</string>
+    <string name="whatsapp_share">WhatsApp</string>
+    <string name="instagram_share">Instagram</string>
+    <string name="twitter">Twitter</string>
+    <string name="snapchat">SnapChat</string>
+    <string name="more_option">More Option</string>
 </resources>

@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+   <FrameLayout
+       android:layout_width="match_parent"
+       android:layout_height="wrap_content"
+       android:minHeight="106dp"
+       android:layout_marginTop="20dp"
+       android:layout_marginBottom="20dp"
+       android:layout_marginLeft="60dp"
+       android:layout_marginRight="60dp">
+
+       <com.facebook.drawee.view.SimpleDraweeView
+           xmlns:fresco="http://schemas.android.com/apk/res-auto"
+           android:id="@+id/iv_shared_sticker"
+           fresco:progressBarImage="@drawable/foto_gif_loading_icon"
+           fresco:progressBarImageScaleType="center"
+           android:layout_gravity="center"
+           android:layout_width="80dp"
+           android:layout_height="80dp"
+           android:adjustViewBounds="true"
+           fresco:viewAspectRatio="1.33" />
+   </FrameLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginLeft="40dp"
+        android:layout_marginRight="40dp"
+        android:background="@color/separate_line"/>
+
+    <GridLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="20dp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        android:layout_gravity="center_horizontal"
+        android:columnCount="4"
+        android:rowCount="4"
+        android:orientation="horizontal">
+
+        <com.facebook.drawee.view.DraweeView
+            android:id="@+id/dv_fb_messenger"
+            android:layout_width="50dp"
+            android:layout_gravity="fill"
+            android:layout_margin="15dp"
+            android:layout_height="50dp"
+            android:src="@drawable/fm"/>
+        <com.facebook.drawee.view.DraweeView
+            android:id="@+id/dv_sms"
+            android:layout_gravity="fill"
+            android:layout_margin="15dp"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:src="@drawable/sms"/>
+        <com.facebook.drawee.view.DraweeView
+            android:id="@+id/dv_whatsapp"
+            android:layout_gravity="fill"
+
+            android:layout_margin="15dp"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:src="@drawable/whatsapp"/>
+        <com.facebook.drawee.view.DraweeView
+            android:id="@+id/drawable_intragram"
+            android:layout_gravity="fill"
+            android:layout_margin="15dp"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:src="@drawable/instagram"/>
+
+
+        <TextView
+            android:layout_width="80dp"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="@string/facebook_messenger"/>
+
+        <TextView
+            android:layout_width="80dp"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="@string/share_sms"/>
+        <TextView
+            android:layout_width="80dp"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="@string/whatsapp_share"/>
+
+        <TextView
+            android:layout_width="80dp"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="@string/instagram_share"/>
+
+        <com.facebook.drawee.view.DraweeView
+            android:id="@+id/dv_facebook"
+            android:layout_gravity="fill"
+
+            android:layout_margin="15dp"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:src="@drawable/facebook"/>
+
+        <com.facebook.drawee.view.DraweeView
+            android:id="@+id/dv_twitter"
+            android:layout_gravity="fill"
+
+            android:layout_margin="15dp"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:src="@drawable/twitter"/>
+
+        <com.facebook.drawee.view.DraweeView
+            android:id="@+id/dv_snapchat"
+            android:layout_gravity="fill"
+
+            android:layout_margin="15dp"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:src="@drawable/snapchat"/>
+
+        <com.facebook.drawee.view.DraweeView
+            android:id="@+id/dv_more"
+            android:layout_gravity="fill"
+            android:layout_margin="15dp"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:src="@drawable/more"/>
+
+        <TextView
+            android:layout_width="80dp"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="@string/facebook"/>
+        <TextView
+            android:layout_width="80dp"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="@string/twitter"/>
+        <TextView
+            android:layout_width="80dp"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="@string/snapchat"/>
+
+        <TextView
+            android:layout_width="80dp"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="@string/more_option"/>
+    </GridLayout>
+
+</LinearLayout>
