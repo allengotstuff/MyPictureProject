@@ -1,0 +1,2 @@
+# MyPictureProject
+setting up projects
