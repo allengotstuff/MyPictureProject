@@ -4,7 +4,10 @@ import android.content.Context;
 import android.text.TextUtils;
 import android.util.Log;
 
+import com.pheth.hasee.stickerhero.BaseData.Data.BaseData;
 import com.pheth.hasee.stickerhero.MyApplication;
+import com.pheth.hasee.stickerhero.utils.DataConverter;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -45,12 +48,14 @@ public class ImojiSerachData implements ImojiBaseData{
                     return;
 
                 ArrayList<Imoji> newResults = new ArrayList<Imoji>();
-                for (Imoji imoji : imojisResponse.getImojis()) {
-                    newResults.add(imoji);
-                }
+                newResults.addAll(imojisResponse.getImojis());
+
+
+                //转化数据
+                List<BaseData> convertData = DataConverter.convertData(newResults);
 
                 //传出数据
-                ImojiSerachData.this.onPostExecute(newResults);
+                ImojiSerachData.this.onPostExecute(convertData);
 
             }
         };

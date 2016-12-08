@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 
 import com.pheth.hasee.stickerhero.Adapter.FlexSpanAdapter;
 import com.pheth.hasee.stickerhero.Animation.TrendingHolderAnimation;
+import com.pheth.hasee.stickerhero.BaseData.Data.BaseData;
 import com.pheth.hasee.stickerhero.ClickHandler.ClickHandler;
 import com.pheth.hasee.stickerhero.ClickHandler.DetailClickHandler;
 import com.pheth.hasee.stickerhero.GreenDaoManager.DaoManager;
@@ -33,7 +34,7 @@ public class TrendingFragment extends BaseFragment implements FlexSpanAdapter.On
 
     private FlexSpanAdapter adapter;
 
-    private ClickHandler clickHandler;
+//    private ClickHandler clickHandler;
 
     private TrendingHolderAnimation holderAnimation;
 
@@ -55,7 +56,7 @@ public class TrendingFragment extends BaseFragment implements FlexSpanAdapter.On
 
     private void setupRecyclerView(RecyclerView recyclerView){
 
-        clickHandler = new DetailClickHandler(DaoManager.getManager(),getContext());
+//        clickHandler = new DetailClickHandler(DaoManager.getManager(),getContext());
 
         adapter = new FlexSpanAdapter(getContext());
         adapter.setAnimationHolder(holderAnimation);
@@ -78,14 +79,15 @@ public class TrendingFragment extends BaseFragment implements FlexSpanAdapter.On
             @Override
             public void onPostExecute(List arrayList) {
 
+                if(arrayList==null || arrayList.size()<=0)
+                    return;
+
+
                 if(featureImojis==null){
-                    featureImojis = new ArrayList<Imoji>();
+                    featureImojis = new ArrayList<>();
                 }else{
                     featureImojis.clear();
                 }
-
-                if(arrayList==null || arrayList.size()<=0)
-                    return;
 
 
                 featureImojis.addAll(arrayList);

@@ -4,7 +4,9 @@ import android.content.Context;
 import android.support.annotation.Nullable;
 import android.util.Log;
 
+import com.pheth.hasee.stickerhero.BaseData.Data.BaseData;
 import com.pheth.hasee.stickerhero.MyApplication;
+import com.pheth.hasee.stickerhero.utils.DataConverter;
 
 import java.util.List;
 
@@ -47,14 +49,18 @@ public abstract class ImojiData implements ImojiBaseData {
                 protected void onPostExecute(ImojisResponse imojisResponse) {
                     //Bind the results to an adapter of sorts
 
-                    //如果键盘界面和Imoji Fragment申请的话，防止重复添加数据
-                    imojiList.clear();
-
                     List<Imoji> tempList = imojisResponse.getImojis();
+                    if(tempList==null || tempList.size()<=0)
+                        return;
 
+
+                    imojiList.clear();
                     imojiList.addAll(tempList);
 
-                    ImojiData.this.onPostExecute(imojiList);
+                    //转化数据
+                    List<BaseData> convertData = DataConverter.convertData(imojiList);
+
+                    ImojiData.this.onPostExecute(convertData);
                 }
             };
 

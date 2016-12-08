@@ -3,7 +3,9 @@ package com.pheth.hasee.stickerhero.iemoji.ImojiNetwork;
 import android.content.Context;
 import android.util.Log;
 
+import com.pheth.hasee.stickerhero.BaseData.Data.BaseData;
 import com.pheth.hasee.stickerhero.MyApplication;
+import com.pheth.hasee.stickerhero.utils.DataConverter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -79,7 +81,11 @@ public abstract class ImojiCategoryData implements ImojiBaseData {
                         categoryList.add(oneRequestList.remove(0));
                     }
 
-                    ImojiCategoryData.this.onPostExecute(categoryList);
+                    //转化数据
+                    List<BaseData> convertData = DataConverter.convertData(categoryList);
+
+
+                    ImojiCategoryData.this.onPostExecute(convertData);
                 }
             };
 
@@ -122,7 +128,10 @@ public abstract class ImojiCategoryData implements ImojiBaseData {
                 categoryList.add(oneRequestList.remove(0));
             }
 
-            ImojiCategoryData.this.onPostExecute(categoryList);
+            //转化数据
+            List<BaseData> convertData = DataConverter.convertData(categoryList);
+
+            ImojiCategoryData.this.onPostExecute(convertData);
 
             Log.e(TAG,"onRefresh: refreshing data local");
             return true;

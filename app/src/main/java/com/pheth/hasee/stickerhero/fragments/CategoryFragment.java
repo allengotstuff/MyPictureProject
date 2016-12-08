@@ -112,11 +112,8 @@ public class CategoryFragment extends BaseFragment implements CardViewAdapter.Re
 
                 if(mDataList!=null || (arrayList!=null && arrayList.size()>0)) {
 
-                    //转化数据
-                    List<BaseData> convertData = DataConverter.convertData(arrayList);
-
                     mDataList.clear();
-                    mDataList.addAll(convertData);
+                    mDataList.addAll(arrayList);
                 }
 
                 adapter.notifyDataSetChanged();

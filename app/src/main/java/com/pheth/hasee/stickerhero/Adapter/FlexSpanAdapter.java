@@ -10,8 +10,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.facebook.drawee.backends.pipeline.Fresco;
 import com.facebook.drawee.interfaces.DraweeController;
 import com.facebook.drawee.view.SimpleDraweeView;
+import com.pheth.hasee.stickerhero.BaseData.Data.BaseData;
 import com.pheth.hasee.stickerhero.R;
 import com.pheth.hasee.stickerhero.utils.CommonUtils;
 
@@ -33,7 +36,7 @@ public class FlexSpanAdapter extends AnimationAdapter<FlexSpanAdapter.MyHolder> 
     private Context mContext;
     private HashSet<Integer> spanPositionSet;
     private static final String TAG = "FlexSpanAdapter";
-    private ArrayList<Imoji> imojiList;
+    private ArrayList<BaseData> imojiList;
 
     private OnItemClickListener onItemClickListener;
 
@@ -44,7 +47,7 @@ public class FlexSpanAdapter extends AnimationAdapter<FlexSpanAdapter.MyHolder> 
     }
 
     public void setData(List list){
-        ArrayList<Imoji> temp =  (ArrayList<Imoji>)list;
+        ArrayList<BaseData> temp =  (ArrayList<BaseData>)list;
 
         imojiList.clear();
         imojiList.addAll(temp);
@@ -97,7 +100,7 @@ public class FlexSpanAdapter extends AnimationAdapter<FlexSpanAdapter.MyHolder> 
 
         switch (viewType) {
             case TYPE_HEADER:
-                Imoji posImoji = imojiList.get(position);
+                BaseData posImoji = imojiList.get(position);
 //                DraweeController controller = CommonUtils.getController(baseImoji);
 //                holder.detailImage.setController(controller);
                 holder.itemView.setOnClickListener(null);
@@ -105,11 +108,16 @@ public class FlexSpanAdapter extends AnimationAdapter<FlexSpanAdapter.MyHolder> 
 
             case TYPE_BODY:
 
-                Imoji imoji = imojiList.get(position);
-                DraweeController controller_body = CommonUtils.getController(imoji);
-                holder.detailImage.setController(controller_body);
+                BaseData imoji = imojiList.get(position);
 
-                String title = imoji.getTags().get(0);
+                DraweeController controller = Fresco.newDraweeControllerBuilder()
+                        .setUri(imoji.getOnlineThumbUrl())
+                        .setAutoPlayAnimations(true)
+                        .build();
+
+                holder.detailImage.setController(controller);
+
+                String title = imoji.getName();
                 if(!TextUtils.isEmpty(title)) {
                     holder.imojiTitle.setText(title);
                 }

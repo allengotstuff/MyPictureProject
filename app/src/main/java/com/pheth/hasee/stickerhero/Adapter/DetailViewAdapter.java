@@ -170,14 +170,12 @@ public class DetailViewAdapter extends AnimationAdapter<DetailViewAdapter.Detail
                 break;
         }
 //        tempDrawee.setLayoutParams(params_drawee);
-
     }
 
     @Override
     public void onPostExecute(List arrayList) {
 
-        ArrayList<BaseData> convertData =( ArrayList<BaseData>) DataConverter.convertData(arrayList);
-        mList.addAll(convertData);
+        mList.addAll(arrayList);
 
         handler.postDelayed(runnable,500);
     }
