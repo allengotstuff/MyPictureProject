@@ -34,8 +34,8 @@ public class DataConverter {
             ImojiContainerFactory factory = new ImojiContainerFactory();
             Iterator iterator = list.iterator();
             while(iterator.hasNext()){
-                Imoji imoji = (Imoji) iterator.next();
 
+                Imoji imoji = (Imoji) iterator.next();
                 result.add(factory.produce(imoji));
             }
         }

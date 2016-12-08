@@ -1,4 +1,5 @@
 package com.pheth.hasee.stickerhero.fragments;
+
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.GridLayoutManager;
@@ -29,7 +30,7 @@ import io.imoji.sdk.objects.Imoji;
 public class TrendingFragment extends BaseFragment implements FlexSpanAdapter.OnItemClickListener {
 
     private ImojiData imojiData;
-    private List featureImojis;
+    private List<BaseData> featureImojis;
     public static final String NAMETAG = "trending_fragment";
 
     private FlexSpanAdapter adapter;
@@ -38,7 +39,7 @@ public class TrendingFragment extends BaseFragment implements FlexSpanAdapter.On
 
     private TrendingHolderAnimation holderAnimation;
 
-    public TrendingFragment(){
+    public TrendingFragment() {
     }
 
 
@@ -54,13 +55,14 @@ public class TrendingFragment extends BaseFragment implements FlexSpanAdapter.On
     }
 
 
-    private void setupRecyclerView(RecyclerView recyclerView){
+    private void setupRecyclerView(RecyclerView recyclerView) {
 
 //        clickHandler = new DetailClickHandler(DaoManager.getManager(),getContext());
+        featureImojis = new ArrayList<>();
+        adapter = new FlexSpanAdapter(getContext(), featureImojis);
 
-        adapter = new FlexSpanAdapter(getContext());
         adapter.setAnimationHolder(holderAnimation);
-        GridLayoutManager layoutManager = new GridLayoutManager(getContext(),3);
+        GridLayoutManager layoutManager = new GridLayoutManager(getContext(), 3);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(layoutManager);
         adapter.setOnItemClickListener(this);
@@ -69,31 +71,25 @@ public class TrendingFragment extends BaseFragment implements FlexSpanAdapter.On
     }
 
 
-    private void initView(){
+    private void initView() {
         holderAnimation = new TrendingHolderAnimation();
     }
 
-    private void initData(){
+    private void initData() {
 
         imojiData = new ImojiData(getContext(), ImojiDataContainer.getFeatureImojiListList()) {
             @Override
             public void onPostExecute(List arrayList) {
 
-                if(arrayList==null || arrayList.size()<=0)
+                if (arrayList == null || arrayList.size() <= 0)
                     return;
 
-
-                if(featureImojis==null){
-                    featureImojis = new ArrayList<>();
-                }else{
-                    featureImojis.clear();
-                }
-
-
+                featureImojis.clear();
                 featureImojis.addAll(arrayList);
 
-                Log.e(NAMETAG,"featureImojis size ："+featureImojis.size() );
-                adapter.setData(featureImojis);
+                adapter.notifyDataSetChanged();
+                Log.e(NAMETAG, "featureImojis size ：" + featureImojis.size());
+
             }
         };
         imojiData.startRequest(null);
@@ -118,7 +114,7 @@ public class TrendingFragment extends BaseFragment implements FlexSpanAdapter.On
     @Override
     public void onItemClick(RecyclerView.ViewHolder holder, int pos) {
 
-        Log.e("Trending", ""+pos);
+        Log.e("Trending", "" + pos);
 
         //控制点击动画
         holderAnimation.setViewHolder(holder, pos);

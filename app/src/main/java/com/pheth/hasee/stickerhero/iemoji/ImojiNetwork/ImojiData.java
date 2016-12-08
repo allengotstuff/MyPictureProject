@@ -53,14 +53,13 @@ public abstract class ImojiData implements ImojiBaseData {
                     if(tempList==null || tempList.size()<=0)
                         return;
 
+                    //转化数据
+                    List<BaseData> convertData = DataConverter.convertData(tempList);
 
                     imojiList.clear();
-                    imojiList.addAll(tempList);
+                    imojiList.addAll(convertData);
 
-                    //转化数据
-                    List<BaseData> convertData = DataConverter.convertData(imojiList);
-
-                    ImojiData.this.onPostExecute(convertData);
+                    ImojiData.this.onPostExecute(imojiList);
                 }
             };
 

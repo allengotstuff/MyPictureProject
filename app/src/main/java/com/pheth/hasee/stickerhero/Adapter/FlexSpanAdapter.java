@@ -32,7 +32,7 @@ public class FlexSpanAdapter extends AnimationAdapter<FlexSpanAdapter.MyHolder> 
     public static final int TYPE_HEADER = 1;
     public static final int TYPE_BODY = 2;
 
-//    private GridLayoutManager layoutManager;
+    //    private GridLayoutManager layoutManager;
     private Context mContext;
     private HashSet<Integer> spanPositionSet;
     private static final String TAG = "FlexSpanAdapter";
@@ -41,18 +41,18 @@ public class FlexSpanAdapter extends AnimationAdapter<FlexSpanAdapter.MyHolder> 
     private OnItemClickListener onItemClickListener;
 
 
-    public FlexSpanAdapter(Context context){
-        mContext= context;
-        imojiList = new ArrayList<>();
+    public FlexSpanAdapter(Context context, List data) {
+        mContext = context;
+        imojiList = (ArrayList<BaseData>) data;
     }
 
-    public void setData(List list){
-        ArrayList<BaseData> temp =  (ArrayList<BaseData>)list;
-
-        imojiList.clear();
-        imojiList.addAll(temp);
-        this.notifyDataSetChanged();
-    }
+//    public void setData(List list){
+//        ArrayList<BaseData> temp =  (ArrayList<BaseData>)list;
+//
+//        imojiList.clear();
+//        imojiList.addAll(temp);
+//        this.notifyDataSetChanged();
+//    }
 
 //    public void setLayoutManager(GridLayoutManager manager, final HashSet<Integer> fullSpanCount){
 //        layoutManager = manager;
@@ -70,7 +70,7 @@ public class FlexSpanAdapter extends AnimationAdapter<FlexSpanAdapter.MyHolder> 
 //        });
 //    }
 
-    public void setOnItemClickListener(OnItemClickListener listener){
+    public void setOnItemClickListener(OnItemClickListener listener) {
         onItemClickListener = listener;
     }
 
@@ -78,9 +78,9 @@ public class FlexSpanAdapter extends AnimationAdapter<FlexSpanAdapter.MyHolder> 
     @Override
     public int getItemViewType(int position) {
 
-        if(spanPositionSet!=null && spanPositionSet.contains(position)){
-            return TYPE_HEADER;
-        }
+//        if(spanPositionSet!=null && spanPositionSet.contains(position)){
+//            return TYPE_HEADER;
+//        }
         return TYPE_BODY;
     }
 
@@ -93,7 +93,7 @@ public class FlexSpanAdapter extends AnimationAdapter<FlexSpanAdapter.MyHolder> 
 
     @Override
     public void onBindViewHolder(final MyHolder holder, final int position) {
-        super.onBindViewHolder(holder,position);
+        super.onBindViewHolder(holder, position);
 
         int viewType = getItemViewType(position);
         setDraweeParam(holder, viewType);
@@ -118,9 +118,9 @@ public class FlexSpanAdapter extends AnimationAdapter<FlexSpanAdapter.MyHolder> 
                 holder.detailImage.setController(controller);
 
                 String title = imoji.getName();
-                if(!TextUtils.isEmpty(title)) {
-                    holder.imojiTitle.setText(title);
-                }
+//                if(!TextUtils.isEmpty(title)) {
+                holder.imojiTitle.setText(title);
+//                }
                 holder.itemView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -164,12 +164,12 @@ public class FlexSpanAdapter extends AnimationAdapter<FlexSpanAdapter.MyHolder> 
         public SimpleDraweeView detailImage;
         public TextView imojiTitle;
 
-        public ImageView favorite_function,share_function;
+        public ImageView favorite_function, share_function;
 
         public MyHolder(View itemView) {
             super(itemView);
             detailImage = (SimpleDraweeView) itemView.findViewById(R.id.dv_detail_image);
-            imojiTitle = (TextView)itemView.findViewById(R.id.title_tv);
+            imojiTitle = (TextView) itemView.findViewById(R.id.title_tv);
             setupControllor(itemView);
         }
 
@@ -179,7 +179,7 @@ public class FlexSpanAdapter extends AnimationAdapter<FlexSpanAdapter.MyHolder> 
         }
     }
 
-    public interface OnItemClickListener{
+    public interface OnItemClickListener {
         void onItemClick(RecyclerView.ViewHolder holder, int pos);
     }
 }

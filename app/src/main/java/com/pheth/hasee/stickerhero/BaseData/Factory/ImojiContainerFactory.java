@@ -24,9 +24,10 @@ public class ImojiContainerFactory implements BaseFactory<BaseData, Imoji> {
         DataContainer container = new DataContainer();
 
         //set name
-        String name = imoji.getTags().get(0);
-        if (!TextUtils.isEmpty(name))
+        if(imoji.getTags()!=null && imoji.getTags().size()>0) {
+            String name = imoji.getTags().get(0);
             container.setName(name);
+        }
 
         //set search id
         container.setIdentifier(imoji.getIdentifier());

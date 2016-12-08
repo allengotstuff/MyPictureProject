@@ -4,12 +4,13 @@ import android.content.Context;
 import android.util.Log;
 
 import com.pheth.hasee.stickerhero.BaseData.Data.BaseData;
+import com.pheth.hasee.stickerhero.BaseData.Factory.CategoryContainerFactory;
 import com.pheth.hasee.stickerhero.MyApplication;
 import com.pheth.hasee.stickerhero.utils.DataConverter;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
+
 
 import io.imoji.sdk.ApiTask;
 import io.imoji.sdk.ImojiSDK;
@@ -68,10 +69,12 @@ public abstract class ImojiCategoryData implements ImojiBaseData {
                 protected void onPostExecute(CategoriesResponse imojisResponse) {
                     //Bind the results to an adapter of sorts
 
+                    //转化数据
+                    List<BaseData> convertData = DataConverter.convertData(imojisResponse.getCategories());
 
                     //记录下来每次刷新之后的数据
                     oneRequestList.clear();
-                    oneRequestList.addAll(imojisResponse.getCategories());
+                    oneRequestList.addAll(convertData);
 
                     //如果键盘界面和Imoji Fragment申请的话，防止重复添加数据
                     categoryList.clear();
@@ -81,11 +84,7 @@ public abstract class ImojiCategoryData implements ImojiBaseData {
                         categoryList.add(oneRequestList.remove(0));
                     }
 
-                    //转化数据
-                    List<BaseData> convertData = DataConverter.convertData(categoryList);
-
-
-                    ImojiCategoryData.this.onPostExecute(convertData);
+                    ImojiCategoryData.this.onPostExecute(categoryList);
                 }
             };
 
@@ -122,16 +121,13 @@ public abstract class ImojiCategoryData implements ImojiBaseData {
     }
 
     private boolean isFromLocal(){
-        if(oneRequestList.size()>22){
+        if(oneRequestList!=null && oneRequestList.size()>22){
 
             for (int i = 0; i < 21; i++) {
                 categoryList.add(oneRequestList.remove(0));
             }
 
-            //转化数据
-            List<BaseData> convertData = DataConverter.convertData(categoryList);
-
-            ImojiCategoryData.this.onPostExecute(convertData);
+            ImojiCategoryData.this.onPostExecute(categoryList);
 
             Log.e(TAG,"onRefresh: refreshing data local");
             return true;
