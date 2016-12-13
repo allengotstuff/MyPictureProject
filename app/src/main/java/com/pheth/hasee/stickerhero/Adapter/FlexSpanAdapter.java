@@ -118,15 +118,17 @@ public class FlexSpanAdapter extends AnimationAdapter<FlexSpanAdapter.MyHolder> 
                 holder.detailImage.setController(controller);
 
                 String title = imoji.getName();
-//                if(!TextUtils.isEmpty(title)) {
+
                 holder.imojiTitle.setText(title);
-//                }
-                holder.itemView.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        onItemClickListener.onItemClick(holder, position);
-                    }
-                });
+
+                if(onItemClickListener!=null) {
+                    holder.itemView.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            onItemClickListener.onItemClick(holder, position);
+                        }
+                    });
+                }
                 break;
         }
     }

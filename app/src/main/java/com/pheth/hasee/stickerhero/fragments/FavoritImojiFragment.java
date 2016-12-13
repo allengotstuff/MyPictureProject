@@ -12,9 +12,12 @@ import android.view.ViewGroup;
 
 import com.pheth.hasee.stickerhero.Adapter.FavoriteAdapter;
 import com.pheth.hasee.stickerhero.Adapter.FlexSpanAdapter;
+import com.pheth.hasee.stickerhero.BaseData.Data.BaseData;
+import com.pheth.hasee.stickerhero.BaseData.Data.DataContainer;
 import com.pheth.hasee.stickerhero.GreenDaoManager.DaoManager;
 import com.pheth.hasee.stickerhero.R;
 import com.pheth.hasee.stickerhero.greendao.Favorite;
+import com.pheth.hasee.stickerhero.utils.DataConverter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,6 +32,7 @@ public class FavoritImojiFragment extends BaseFragment {
     private Context mContext;
     private DaoManager daoManager;
     private List<Favorite> favoriteImojiList;
+    private List<BaseData> baseDataList;
 
 
 
@@ -57,8 +61,9 @@ public class FavoritImojiFragment extends BaseFragment {
 
     private void getFavoite() {
         favoriteImojiList = new ArrayList<Favorite>();
-
         favoriteImojiList.addAll(daoManager.getFavoriteIndividualDao().loadAll());
+
+        baseDataList = DataConverter.convertData(favoriteImojiList);
 
         Log.e(TAG, "favorite list size: "+ favoriteImojiList.size());
     }
@@ -66,9 +71,9 @@ public class FavoritImojiFragment extends BaseFragment {
     private void setupRecyclerview(RecyclerView recyclerview) {
 
         recyclerview.setLayoutManager(new GridLayoutManager(getContext(),3));
-        FavoriteAdapter adapter = new FavoriteAdapter(mContext);
-        adapter.setData(favoriteImojiList);
         recyclerview.setHasFixedSize(true);
+
+        FlexSpanAdapter adapter = new FlexSpanAdapter(getContext(), baseDataList);
         recyclerview.setAdapter(adapter);
         Log.e(TAG, "setup recyclerview");
     }

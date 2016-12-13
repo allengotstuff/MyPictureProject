@@ -1,42 +1,45 @@
 package com.pheth.hasee.stickerhero.ClickHandler;
 
 import android.content.Context;
-import android.net.Uri;
-import android.support.design.widget.Snackbar;
+import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.Toast;
 
-import com.pheth.hasee.stickerhero.Adapter.DetailViewAdapter;
+import com.pheth.hasee.stickerhero.Adapter.FlexSpanAdapter;
 import com.pheth.hasee.stickerhero.BaseData.Data.BaseData;
 import com.pheth.hasee.stickerhero.GreenDaoManager.DaoManager;
 import com.pheth.hasee.stickerhero.R;
 import com.pheth.hasee.stickerhero.greendao.Favorite;
 import com.pheth.hasee.stickerhero.greendao.FavoriteDao;
-import com.pheth.hasee.stickerhero.iemoji.IemojiUtil;
 import com.pheth.hasee.stickerhero.utils.MyGreenDaoUtils;
 
 import java.util.Calendar;
 
-import io.imoji.sdk.objects.Imoji;
-import io.imoji.sdk.objects.RenderingOptions;
-
 /**
- * Created by allengotstuff on 11/21/2016.
+ * Created by allengotstuff on 12/13/2016.
  */
-public class DetailClickHandler implements ClickHandler<DetailViewAdapter.DetailHolder, BaseData>, View.OnClickListener {
+public class TrendingClickHandler implements ClickHandler<RecyclerView.ViewHolder, BaseData>, View.OnClickListener  {
+
 
     private BaseData dataImoji;
-    private DetailViewAdapter.DetailHolder myHolder;
+    private FlexSpanAdapter.MyHolder myHolder;
     private DaoManager daoManager;
     private Context mContext;
     private int position;
 
 
-    public DetailClickHandler(DaoManager daoManager, Context context) {
+    public TrendingClickHandler(DaoManager daoManager, Context context) {
         this.daoManager = daoManager;
         mContext = context;
         position = -999;
+    }
+
+    @Override
+    public void setViewHolder(RecyclerView.ViewHolder holder, int pos) {
+        myHolder = (FlexSpanAdapter.MyHolder)holder;
+        position = pos;
+        registerOnClick();
     }
 
     private void registerOnClick() {
@@ -46,27 +49,8 @@ public class DetailClickHandler implements ClickHandler<DetailViewAdapter.Detail
         myHolder.share_function.setOnClickListener(this);
     }
 
-    //need to called this in onbindview recyclerview adapter
     @Override
-    public void prepareHolder(DetailViewAdapter.DetailHolder holder, int pos) {
-        if (position == pos) {
-            holder.favorite_function.setOnClickListener(this);
-            holder.share_function.setOnClickListener(this);
-        } else {
-            holder.favorite_function.setOnClickListener(null);
-            holder.share_function.setOnClickListener(null);
-        }
-    }
-
-    @Override
-    public void setViewHolder(DetailViewAdapter.DetailHolder holder, int pos) {
-        myHolder = holder;
-        position = pos;
-        registerOnClick();
-    }
-
-    @Override
-    public DetailViewAdapter.DetailHolder getViewHolder() {
+    public RecyclerView.ViewHolder getViewHolder() {
         return myHolder;
     }
 
@@ -80,10 +64,21 @@ public class DetailClickHandler implements ClickHandler<DetailViewAdapter.Detail
         return dataImoji;
     }
 
+    @Override
+    public void prepareHolder(RecyclerView.ViewHolder holder, int pos) {
+
+        FlexSpanAdapter.MyHolder tempHolder = (FlexSpanAdapter.MyHolder)holder;
+        if (position == pos) {
+            tempHolder.favorite_function.setOnClickListener(this);
+            tempHolder.share_function.setOnClickListener(this);
+        } else {
+            tempHolder.favorite_function.setOnClickListener(null);
+            tempHolder.share_function.setOnClickListener(null);
+        }
+    }
 
     @Override
     public void addToFavorite() {
-
         daoManager.initFavoriteIndividualDao();
         FavoriteDao favoriteDao = daoManager.getFavoriteIndividualDao();
 
@@ -98,16 +93,12 @@ public class DetailClickHandler implements ClickHandler<DetailViewAdapter.Detail
     }
 
     @Override
-    public void handleAnimation() {
-        if (myHolder == null) {
-            throw new RuntimeException("ClickHandler: myHolder can not be null");
-        }
-
+    public void shareAction() {
 
     }
 
     @Override
-    public void shareAction() {
+    public void handleAnimation() {
 
     }
 

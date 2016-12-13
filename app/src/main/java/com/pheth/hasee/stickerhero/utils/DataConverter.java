@@ -2,7 +2,9 @@ package com.pheth.hasee.stickerhero.utils;
 
 import com.pheth.hasee.stickerhero.BaseData.Data.BaseData;
 import com.pheth.hasee.stickerhero.BaseData.Factory.CategoryContainerFactory;
+import com.pheth.hasee.stickerhero.BaseData.Factory.FavoriteContainerFactory;
 import com.pheth.hasee.stickerhero.BaseData.Factory.ImojiContainerFactory;
+import com.pheth.hasee.stickerhero.greendao.Favorite;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -37,6 +39,15 @@ public class DataConverter {
 
                 Imoji imoji = (Imoji) iterator.next();
                 result.add(factory.produce(imoji));
+            }
+        }else if(list.get(0) instanceof Favorite){
+
+            FavoriteContainerFactory factory = new FavoriteContainerFactory();
+            Iterator iterator = list.iterator();
+            while(iterator.hasNext()){
+
+                Favorite favorite = (Favorite) iterator.next();
+                result.add(factory.produce(favorite));
             }
         }
 

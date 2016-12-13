@@ -14,6 +14,7 @@ import com.pheth.hasee.stickerhero.Animation.TrendingHolderAnimation;
 import com.pheth.hasee.stickerhero.BaseData.Data.BaseData;
 import com.pheth.hasee.stickerhero.ClickHandler.ClickHandler;
 import com.pheth.hasee.stickerhero.ClickHandler.DetailClickHandler;
+import com.pheth.hasee.stickerhero.ClickHandler.TrendingClickHandler;
 import com.pheth.hasee.stickerhero.GreenDaoManager.DaoManager;
 import com.pheth.hasee.stickerhero.R;
 import com.pheth.hasee.stickerhero.iemoji.ImojiNetwork.ImojiData;
@@ -38,6 +39,7 @@ public class TrendingFragment extends BaseFragment implements FlexSpanAdapter.On
 //    private ClickHandler clickHandler;
 
     private TrendingHolderAnimation holderAnimation;
+    private ClickHandler clickHandler;
 
     public TrendingFragment() {
     }
@@ -57,10 +59,9 @@ public class TrendingFragment extends BaseFragment implements FlexSpanAdapter.On
 
     private void setupRecyclerView(RecyclerView recyclerView) {
 
-//        clickHandler = new DetailClickHandler(DaoManager.getManager(),getContext());
         featureImojis = new ArrayList<>();
         adapter = new FlexSpanAdapter(getContext(), featureImojis);
-
+        adapter.setClickHandler(clickHandler);
         adapter.setAnimationHolder(holderAnimation);
         GridLayoutManager layoutManager = new GridLayoutManager(getContext(), 3);
         recyclerView.setHasFixedSize(true);
@@ -73,6 +74,7 @@ public class TrendingFragment extends BaseFragment implements FlexSpanAdapter.On
 
     private void initView() {
         holderAnimation = new TrendingHolderAnimation();
+        clickHandler = new TrendingClickHandler(DaoManager.getManager(),getContext());
     }
 
     private void initData() {
@@ -118,5 +120,12 @@ public class TrendingFragment extends BaseFragment implements FlexSpanAdapter.On
 
         //控制点击动画
         holderAnimation.setViewHolder(holder, pos);
+
+
+        //控制点击的操
+        BaseData imoji = featureImojis.get(pos);
+
+        clickHandler.setViewHolder(holder,pos);
+        clickHandler.setData(imoji);
     }
 }

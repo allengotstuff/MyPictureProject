@@ -31,6 +31,9 @@ public class TrendingHolderAnimation extends AdapterSelector<RecyclerView.ViewHo
         myHolder.detailImage.setScaleX(1);
         myHolder.detailImage.setScaleY(1);
         myHolder.detailImage.setTranslationY(0);
+
+        myHolder.favorite_function.setVisibility(View.GONE);
+        myHolder.share_function.setVisibility(View.GONE);
     }
 
     @Override
@@ -39,6 +42,9 @@ public class TrendingHolderAnimation extends AdapterSelector<RecyclerView.ViewHo
         myHolder.detailImage.setScaleX(0.44f);
         myHolder.detailImage.setScaleY(0.4f);
         myHolder.detailImage.setTranslationY(50f);
+
+        myHolder.favorite_function.setVisibility(View.VISIBLE);
+        myHolder.share_function.setVisibility(View.VISIBLE);
     }
 
 
@@ -62,6 +68,9 @@ public class TrendingHolderAnimation extends AdapterSelector<RecyclerView.ViewHo
                 .setDuration(200);
         objectAnimator_03.setInterpolator(new OvershootInterpolator());
         objectAnimator_03.start();
+
+        myHolder.favorite_function.setVisibility(View.VISIBLE);
+        myHolder.share_function.setVisibility(View.VISIBLE);
     }
 
     private void cancleDraweeAnimation(RecyclerView.ViewHolder holder){
@@ -85,5 +94,8 @@ public class TrendingHolderAnimation extends AdapterSelector<RecyclerView.ViewHo
                 .setDuration(200);
         objectAnimator_03.setInterpolator(new OvershootInterpolator());
         objectAnimator_03.start();
+
+        myHolder.favorite_function.setVisibility(View.GONE);
+        myHolder.share_function.setVisibility(View.GONE);
     }
 }
