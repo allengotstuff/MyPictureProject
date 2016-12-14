@@ -43,7 +43,7 @@ public class MyApplication extends Application {
     public void onCreate() {
         super.onCreate();
         LeakCanary.install(this);
-        Fabric.with(this, new Crashlytics());
+//        Fabric.with(this, new Crashlytics());
         FlurryAgent.setLogEnabled(false);
         FlurryAgent.init(this, "R9C94Z9PXMNDKY6N7J23");
 

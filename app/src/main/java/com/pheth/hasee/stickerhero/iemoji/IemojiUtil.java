@@ -7,6 +7,7 @@ import android.net.Uri;
 import android.os.Environment;
 import android.os.Handler;
 import android.os.Looper;
+import android.support.annotation.Nullable;
 import android.text.TextUtils;
 import android.util.Log;
 import android.widget.Toast;
@@ -68,7 +69,7 @@ public class IemojiUtil {
      * @param ctx
      * @param url
      */
-    public static void shareGif(final Context ctx, final String url, final HistoryDao historyDao, final History historyItem) {
+    public static void shareGif(final Context ctx, final String url,@Nullable final String packageName, @Nullable final HistoryDao historyDao, @Nullable final History historyItem) {
 
         IS_SHARE_IN_PROGRESS = true;
         ImageRequest imageRequest = ImageRequest.fromUri(url);
@@ -109,20 +110,22 @@ public class IemojiUtil {
                 }
             }
 
-            //添加下载本地文件的url
-            historyItem.setUrl_send_local(targetFile.getAbsolutePath());
+            if(historyDao!=null ||historyItem!=null ) {
+                //添加下载本地文件的url
+                historyItem.setUrl_send_local(targetFile.getAbsolutePath());
 
-            boolean isUpdate = MyGreenDaoUtils.AddToHistory(historyDao, historyItem);
+                boolean isUpdate = MyGreenDaoUtils.AddToHistory(historyDao, historyItem);
 
-            if (isUpdate) {
-                //通知historylayout有分享内容更新的软件UI
-                Intent intent = new Intent(Constants.UPDATE_HISTORY_LIST);
-                intent.putExtra(Constants.UPDATE_HISTORY_LIST, true);
-                ctx.sendBroadcast(intent);
-                Log.e("IemojiUtil", "add to database successfully");
+                if (isUpdate) {
+                    //通知historylayout有分享内容更新的软件UI
+                    Intent intent = new Intent(Constants.UPDATE_HISTORY_LIST);
+                    intent.putExtra(Constants.UPDATE_HISTORY_LIST, true);
+                    ctx.sendBroadcast(intent);
+                    Log.e("IemojiUtil", "add to database successfully");
+                }
             }
 
-            sharedFile(ctx, targetFile);
+            sharedFile(ctx, targetFile,packageName);
 
             IS_SHARE_IN_PROGRESS = false;
         } else {
@@ -134,7 +137,7 @@ public class IemojiUtil {
             imagePipeline.prefetchToBitmapCache(imageRequest, null).subscribe(new DataSubscriber<Void>() {
                 @Override
                 public void onNewResult(DataSource<Void> dataSource) {
-                    shareGif(ctx, url, historyDao, historyItem);
+                    shareGif(ctx, url,packageName, historyDao, historyItem);
                     IS_SHARE_IN_PROGRESS = false;
 
                 }
@@ -158,7 +161,7 @@ public class IemojiUtil {
         }
     }
 
-    public static void sharedFile(final Context ctx, File targetFile) {
+    public static void sharedFile(final Context ctx, File targetFile,@Nullable String packageName) {
 
         FlurryAgent.logEvent(StaticConstant.NUMBER_OF_TIME_SHARE_ON_SOCIAL);
         if (TextUtils.isEmpty(MyApplication.sharedPackage)) {
@@ -172,7 +175,7 @@ public class IemojiUtil {
             return;
         }
 
-        if (!CommonUtils.isPackageExist(ctx, MyApplication.sharedPackage)) {
+        if (!CommonUtils.isPackageExist(MyApplication.sharedPackage,ctx)) {
 
             mHandler.post(new Runnable() {
                 @Override
@@ -186,14 +189,18 @@ public class IemojiUtil {
 
         Intent share = new Intent(Intent.ACTION_SEND);
         share.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        share.setPackage(MyApplication.sharedPackage);
+        if(!TextUtils.isEmpty(packageName)) {
+            share.setPackage(packageName);
+        }else{
+
+        }
         share.putExtra(Intent.EXTRA_STREAM, Uri.fromFile(targetFile));
         share.setType("image/gif");
         ctx.startActivity(share);
     }
 
 
-    public static void getBitmap(final Context ctx, final String url, final HistoryDao historyDao, final History historyItem) {
+    public static void getBitmap(final Context ctx, final String url,@Nullable final String packageName, final HistoryDao historyDao, final History historyItem) {
         Toast.makeText(ctx, "loading image...", Toast.LENGTH_SHORT).show();
         IS_SHARE_IN_PROGRESS = true;
         ImageRequest imageRequest = ImageRequest.fromUri(url);
@@ -249,7 +256,7 @@ public class IemojiUtil {
 
                 IS_SHARE_IN_PROGRESS = false;
 
-                sharedFile(ctx, destinationFile);
+                sharedFile(ctx, destinationFile,packageName);
 
             }
         };

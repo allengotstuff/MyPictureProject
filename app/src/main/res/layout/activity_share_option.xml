@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
+    android:background="@drawable/white_background"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -79,23 +80,31 @@
             android:layout_width="80dp"
             android:layout_height="wrap_content"
             android:gravity="center"
+            android:textSize="12dp"
+            android:textColor="@color/text_grey"
             android:text="@string/facebook_messenger"/>
 
         <TextView
             android:layout_width="80dp"
             android:layout_height="wrap_content"
             android:gravity="center"
+            android:textSize="12dp"
+            android:textColor="@color/text_grey"
             android:text="@string/share_sms"/>
         <TextView
             android:layout_width="80dp"
             android:layout_height="wrap_content"
             android:gravity="center"
+            android:textSize="12dp"
+            android:textColor="@color/text_grey"
             android:text="@string/whatsapp_share"/>
 
         <TextView
             android:layout_width="80dp"
             android:layout_height="wrap_content"
             android:gravity="center"
+            android:textSize="12dp"
+            android:textColor="@color/text_grey"
             android:text="@string/instagram_share"/>
 
         <com.facebook.drawee.view.DraweeView
@@ -137,22 +146,30 @@
             android:layout_width="80dp"
             android:layout_height="wrap_content"
             android:gravity="center"
+            android:textSize="12dp"
+            android:textColor="@color/text_grey"
             android:text="@string/facebook"/>
         <TextView
             android:layout_width="80dp"
             android:layout_height="wrap_content"
             android:gravity="center"
+            android:textSize="12dp"
+            android:textColor="@color/text_grey"
             android:text="@string/twitter"/>
         <TextView
             android:layout_width="80dp"
             android:layout_height="wrap_content"
             android:gravity="center"
+            android:textSize="12dp"
+            android:textColor="@color/text_grey"
             android:text="@string/snapchat"/>
 
         <TextView
             android:layout_width="80dp"
             android:layout_height="wrap_content"
             android:gravity="center"
+            android:textSize="12dp"
+            android:textColor="@color/text_grey"
             android:text="@string/more_option"/>
     </GridLayout>
 

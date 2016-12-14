@@ -117,9 +117,9 @@ public class MyStickerSearchAdapter extends BaseAdapter implements AdapterView.O
 
 
         if(imoji.hasAnimationCapability()){
-            IemojiUtil.shareGif(mContext, uri.toString(),daoManager.getHistoryDao(),mHistory);
+            IemojiUtil.shareGif(mContext, uri.toString(),null,daoManager.getHistoryDao(),mHistory);
         }else {
-            IemojiUtil.getBitmap(mContext, uri.toString(), daoManager.getHistoryDao(), mHistory);
+            IemojiUtil.getBitmap(mContext, uri.toString(),null, daoManager.getHistoryDao(), mHistory);
         }
     }
 

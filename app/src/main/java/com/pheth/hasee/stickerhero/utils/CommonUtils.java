@@ -22,15 +22,24 @@ import io.imoji.sdk.objects.RenderingOptions;
  */
 public class CommonUtils {
 
-    public static boolean isPackageExist(Context context, String packagename) {
+    public static boolean isPackageExist(String packagename,Context context) {
         PackageManager pm = context.getPackageManager();
+
+        boolean installed;
+
         try {
             pm.getPackageInfo(packagename, PackageManager.GET_ACTIVITIES);
-            return true;
+
+            installed = true;
+
         } catch (PackageManager.NameNotFoundException e) {
-            return false;
+
+            installed = false;
         }
+
+        return installed;
     }
+
 
     public static void saveSocialSetting(Context context, String packageName) {
 
@@ -60,13 +69,11 @@ public class CommonUtils {
         return sp.getString(Constants.PREFERENCE_SHARE_PACKAGE, context.getResources().getString(R.string.whatsapp));
     }
 
-    public static int dpToPx(int dp)
-    {
+    public static int dpToPx(int dp) {
         return (int) (dp * Resources.getSystem().getDisplayMetrics().density);
     }
 
-    public static int pxToDp(int px)
-    {
+    public static int pxToDp(int px) {
         return (int) (px / Resources.getSystem().getDisplayMetrics().density);
     }
 

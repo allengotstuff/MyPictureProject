@@ -35,6 +35,7 @@
         <activity android:name=".Activities.DetailViewActivity"  android:theme="@style/main_theme"/>
         <activity android:name=".Activities.AboutActicity"  android:theme="@style/main_theme"/>
         <activity android:name=".Activities.FavoriteActivity"  android:theme="@style/main_theme"/>
+        <activity android:name=".ShareOption.ShareOptionActivity"  android:theme="@style/DialogTheme"/>
 
         <!--<activity android:name=".Myfavorite_Activity" android:theme="@style/Theme.AppCompat.Light.NoActionBar"/>-->
 

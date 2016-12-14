@@ -91,7 +91,7 @@ public class HistoryImojiAdapter extends BaseAdapter implements AdapterView.OnIt
 
             File file = new File(url);
 //            Log.e("History",url);
-            IemojiUtil.sharedFile(mContext,file);
+            IemojiUtil.sharedFile(mContext,file,null);
 
         }
     }

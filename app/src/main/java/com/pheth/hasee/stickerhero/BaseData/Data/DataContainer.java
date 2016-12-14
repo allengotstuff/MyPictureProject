@@ -79,7 +79,7 @@ public class DataContainer implements BaseData, Parcelable {
 
     @Override
     public String getOnlineFullUrl() {
-        return this.localFullUrl;
+        return this.onLineFullUrl;
     }
 
 

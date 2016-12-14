@@ -128,6 +128,8 @@ public class TrendingFragment extends BaseFragment implements FlexSpanAdapter.On
         clickHandler.setViewHolder(holder,pos);
         clickHandler.setData(imoji);
 
+//        Log.e("Trending", " full url " + imoji.getOnlineFullUrl());
+
 //        if(imoji.getIsAnimateable()){
 //            Log.e("Trending", "Animateable" + pos);
 //        }else{

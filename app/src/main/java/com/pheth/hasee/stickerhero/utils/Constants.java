@@ -22,4 +22,5 @@ public class Constants {
     public static final String INSTAGRAM = "com.instagram.android";
     public static final String SMS = "sms_default_application";
     public static final String MORE = "more";
+    public static final String MESSENGER_FB = "com.facebook.orca";
 }

@@ -1,6 +1,7 @@
 package com.pheth.hasee.stickerhero.ClickHandler;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.View;
@@ -8,8 +9,10 @@ import android.widget.Toast;
 
 import com.pheth.hasee.stickerhero.Adapter.FlexSpanAdapter;
 import com.pheth.hasee.stickerhero.BaseData.Data.BaseData;
+import com.pheth.hasee.stickerhero.BaseData.Data.DataContainer;
 import com.pheth.hasee.stickerhero.GreenDaoManager.DaoManager;
 import com.pheth.hasee.stickerhero.R;
+import com.pheth.hasee.stickerhero.ShareOption.ShareOptionActivity;
 import com.pheth.hasee.stickerhero.greendao.Favorite;
 import com.pheth.hasee.stickerhero.greendao.FavoriteDao;
 import com.pheth.hasee.stickerhero.utils.MyGreenDaoUtils;
@@ -94,7 +97,11 @@ public class TrendingClickHandler implements ClickHandler<RecyclerView.ViewHolde
 
     @Override
     public void shareAction() {
+        Intent intent = new Intent(mContext, ShareOptionActivity.class);
+        DataContainer dataContainer = (DataContainer)dataImoji;
 
+        intent.putExtra(ShareOptionActivity.PASS_BASE_DATA,dataContainer);
+        mContext.startActivity(intent);
     }
 
     @Override
