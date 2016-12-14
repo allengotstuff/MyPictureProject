@@ -31,7 +31,7 @@ public class ImojiContainerFactory implements BaseFactory<BaseData, Imoji> {
 
         //set search id
         container.setIdentifier(imoji.getIdentifier());
-
+        container.setIsAnimateable(imoji.hasAnimationCapability());
         //set thumburl
         RenderingOptions options_thumb = IemojiUtil.getRenderOption(imoji, RenderingOptions.Size.Thumbnail);
         Uri uri_thumb = imoji.urlForRenderingOption(options_thumb);

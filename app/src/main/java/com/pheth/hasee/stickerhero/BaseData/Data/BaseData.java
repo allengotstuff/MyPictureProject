@@ -19,5 +19,7 @@ public interface BaseData {
     String getLocalFullUrl();
     String getOnlineFullUrl();
 
+    boolean getIsAnimateable();
+
 
 }

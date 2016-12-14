@@ -129,6 +129,7 @@ public class IemojiUtil {
 
             Toast.makeText(ctx, "loading image...", Toast.LENGTH_SHORT).show();
 
+            // below code is execute on worker thread
             final ImagePipeline imagePipeline = Fresco.getImagePipeline();
             imagePipeline.prefetchToBitmapCache(imageRequest, null).subscribe(new DataSubscriber<Void>() {
                 @Override

@@ -16,13 +16,16 @@ public class ExampleUnitTest {
     @Test
     public void addition_isCorrect() throws Exception {
 
-
-
         ArrayList<String> list = new ArrayList<String>();
 
         list.add("one");
         assertEquals(4, 2 + 2);
 
         assertFalse(list.isEmpty());
+    }
+
+    @Test
+    public void test_parceable() throws Exception{
+
     }
 }

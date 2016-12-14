@@ -61,7 +61,7 @@ public class MyClass {
         favorite.addStringProperty("url_full");
         favorite.addStringProperty("url_thumb");
         favorite.addStringProperty("identifier");
-
+        favorite.addBooleanProperty("isAnimateable");
         favorite.addStringProperty("url_full_local");
         favorite.addStringProperty("url_thumb_local");
         favorite.addDateProperty("add_date");
@@ -94,7 +94,7 @@ public class MyClass {
         history.addStringProperty("url_thumb_local");
         history.addStringProperty("url_thumb_online");
         history.addStringProperty("identifier");
-
+        history.addBooleanProperty("isAnimateable");
         history.addDateProperty("add_date");
         return history;
     }

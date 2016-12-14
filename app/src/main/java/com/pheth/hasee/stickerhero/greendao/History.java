@@ -16,6 +16,7 @@ public class History {
     private String url_thumb_local;
     private String url_thumb_online;
     private String identifier;
+    private Boolean isAnimateable;
     private java.util.Date add_date;
 
     // KEEP FIELDS - put your custom fields here
@@ -28,7 +29,7 @@ public class History {
         this.id = id;
     }
 
-    public History(Long id, String name, String url_send_local, String url_send_online, String url_thumb_local, String url_thumb_online, String identifier, java.util.Date add_date) {
+    public History(Long id, String name, String url_send_local, String url_send_online, String url_thumb_local, String url_thumb_online, String identifier, Boolean isAnimateable, java.util.Date add_date) {
         this.id = id;
         this.name = name;
         this.url_send_local = url_send_local;
@@ -36,6 +37,7 @@ public class History {
         this.url_thumb_local = url_thumb_local;
         this.url_thumb_online = url_thumb_online;
         this.identifier = identifier;
+        this.isAnimateable = isAnimateable;
         this.add_date = add_date;
     }
 
@@ -93,6 +95,14 @@ public class History {
 
     public void setIdentifier(String identifier) {
         this.identifier = identifier;
+    }
+
+    public Boolean getIsAnimateable() {
+        return isAnimateable;
+    }
+
+    public void setIsAnimateable(Boolean isAnimateable) {
+        this.isAnimateable = isAnimateable;
     }
 
     public java.util.Date getAdd_date() {

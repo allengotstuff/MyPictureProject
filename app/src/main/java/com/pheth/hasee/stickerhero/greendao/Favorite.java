@@ -14,6 +14,7 @@ public class Favorite {
     private String url_full;
     private String url_thumb;
     private String identifier;
+    private Boolean isAnimateable;
     private String url_full_local;
     private String url_thumb_local;
     private java.util.Date add_date;
@@ -28,12 +29,13 @@ public class Favorite {
         this.id = id;
     }
 
-    public Favorite(Long id, String name, String url_full, String url_thumb, String identifier, String url_full_local, String url_thumb_local, java.util.Date add_date) {
+    public Favorite(Long id, String name, String url_full, String url_thumb, String identifier, Boolean isAnimateable, String url_full_local, String url_thumb_local, java.util.Date add_date) {
         this.id = id;
         this.name = name;
         this.url_full = url_full;
         this.url_thumb = url_thumb;
         this.identifier = identifier;
+        this.isAnimateable = isAnimateable;
         this.url_full_local = url_full_local;
         this.url_thumb_local = url_thumb_local;
         this.add_date = add_date;
@@ -77,6 +79,14 @@ public class Favorite {
 
     public void setIdentifier(String identifier) {
         this.identifier = identifier;
+    }
+
+    public Boolean getIsAnimateable() {
+        return isAnimateable;
+    }
+
+    public void setIsAnimateable(Boolean isAnimateable) {
+        this.isAnimateable = isAnimateable;
     }
 
     public String getUrl_full_local() {

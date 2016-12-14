@@ -35,7 +35,6 @@ public class FavoritImojiFragment extends BaseFragment {
     private List<BaseData> baseDataList;
 
 
-
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -61,16 +60,21 @@ public class FavoritImojiFragment extends BaseFragment {
 
     private void getFavoite() {
         favoriteImojiList = new ArrayList<Favorite>();
-        favoriteImojiList.addAll(daoManager.getFavoriteIndividualDao().loadAll());
+        List databaseList = daoManager.getFavoriteIndividualDao().loadAll();
+
+        if (databaseList == null)
+            return;
+
+        favoriteImojiList.addAll(databaseList);
 
         baseDataList = DataConverter.convertData(favoriteImojiList);
 
-        Log.e(TAG, "favorite list size: "+ favoriteImojiList.size());
+        Log.e(TAG, "favorite list size: " + favoriteImojiList.size());
     }
 
     private void setupRecyclerview(RecyclerView recyclerview) {
 
-        recyclerview.setLayoutManager(new GridLayoutManager(getContext(),3));
+        recyclerview.setLayoutManager(new GridLayoutManager(getContext(), 3));
         recyclerview.setHasFixedSize(true);
 
         FlexSpanAdapter adapter = new FlexSpanAdapter(getContext(), baseDataList);

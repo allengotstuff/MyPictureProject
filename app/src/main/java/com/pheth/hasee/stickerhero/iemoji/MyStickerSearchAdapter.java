@@ -113,7 +113,7 @@ public class MyStickerSearchAdapter extends BaseAdapter implements AdapterView.O
         Uri thumbUri = imoji.urlForRenderingOption(thumbOptions);
 
         Date date = new Date();
-        History mHistory = new History(null,imojiName,null,uri.toString(),null,thumbUri.toString(),imoji.getIdentifier(),date);
+        History mHistory = new History(null,imojiName,null,uri.toString(),null,thumbUri.toString(),imoji.getIdentifier(),imoji.hasAnimationCapability(),date);
 
 
         if(imoji.hasAnimationCapability()){

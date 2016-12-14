@@ -26,6 +26,7 @@
 //
 //    private Imoji imoji;
 //    private DraweeView shareDrawee;
+//    public static final String PASS_BASE_DATA = "pass_base_data";
 //
 //    @Override
 //    public void onCreate(Bundle savedInstanceState) {
@@ -34,7 +35,7 @@
 //        init();
 //
 //        if (getIntent() != null) {
-//            imoji = getIntent().getParcelableExtra(Constants.SHAREE_IMOJI);
+//            imoji = getIntent().getParcelableExtra(PASS_BASE_DATA);
 //
 //            DraweeController controller = Fresco.newDraweeControllerBuilder()
 //                    .setUri(imoji.getStandardThumbnailUri(true))

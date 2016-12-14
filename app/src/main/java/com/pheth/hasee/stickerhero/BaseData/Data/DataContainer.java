@@ -15,6 +15,7 @@ public class DataContainer implements BaseData, Parcelable {
     String onlineThumbUrl="";
     String localFullUrl="";
     String onLineFullUrl="";
+    boolean isAnimateable = false;
 
     public DataContainer(){}
 
@@ -40,6 +41,15 @@ public class DataContainer implements BaseData, Parcelable {
 
     public void setOnLineFullUrl(String on_url) {
         this.onLineFullUrl = on_url;
+    }
+
+    public void setIsAnimateable(boolean animateable){
+        this.isAnimateable = animateable;
+    }
+
+    @Override
+    public boolean getIsAnimateable(){
+        return this.isAnimateable;
     }
 
     @Override
@@ -88,6 +98,8 @@ public class DataContainer implements BaseData, Parcelable {
         dest.writeString(onlineThumbUrl);
         dest.writeString(localFullUrl);
         dest.writeString(onLineFullUrl);
+
+        dest.writeByte((byte) (isAnimateable ? 1 : 0));
     }
 
     // Using the `in` variable, we can retrieve the values that
@@ -100,6 +112,7 @@ public class DataContainer implements BaseData, Parcelable {
         onlineThumbUrl = in.readString();
         localFullUrl = in.readString();
         onLineFullUrl = in.readString();
+        isAnimateable = in.readByte() != 0;
     }
 
 

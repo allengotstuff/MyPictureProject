@@ -28,9 +28,10 @@ public class FavoriteDao extends AbstractDao<Favorite, Long> {
         public final static Property Url_full = new Property(2, String.class, "url_full", false, "URL_FULL");
         public final static Property Url_thumb = new Property(3, String.class, "url_thumb", false, "URL_THUMB");
         public final static Property Identifier = new Property(4, String.class, "identifier", false, "IDENTIFIER");
-        public final static Property Url_full_local = new Property(5, String.class, "url_full_local", false, "URL_FULL_LOCAL");
-        public final static Property Url_thumb_local = new Property(6, String.class, "url_thumb_local", false, "URL_THUMB_LOCAL");
-        public final static Property Add_date = new Property(7, java.util.Date.class, "add_date", false, "ADD_DATE");
+        public final static Property IsAnimateable = new Property(5, Boolean.class, "isAnimateable", false, "IS_ANIMATEABLE");
+        public final static Property Url_full_local = new Property(6, String.class, "url_full_local", false, "URL_FULL_LOCAL");
+        public final static Property Url_thumb_local = new Property(7, String.class, "url_thumb_local", false, "URL_THUMB_LOCAL");
+        public final static Property Add_date = new Property(8, java.util.Date.class, "add_date", false, "ADD_DATE");
     };
 
 
@@ -51,9 +52,10 @@ public class FavoriteDao extends AbstractDao<Favorite, Long> {
                 "\"URL_FULL\" TEXT," + // 2: url_full
                 "\"URL_THUMB\" TEXT," + // 3: url_thumb
                 "\"IDENTIFIER\" TEXT," + // 4: identifier
-                "\"URL_FULL_LOCAL\" TEXT," + // 5: url_full_local
-                "\"URL_THUMB_LOCAL\" TEXT," + // 6: url_thumb_local
-                "\"ADD_DATE\" INTEGER);"); // 7: add_date
+                "\"IS_ANIMATEABLE\" INTEGER," + // 5: isAnimateable
+                "\"URL_FULL_LOCAL\" TEXT," + // 6: url_full_local
+                "\"URL_THUMB_LOCAL\" TEXT," + // 7: url_thumb_local
+                "\"ADD_DATE\" INTEGER);"); // 8: add_date
     }
 
     /** Drops the underlying database table. */
@@ -92,19 +94,24 @@ public class FavoriteDao extends AbstractDao<Favorite, Long> {
             stmt.bindString(5, identifier);
         }
  
+        Boolean isAnimateable = entity.getIsAnimateable();
+        if (isAnimateable != null) {
+            stmt.bindLong(6, isAnimateable ? 1L: 0L);
+        }
+ 
         String url_full_local = entity.getUrl_full_local();
         if (url_full_local != null) {
-            stmt.bindString(6, url_full_local);
+            stmt.bindString(7, url_full_local);
         }
  
         String url_thumb_local = entity.getUrl_thumb_local();
         if (url_thumb_local != null) {
-            stmt.bindString(7, url_thumb_local);
+            stmt.bindString(8, url_thumb_local);
         }
  
         java.util.Date add_date = entity.getAdd_date();
         if (add_date != null) {
-            stmt.bindLong(8, add_date.getTime());
+            stmt.bindLong(9, add_date.getTime());
         }
     }
 
@@ -123,9 +130,10 @@ public class FavoriteDao extends AbstractDao<Favorite, Long> {
             cursor.isNull(offset + 2) ? null : cursor.getString(offset + 2), // url_full
             cursor.isNull(offset + 3) ? null : cursor.getString(offset + 3), // url_thumb
             cursor.isNull(offset + 4) ? null : cursor.getString(offset + 4), // identifier
-            cursor.isNull(offset + 5) ? null : cursor.getString(offset + 5), // url_full_local
-            cursor.isNull(offset + 6) ? null : cursor.getString(offset + 6), // url_thumb_local
-            cursor.isNull(offset + 7) ? null : new java.util.Date(cursor.getLong(offset + 7)) // add_date
+            cursor.isNull(offset + 5) ? null : cursor.getShort(offset + 5) != 0, // isAnimateable
+            cursor.isNull(offset + 6) ? null : cursor.getString(offset + 6), // url_full_local
+            cursor.isNull(offset + 7) ? null : cursor.getString(offset + 7), // url_thumb_local
+            cursor.isNull(offset + 8) ? null : new java.util.Date(cursor.getLong(offset + 8)) // add_date
         );
         return entity;
     }
@@ -138,9 +146,10 @@ public class FavoriteDao extends AbstractDao<Favorite, Long> {
         entity.setUrl_full(cursor.isNull(offset + 2) ? null : cursor.getString(offset + 2));
         entity.setUrl_thumb(cursor.isNull(offset + 3) ? null : cursor.getString(offset + 3));
         entity.setIdentifier(cursor.isNull(offset + 4) ? null : cursor.getString(offset + 4));
-        entity.setUrl_full_local(cursor.isNull(offset + 5) ? null : cursor.getString(offset + 5));
-        entity.setUrl_thumb_local(cursor.isNull(offset + 6) ? null : cursor.getString(offset + 6));
-        entity.setAdd_date(cursor.isNull(offset + 7) ? null : new java.util.Date(cursor.getLong(offset + 7)));
+        entity.setIsAnimateable(cursor.isNull(offset + 5) ? null : cursor.getShort(offset + 5) != 0);
+        entity.setUrl_full_local(cursor.isNull(offset + 6) ? null : cursor.getString(offset + 6));
+        entity.setUrl_thumb_local(cursor.isNull(offset + 7) ? null : cursor.getString(offset + 7));
+        entity.setAdd_date(cursor.isNull(offset + 8) ? null : new java.util.Date(cursor.getLong(offset + 8)));
      }
     
     /** @inheritdoc */

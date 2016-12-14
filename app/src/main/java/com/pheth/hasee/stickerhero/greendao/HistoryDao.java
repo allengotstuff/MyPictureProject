@@ -30,7 +30,8 @@ public class HistoryDao extends AbstractDao<History, Long> {
         public final static Property Url_thumb_local = new Property(4, String.class, "url_thumb_local", false, "URL_THUMB_LOCAL");
         public final static Property Url_thumb_online = new Property(5, String.class, "url_thumb_online", false, "URL_THUMB_ONLINE");
         public final static Property Identifier = new Property(6, String.class, "identifier", false, "IDENTIFIER");
-        public final static Property Add_date = new Property(7, java.util.Date.class, "add_date", false, "ADD_DATE");
+        public final static Property IsAnimateable = new Property(7, Boolean.class, "isAnimateable", false, "IS_ANIMATEABLE");
+        public final static Property Add_date = new Property(8, java.util.Date.class, "add_date", false, "ADD_DATE");
     };
 
 
@@ -53,7 +54,8 @@ public class HistoryDao extends AbstractDao<History, Long> {
                 "\"URL_THUMB_LOCAL\" TEXT," + // 4: url_thumb_local
                 "\"URL_THUMB_ONLINE\" TEXT," + // 5: url_thumb_online
                 "\"IDENTIFIER\" TEXT," + // 6: identifier
-                "\"ADD_DATE\" INTEGER);"); // 7: add_date
+                "\"IS_ANIMATEABLE\" INTEGER," + // 7: isAnimateable
+                "\"ADD_DATE\" INTEGER);"); // 8: add_date
     }
 
     /** Drops the underlying database table. */
@@ -102,9 +104,14 @@ public class HistoryDao extends AbstractDao<History, Long> {
             stmt.bindString(7, identifier);
         }
  
+        Boolean isAnimateable = entity.getIsAnimateable();
+        if (isAnimateable != null) {
+            stmt.bindLong(8, isAnimateable ? 1L: 0L);
+        }
+ 
         java.util.Date add_date = entity.getAdd_date();
         if (add_date != null) {
-            stmt.bindLong(8, add_date.getTime());
+            stmt.bindLong(9, add_date.getTime());
         }
     }
 
@@ -125,7 +132,8 @@ public class HistoryDao extends AbstractDao<History, Long> {
             cursor.isNull(offset + 4) ? null : cursor.getString(offset + 4), // url_thumb_local
             cursor.isNull(offset + 5) ? null : cursor.getString(offset + 5), // url_thumb_online
             cursor.isNull(offset + 6) ? null : cursor.getString(offset + 6), // identifier
-            cursor.isNull(offset + 7) ? null : new java.util.Date(cursor.getLong(offset + 7)) // add_date
+            cursor.isNull(offset + 7) ? null : cursor.getShort(offset + 7) != 0, // isAnimateable
+            cursor.isNull(offset + 8) ? null : new java.util.Date(cursor.getLong(offset + 8)) // add_date
         );
         return entity;
     }
@@ -140,7 +148,8 @@ public class HistoryDao extends AbstractDao<History, Long> {
         entity.setUrl_thumb_local(cursor.isNull(offset + 4) ? null : cursor.getString(offset + 4));
         entity.setUrl_thumb_online(cursor.isNull(offset + 5) ? null : cursor.getString(offset + 5));
         entity.setIdentifier(cursor.isNull(offset + 6) ? null : cursor.getString(offset + 6));
-        entity.setAdd_date(cursor.isNull(offset + 7) ? null : new java.util.Date(cursor.getLong(offset + 7)));
+        entity.setIsAnimateable(cursor.isNull(offset + 7) ? null : cursor.getShort(offset + 7) != 0);
+        entity.setAdd_date(cursor.isNull(offset + 8) ? null : new java.util.Date(cursor.getLong(offset + 8)));
      }
     
     /** @inheritdoc */

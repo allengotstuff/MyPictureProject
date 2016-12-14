@@ -119,7 +119,7 @@ public class TrendingClickHandler implements ClickHandler<RecyclerView.ViewHolde
         myFavorite.setAdd_date(Calendar.getInstance().getTime());
         myFavorite.setUrl_thumb(dataImoji.getOnlineThumbUrl());
         myFavorite.setUrl_full(dataImoji.getOnlineFullUrl());
-
+        myFavorite.setIsAnimateable(dataImoji.getIsAnimateable());
         String name = dataImoji.getName();
         if(!TextUtils.isEmpty(name)){
             myFavorite.setName(name);

@@ -21,7 +21,7 @@ public class FavoriteContainerFactory implements BaseFactory<BaseData, Favorite>
             container.setName(name);
 
         container.setIdentifier(data.getIdentifier());
-
+        container.setIsAnimateable(data.getIsAnimateable());
         container.setOnLineFullUrl(data.getUrl_full());
         container.setOnlineThumbUrl(data.getUrl_thumb());
 
