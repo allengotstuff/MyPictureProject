@@ -5,26 +5,24 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-   <FrameLayout
-       android:layout_width="match_parent"
-       android:layout_height="wrap_content"
-       android:minHeight="106dp"
-       android:layout_marginTop="20dp"
-       android:layout_marginBottom="20dp"
-       android:layout_marginLeft="60dp"
-       android:layout_marginRight="60dp">
+
 
        <com.facebook.drawee.view.SimpleDraweeView
            xmlns:fresco="http://schemas.android.com/apk/res-auto"
            android:id="@+id/iv_shared_sticker"
            fresco:progressBarImage="@drawable/foto_gif_loading_icon"
            fresco:progressBarImageScaleType="center"
+           fresco:actualImageScaleType="fitCenter"
            android:layout_gravity="center"
-           android:layout_width="80dp"
-           android:layout_height="80dp"
+           android:layout_width="100dp"
+           android:layout_height="100dp"
            android:adjustViewBounds="true"
-           fresco:viewAspectRatio="1.33" />
-   </FrameLayout>
+           fresco:viewAspectRatio="1.33"
+           android:layout_marginTop="20dp"
+           android:layout_marginBottom="20dp"
+           android:layout_marginLeft="60dp"
+           android:layout_marginRight="60dp"/>
+
 
     <View
         android:layout_width="match_parent"

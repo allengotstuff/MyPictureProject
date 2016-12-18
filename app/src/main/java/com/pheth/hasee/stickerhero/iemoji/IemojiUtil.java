@@ -69,7 +69,7 @@ public class IemojiUtil {
      * @param ctx
      * @param url
      */
-    public static void shareGif(final Context ctx, final String url,@Nullable final String packageName, @Nullable final HistoryDao historyDao, @Nullable final History historyItem) {
+    public static void shareGif(final Context ctx, final String url, @Nullable final String packageName, @Nullable final HistoryDao historyDao, @Nullable final History historyItem) {
 
         IS_SHARE_IN_PROGRESS = true;
         ImageRequest imageRequest = ImageRequest.fromUri(url);
@@ -110,7 +110,7 @@ public class IemojiUtil {
                 }
             }
 
-            if(historyDao!=null ||historyItem!=null ) {
+            if (historyDao != null || historyItem != null) {
                 //添加下载本地文件的url
                 historyItem.setUrl_send_local(targetFile.getAbsolutePath());
 
@@ -125,7 +125,7 @@ public class IemojiUtil {
                 }
             }
 
-            sharedFile(ctx, targetFile,packageName);
+            sharedFile(ctx, targetFile, packageName);
 
             IS_SHARE_IN_PROGRESS = false;
         } else {
@@ -137,7 +137,7 @@ public class IemojiUtil {
             imagePipeline.prefetchToBitmapCache(imageRequest, null).subscribe(new DataSubscriber<Void>() {
                 @Override
                 public void onNewResult(DataSource<Void> dataSource) {
-                    shareGif(ctx, url,packageName, historyDao, historyItem);
+                    shareGif(ctx, url, packageName, historyDao, historyItem);
                     IS_SHARE_IN_PROGRESS = false;
 
                 }
@@ -161,7 +161,7 @@ public class IemojiUtil {
         }
     }
 
-    public static void sharedFile(final Context ctx, File targetFile,@Nullable String packageName) {
+    public static void sharedFile(final Context ctx, File targetFile, @Nullable String packageName) {
 
         FlurryAgent.logEvent(StaticConstant.NUMBER_OF_TIME_SHARE_ON_SOCIAL);
         if (TextUtils.isEmpty(MyApplication.sharedPackage)) {
@@ -175,7 +175,7 @@ public class IemojiUtil {
             return;
         }
 
-        if (!CommonUtils.isPackageExist(MyApplication.sharedPackage,ctx)) {
+        if (!CommonUtils.isPackageExist(MyApplication.sharedPackage, ctx)) {
 
             mHandler.post(new Runnable() {
                 @Override
@@ -189,18 +189,19 @@ public class IemojiUtil {
 
         Intent share = new Intent(Intent.ACTION_SEND);
         share.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        if(!TextUtils.isEmpty(packageName)) {
+        if (!TextUtils.isEmpty(packageName) && packageName != Constants.SMS) {
             share.setPackage(packageName);
-        }else{
-
+        } else if (packageName == Constants.SMS) {
+//            share.setType("vnd.android-dir/mms-sms");
         }
+
         share.putExtra(Intent.EXTRA_STREAM, Uri.fromFile(targetFile));
         share.setType("image/gif");
         ctx.startActivity(share);
     }
 
 
-    public static void getBitmap(final Context ctx, final String url,@Nullable final String packageName, final HistoryDao historyDao, final History historyItem) {
+    public static void getBitmap(final Context ctx, final String url, @Nullable final String packageName, final HistoryDao historyDao, final History historyItem) {
         Toast.makeText(ctx, "loading image...", Toast.LENGTH_SHORT).show();
         IS_SHARE_IN_PROGRESS = true;
         ImageRequest imageRequest = ImageRequest.fromUri(url);
@@ -256,7 +257,7 @@ public class IemojiUtil {
 
                 IS_SHARE_IN_PROGRESS = false;
 
-                sharedFile(ctx, destinationFile,packageName);
+                sharedFile(ctx, destinationFile, packageName);
 
             }
         };

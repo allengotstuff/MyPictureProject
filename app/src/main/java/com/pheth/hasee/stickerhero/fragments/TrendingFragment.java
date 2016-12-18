@@ -13,7 +13,6 @@ import com.pheth.hasee.stickerhero.Adapter.FlexSpanAdapter;
 import com.pheth.hasee.stickerhero.Animation.TrendingHolderAnimation;
 import com.pheth.hasee.stickerhero.BaseData.Data.BaseData;
 import com.pheth.hasee.stickerhero.ClickHandler.ClickHandler;
-import com.pheth.hasee.stickerhero.ClickHandler.DetailClickHandler;
 import com.pheth.hasee.stickerhero.ClickHandler.TrendingClickHandler;
 import com.pheth.hasee.stickerhero.GreenDaoManager.DaoManager;
 import com.pheth.hasee.stickerhero.R;
@@ -22,8 +21,6 @@ import com.pheth.hasee.stickerhero.iemoji.ImojiNetwork.ImojiDataContainer;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import io.imoji.sdk.objects.Imoji;
 
 /**
  * Created by allengotstuff on 11/27/2016.
