@@ -12,6 +12,7 @@ import com.pheth.hasee.stickerhero.R;
 import com.pheth.hasee.stickerhero.fragments.FavoritImojiFragment;
 import com.pheth.hasee.stickerhero.greendao.Favorite;
 import com.pheth.hasee.stickerhero.greendao.FavoriteCategory;
+import com.wang.avi.AVLoadingIndicatorView;
 
 import java.util.ArrayList;
 
@@ -20,7 +21,8 @@ import java.util.ArrayList;
  */
 public class AboutActicity extends BaseSecondaryActivity {
 
-    private DaoManager daoManager;
+
+    private AVLoadingIndicatorView loadingIndicatorView;
 
     private static final String TAG = "AboutActicity";
 

@@ -18,6 +18,7 @@ import com.pheth.hasee.stickerhero.ClickHandler.ClickHandler;
 import com.pheth.hasee.stickerhero.ClickHandler.DetailClickHandler;
 import com.pheth.hasee.stickerhero.GreenDaoManager.DaoManager;
 import com.pheth.hasee.stickerhero.R;
+import com.wang.avi.AVLoadingIndicatorView;
 
 import io.imoji.sdk.objects.Imoji;
 
@@ -43,6 +44,8 @@ public class DetailViewActivity extends BaseSecondaryActivity implements DetailV
     private ClickHandler clickHandler;
 
     private static final String TAG = "DetailViewActivity";
+
+    private AVLoadingIndicatorView loadingIndicatorView;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -75,6 +78,8 @@ public class DetailViewActivity extends BaseSecondaryActivity implements DetailV
 
         title_textview.setText(category_title);
         recyclerView = (RecyclerView)findViewById(R.id.rv_detail);
+
+        loadingIndicatorView = (AVLoadingIndicatorView)findViewById(R.id.loadin_viewg);
     }
 
 
@@ -85,6 +90,7 @@ public class DetailViewActivity extends BaseSecondaryActivity implements DetailV
         adapter.setOnHolderClickListener(this);
         adapter.setAnimationHolder(holderAnimation);
         adapter.setClickHandler(clickHandler);
+        adapter.setLoadingIndicatorView(loadingIndicatorView);
 
         GridLayoutManager layoutManager = new GridLayoutManager(mContext,3);
         layoutManager.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup(){

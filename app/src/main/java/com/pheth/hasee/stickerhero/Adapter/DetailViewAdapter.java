@@ -22,6 +22,7 @@ import com.pheth.hasee.stickerhero.iemoji.ImojiNetwork.ImojiSerachData;
 import com.pheth.hasee.stickerhero.iemoji.ImojiNetwork.RequestInfo;
 import com.pheth.hasee.stickerhero.utils.CommonUtils;
 import com.pheth.hasee.stickerhero.utils.DataConverter;
+import com.wang.avi.AVLoadingIndicatorView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -51,6 +52,8 @@ public class DetailViewAdapter extends AnimationAdapter<DetailViewAdapter.Detail
 
     private OnHolderClickListener onHolderClickListener;
 
+    private AVLoadingIndicatorView loadingIndicatorView;
+
     private Handler handler = new Handler(){};
 
     private Runnable runnable = new Runnable() {
@@ -58,6 +61,7 @@ public class DetailViewAdapter extends AnimationAdapter<DetailViewAdapter.Detail
         public void run() {
 
             notifyDataSetChanged();
+            loadingIndicatorView.hide();
         }
     };
 
@@ -75,10 +79,18 @@ public class DetailViewAdapter extends AnimationAdapter<DetailViewAdapter.Detail
 
         //start requestiong emojis
         initImojiRequest();
+
+        if(loadingIndicatorView!=null){
+            loadingIndicatorView.show();
+        }
     }
 
     public void setOnHolderClickListener(OnHolderClickListener listener) {
         onHolderClickListener = listener;
+    }
+
+    public void setLoadingIndicatorView(AVLoadingIndicatorView loadingIndicatorView){
+        this.loadingIndicatorView = loadingIndicatorView;
     }
 
     private void initImojiRequest() {
