@@ -1,6 +1,7 @@
 package com.pheth.hasee.stickerhero.ShareOption;
 
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
@@ -19,7 +20,6 @@ import com.pheth.hasee.stickerhero.utils.Constants;
 
 
 import java.util.HashMap;
-
 
 
 /**
@@ -74,67 +74,77 @@ public class ShareOptionActivity extends AppCompatActivity implements View.OnCli
 
             //TODO: need to implementing share on default sms
             case R.id.dv_sms:
-                IemojiUtil.shareGif(getApplicationContext(), urlToString, Constants.SMS, null, null);
+//                IemojiUtil.shareGif(getApplicationContext(), urlToString, Constants.SMS, null, null);
                 map.put("share_app", Constants.SMS);
+
+                shareAction(Constants.SMS,urlToString);
                 break;
 
             case R.id.dv_fb_messenger:
-                if (CommonUtils.isPackageExist(Constants.WHATSAPP, getApplicationContext())) {
-                    IemojiUtil.shareGif(getApplicationContext(), urlToString, Constants.MESSENGER_FB,null,null);
-                    map.put("share_app", Constants.MESSENGER_FB);
-                } else {
-                    Toast.makeText(getBaseContext(), "you don't have"+ getResources().getString(R.string.facebook_messenger), Toast.LENGTH_SHORT).show();
-                }
+//                if (CommonUtils.isPackageExist(Constants.WHATSAPP, getApplicationContext())) {
+//                    IemojiUtil.shareGif(getApplicationContext(), urlToString, Constants.MESSENGER_FB, null, null);
+//                    map.put("share_app", Constants.MESSENGER_FB);
+//                } else {
+//                    Toast.makeText(getBaseContext(), "you don't have" + getResources().getString(R.string.facebook_messenger), Toast.LENGTH_SHORT).show();
+//                }
+                shareAction(Constants.MESSENGER_FB,urlToString);
                 break;
 
             case R.id.dv_whatsapp:
-                if (CommonUtils.isPackageExist(Constants.WHATSAPP, getApplicationContext())) {
-                    IemojiUtil.shareGif(getApplicationContext(), urlToString, Constants.WHATSAPP, null, null);
-                    map.put("share_app", Constants.WHATSAPP);
-                } else {
-                    Toast.makeText(getBaseContext(),"you don't have"+ getResources().getString(R.string.whatsapp_share), Toast.LENGTH_SHORT).show();
-                }
+//                if (CommonUtils.isPackageExist(Constants.WHATSAPP, getApplicationContext())) {
+//                    IemojiUtil.shareGif(getApplicationContext(), urlToString, Constants.WHATSAPP, null, null);
+//                    map.put("share_app", Constants.WHATSAPP);
+//                } else {
+//                    Toast.makeText(getBaseContext(), "you don't have" + getResources().getString(R.string.whatsapp_share), Toast.LENGTH_SHORT).show();
+//                }
+                shareAction(Constants.WHATSAPP,urlToString);
                 break;
 
             case R.id.drawable_intragram:
-                if (CommonUtils.isPackageExist(Constants.INSTAGRAM, getApplicationContext())) {
-                    IemojiUtil.shareGif(getApplicationContext(), urlToString, Constants.INSTAGRAM,null,null);
-                    map.put("share_app", Constants.INSTAGRAM);
-                } else {
-                    Toast.makeText(getBaseContext(),"you don't have"+ getResources().getString(R.string.instagram_share), Toast.LENGTH_SHORT).show();
-                }
+//                if (CommonUtils.isPackageExist(Constants.INSTAGRAM, getApplicationContext())) {
+//                    IemojiUtil.shareGif(getApplicationContext(), urlToString, Constants.INSTAGRAM, null, null);
+//                    map.put("share_app", Constants.INSTAGRAM);
+//                } else {
+//                    Toast.makeText(getBaseContext(), "you don't have" + getResources().getString(R.string.instagram_share), Toast.LENGTH_SHORT).show();
+//                }
+                shareAction(Constants.INSTAGRAM,urlToString);
                 break;
 
             case R.id.dv_facebook:
-                if (CommonUtils.isPackageExist(Constants.FACEBOOK, getApplicationContext())) {
-                    IemojiUtil.shareGif(getApplicationContext(), urlToString, Constants.FACEBOOK,null,null);
-                    map.put("share_app", Constants.FACEBOOK);
-                } else {
-                    Toast.makeText(getBaseContext(),"you don't have"+ getResources().getString(R.string.facebook), Toast.LENGTH_SHORT).show();
-                }
+//                if (CommonUtils.isPackageExist(Constants.FACEBOOK, getApplicationContext())) {
+//                    IemojiUtil.shareGif(getApplicationContext(), urlToString, Constants.FACEBOOK, null, null);
+//                    map.put("share_app", Constants.FACEBOOK);
+//                } else {
+//                    Toast.makeText(getBaseContext(), "you don't have" + getResources().getString(R.string.facebook), Toast.LENGTH_SHORT).show();
+//                }
+                shareAction(Constants.FACEBOOK,urlToString);
                 break;
 
             case R.id.dv_twitter:
-                if (CommonUtils.isPackageExist(Constants.TWITTER, getApplicationContext())) {
-                    IemojiUtil.shareGif(getApplicationContext(), urlToString, Constants.TWITTER,null,null);
-                    map.put("share_app", Constants.TWITTER);
-                } else {
-                    Toast.makeText(getBaseContext(), "you don't have"+getResources().getString(R.string.twitter), Toast.LENGTH_SHORT).show();
-                }
+//                if (CommonUtils.isPackageExist(Constants.TWITTER, getApplicationContext())) {
+//                    IemojiUtil.shareGif(getApplicationContext(), urlToString, Constants.TWITTER, null, null);
+//                    map.put("share_app", Constants.TWITTER);
+//                } else {
+//                    Toast.makeText(getBaseContext(), "you don't have" + getResources().getString(R.string.twitter), Toast.LENGTH_SHORT).show();
+//                }
+                shareAction(Constants.TWITTER,urlToString);
                 break;
 
             case R.id.dv_snapchat:
-                if (CommonUtils.isPackageExist(Constants.SNAPCHAT, getApplicationContext())) {
-                    IemojiUtil.shareGif(getApplicationContext(), urlToString, Constants.SNAPCHAT,null,null);
-                    map.put("share_app", Constants.SNAPCHAT);
-                } else {
-                    Toast.makeText(getBaseContext(),"you don't have"+ getResources().getString(R.string.snapchat), Toast.LENGTH_SHORT).show();
-                }
+//                if (CommonUtils.isPackageExist(Constants.SNAPCHAT, getApplicationContext())) {
+//                    IemojiUtil.shareGif(getApplicationContext(), urlToString, Constants.SNAPCHAT, null, null);
+//                    map.put("share_app", Constants.SNAPCHAT);
+//                } else {
+//                    Toast.makeText(getBaseContext(), "you don't have" + getResources().getString(R.string.snapchat), Toast.LENGTH_SHORT).show();
+//                }
+                shareAction(Constants.SNAPCHAT,urlToString);
                 break;
 
             case R.id.dv_more:
-                IemojiUtil.shareGif(getApplicationContext(), urlToString, null,null,null);
+//                IemojiUtil.shareGif(getApplicationContext(), urlToString, null, null, null);
                 map.put("share_app", Constants.MORE);
+
+                shareAction(null,urlToString);
                 break;
         }
 //        // 统计当前emoji package的点击
@@ -142,5 +152,19 @@ public class ShareOptionActivity extends AppCompatActivity implements View.OnCli
 //            FlurryAgent.logEvent(Constants.IMOJI_SHARE, map);
 //        }
 //        finish();
+    }
+
+    private void shareAction(@Nullable String packageName, String urlToString) {
+
+        if (!CommonUtils.isPackageExist(packageName, getApplicationContext()) && packageName!=null) {
+            Toast.makeText(getBaseContext(), "you don't have this app installed", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        if (imoji.getIsAnimateable()) {
+            IemojiUtil.shareGif(getApplicationContext(), urlToString, packageName, null, null);
+        } else {
+            IemojiUtil.getBitmap(getApplicationContext(),urlToString,packageName,null,null);
+        }
     }
 }

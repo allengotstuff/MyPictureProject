@@ -58,7 +58,7 @@ import io.imoji.sdk.objects.RenderingOptions;
 public class IemojiUtil {
 
     public static final String GIFSUFFIX = ".gif";
-    public static boolean IS_SHARE_IN_PROGRESS = false;
+
 
 
     private static Handler mHandler = new Handler(Looper.getMainLooper());
@@ -71,7 +71,6 @@ public class IemojiUtil {
      */
     public static void shareGif(final Context ctx, final String url, @Nullable final String packageName, @Nullable final HistoryDao historyDao, @Nullable final History historyItem) {
 
-        IS_SHARE_IN_PROGRESS = true;
         ImageRequest imageRequest = ImageRequest.fromUri(url);
         CacheKey cacheKey = DefaultCacheKeyFactory.getInstance()
                 .getEncodedCacheKey(imageRequest, null);
@@ -103,14 +102,14 @@ public class IemojiUtil {
                             copyFile(cacheFile, targetFile);
                         } catch (IOException e) {
                             e.printStackTrace();
-                            Toast.makeText(ctx, e.getMessage(), Toast.LENGTH_SHORT).show();
+//                            Toast.makeText(ctx, e.getMessage(), Toast.LENGTH_SHORT).show();
                             return;
                         }
                     }
                 }
             }
 
-            if (historyDao != null || historyItem != null) {
+            if (historyDao != null && historyItem != null) {
                 //添加下载本地文件的url
                 historyItem.setUrl_send_local(targetFile.getAbsolutePath());
 
@@ -127,7 +126,6 @@ public class IemojiUtil {
 
             sharedFile(ctx, targetFile, packageName);
 
-            IS_SHARE_IN_PROGRESS = false;
         } else {
 
             Toast.makeText(ctx, "loading image...", Toast.LENGTH_SHORT).show();
@@ -138,23 +136,18 @@ public class IemojiUtil {
                 @Override
                 public void onNewResult(DataSource<Void> dataSource) {
                     shareGif(ctx, url, packageName, historyDao, historyItem);
-                    IS_SHARE_IN_PROGRESS = false;
-
                 }
 
                 @Override
                 public void onFailure(DataSource<Void> dataSource) {
-                    IS_SHARE_IN_PROGRESS = false;
                 }
 
                 @Override
                 public void onCancellation(DataSource<Void> dataSource) {
-                    IS_SHARE_IN_PROGRESS = false;
                 }
 
                 @Override
                 public void onProgressUpdate(DataSource<Void> dataSource) {
-
                 }
             }, MyApplication.getGlobelExector());
 
@@ -192,7 +185,7 @@ public class IemojiUtil {
         if (!TextUtils.isEmpty(packageName) && packageName != Constants.SMS) {
             share.setPackage(packageName);
         } else if (packageName == Constants.SMS) {
-//            share.setType("vnd.android-dir/mms-sms");
+            share.setClassName("com.android.mms","com.android.mms.ui.ComposeMessageActivity");
         }
 
         share.putExtra(Intent.EXTRA_STREAM, Uri.fromFile(targetFile));
@@ -201,16 +194,15 @@ public class IemojiUtil {
     }
 
 
-    public static void getBitmap(final Context ctx, final String url, @Nullable final String packageName, final HistoryDao historyDao, final History historyItem) {
+    public static void getBitmap(final Context ctx, final String url, @Nullable final String packageName,  @Nullable final HistoryDao historyDao, @Nullable final History historyItem) {
         Toast.makeText(ctx, "loading image...", Toast.LENGTH_SHORT).show();
-        IS_SHARE_IN_PROGRESS = true;
         ImageRequest imageRequest = ImageRequest.fromUri(url);
         final ImagePipeline imagePipeline = Fresco.getImagePipeline();
         DataSubscriber dataSubscriber = new BaseBitmapDataSubscriber() {
 
             @Override
             protected void onFailureImpl(DataSource<CloseableReference<CloseableImage>> dataSource) {
-                IS_SHARE_IN_PROGRESS = false;
+
             }
 
             @Override
@@ -218,13 +210,11 @@ public class IemojiUtil {
 
                 if (bitmap == null) {
                     Log.e("IemojiUtil", "bitmap is null ");
-                    IS_SHARE_IN_PROGRESS = false;
                     return;
                 }
 
                 if (bitmap.isRecycled()) {
                     Log.e("IemojiUtil", "bitmap is recycled ");
-                    IS_SHARE_IN_PROGRESS = false;
                     return;
                 }
 
@@ -242,20 +232,22 @@ public class IemojiUtil {
                     return;
                 }
 
-                //添加下载本地文件的url
-                historyItem.setUrl_send_local(destinationFile.getAbsolutePath());
 
-                boolean isUpdate = MyGreenDaoUtils.AddToHistory(historyDao, historyItem);
+                if (historyDao != null && historyItem != null) {
+                    //添加下载本地文件的url
+                    historyItem.setUrl_send_local(destinationFile.getAbsolutePath());
 
-                if (isUpdate) {
-                    //通知historylayout有分享内容更新的软件UI
-                    Intent intent = new Intent(Constants.UPDATE_HISTORY_LIST);
-                    intent.putExtra(Constants.UPDATE_HISTORY_LIST, true);
-                    ctx.sendBroadcast(intent);
-                    Log.e("IemojiUtil", "add to database successfully");
+                    boolean isUpdate = MyGreenDaoUtils.AddToHistory(historyDao, historyItem);
+
+                    if (isUpdate) {
+                        //通知historylayout有分享内容更新的软件UI
+                        Intent intent = new Intent(Constants.UPDATE_HISTORY_LIST);
+                        intent.putExtra(Constants.UPDATE_HISTORY_LIST, true);
+                        ctx.sendBroadcast(intent);
+                        Log.e("IemojiUtil", "add to database successfully");
+                    }
                 }
 
-                IS_SHARE_IN_PROGRESS = false;
 
                 sharedFile(ctx, destinationFile, packageName);
 

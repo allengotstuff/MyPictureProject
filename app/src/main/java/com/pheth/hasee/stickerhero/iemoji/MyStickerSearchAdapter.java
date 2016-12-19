@@ -96,10 +96,6 @@ public class MyStickerSearchAdapter extends BaseAdapter implements AdapterView.O
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-        if(IemojiUtil.IS_SHARE_IN_PROGRESS){
-            Toast.makeText(mContext, "please wait for the image to load", Toast.LENGTH_SHORT).show();
-            return;
-        }
 
         SearchResult searchResult = (SearchResult) parent.getAdapter().getItem(position);
 
