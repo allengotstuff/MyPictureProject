@@ -111,8 +111,15 @@ public class FavoritImojiFragment extends BaseFragment implements FlexSpanAdapte
         actionName = TAG;
     }
 
+    private long lastClick = 0;
     @Override
     public void onItemClick(RecyclerView.ViewHolder holder, int pos) {
+
+        if(System.currentTimeMillis() - lastClick <150 && lastClick!=0 ){
+            return;
+        }
+        lastClick = System.currentTimeMillis();
+
         Log.e(TAG, ""+pos);
         //控制点击动画
         holderAnimation.setViewHolder(holder, pos);
