@@ -1,37 +1,29 @@
 package com.pheth.hasee.stickerhero.Animation;
+
 import android.animation.ObjectAnimator;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.animation.OvershootInterpolator;
 
-import com.pheth.hasee.stickerhero.Adapter.FlexSpanAdapter;
+import com.pheth.hasee.stickerhero.fragments.FavoritImojiFragment;
+
 
 /**
- * Created by allengotstuff on 12/3/2016.
+ * Created by allengotstuff on 12/20/2016.
  */
-public class TrendingHolderAnimation extends AdapterSelector<RecyclerView.ViewHolder>  {
+public class FavoriteAdapterAnimation extends TrendingHolderAnimation{
 
     @Override
-    public void startAnimation(RecyclerView.ViewHolder holder) {
-        startDraweeAnimation(holder);
+    void restoreHolder(RecyclerView.ViewHolder holder){
 
-    }
+        FavoritImojiFragment.FavoriteAdapter.MyHolder myHolder = (FavoritImojiFragment.FavoriteAdapter.MyHolder)holder;
 
-    @Override
-    public void cancelAnimation(RecyclerView.ViewHolder holder) {
-        cancleDraweeAnimation(holder);
-
-    }
-
-    @Override
-    void restoreHolder(RecyclerView.ViewHolder holder) {
-        FlexSpanAdapter.MyHolder myHolder = (FlexSpanAdapter.MyHolder)holder;
         myHolder.detailImage.setScaleX(1);
         myHolder.detailImage.setScaleY(1);
         myHolder.detailImage.setTranslationY(0);
 
-        myHolder.favorite_function.setTranslationX(0f);
-        myHolder.favorite_function.setVisibility(View.GONE);
+        myHolder.favorite_delete_function.setTranslationX(0f);
+        myHolder.favorite_delete_function.setVisibility(View.GONE);
 
         myHolder.share_function.setTranslationX(0f);
         myHolder.share_function.setVisibility(View.GONE);
@@ -39,13 +31,14 @@ public class TrendingHolderAnimation extends AdapterSelector<RecyclerView.ViewHo
 
     @Override
     void transformHolder(RecyclerView.ViewHolder holder) {
-        FlexSpanAdapter.MyHolder myHolder = (FlexSpanAdapter.MyHolder)holder;
+        FavoritImojiFragment.FavoriteAdapter.MyHolder myHolder = (FavoritImojiFragment.FavoriteAdapter.MyHolder)holder;
+
         myHolder.detailImage.setScaleX(0.44f);
         myHolder.detailImage.setScaleY(0.4f);
         myHolder.detailImage.setTranslationY(50f);
 
-        myHolder.favorite_function.setVisibility(View.VISIBLE);
-        myHolder.favorite_function.setTranslationX(-90f);
+        myHolder.favorite_delete_function.setVisibility(View.VISIBLE);
+        myHolder.favorite_delete_function.setTranslationX(-90f);
 
         myHolder.share_function.setVisibility(View.VISIBLE);
         myHolder.share_function.setTranslationX(90f);
@@ -53,7 +46,8 @@ public class TrendingHolderAnimation extends AdapterSelector<RecyclerView.ViewHo
 
 
     private void startDraweeAnimation(RecyclerView.ViewHolder holder){
-        FlexSpanAdapter.MyHolder myHolder = (FlexSpanAdapter.MyHolder)holder;
+        FavoritImojiFragment.FavoriteAdapter.MyHolder myHolder = (FavoritImojiFragment.FavoriteAdapter.MyHolder)holder;
+
         OvershootInterpolator overshootInterpolator = new OvershootInterpolator();
 
         ObjectAnimator objectAnimator = ObjectAnimator
@@ -74,11 +68,11 @@ public class TrendingHolderAnimation extends AdapterSelector<RecyclerView.ViewHo
         objectAnimator_03.setInterpolator(overshootInterpolator);
         objectAnimator_03.start();
 
-        myHolder.favorite_function.setVisibility(View.VISIBLE);
+        myHolder.favorite_delete_function.setVisibility(View.VISIBLE);
         myHolder.share_function.setVisibility(View.VISIBLE);
 
         ObjectAnimator objectAnimator_04 = ObjectAnimator
-                .ofFloat(myHolder.favorite_function, "translationX",-90f)
+                .ofFloat(myHolder.favorite_delete_function, "translationX",-90f)
                 .setDuration(200);
         objectAnimator_04.setInterpolator(overshootInterpolator);
         objectAnimator_04.start();
@@ -91,7 +85,8 @@ public class TrendingHolderAnimation extends AdapterSelector<RecyclerView.ViewHo
     }
 
     private void cancleDraweeAnimation(RecyclerView.ViewHolder holder){
-        final FlexSpanAdapter.MyHolder myHolder = (FlexSpanAdapter.MyHolder)holder;
+        FavoritImojiFragment.FavoriteAdapter.MyHolder myHolder = (FavoritImojiFragment.FavoriteAdapter.MyHolder)holder;
+
         OvershootInterpolator overshootInterpolator = new OvershootInterpolator();
 
         ObjectAnimator objectAnimator = ObjectAnimator
@@ -115,8 +110,8 @@ public class TrendingHolderAnimation extends AdapterSelector<RecyclerView.ViewHo
 
         // share click handler icon animation
 
-        myHolder.favorite_function.setTranslationX(0f);
-        myHolder.favorite_function.setVisibility(View.GONE);
+        myHolder.favorite_delete_function.setTranslationX(0f);
+        myHolder.favorite_delete_function.setVisibility(View.GONE);
 
         myHolder.share_function.setTranslationX(0f);
         myHolder.share_function.setVisibility(View.GONE);

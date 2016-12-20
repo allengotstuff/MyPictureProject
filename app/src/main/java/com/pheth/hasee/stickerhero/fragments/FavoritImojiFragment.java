@@ -9,11 +9,15 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.TextView;
 
-import com.pheth.hasee.stickerhero.Adapter.FavoriteAdapter;
+import com.facebook.drawee.view.SimpleDraweeView;
 import com.pheth.hasee.stickerhero.Adapter.FlexSpanAdapter;
+import com.pheth.hasee.stickerhero.Animation.FavoriteAdapterAnimation;
+import com.pheth.hasee.stickerhero.Animation.TrendingHolderAnimation;
 import com.pheth.hasee.stickerhero.BaseData.Data.BaseData;
-import com.pheth.hasee.stickerhero.BaseData.Data.DataContainer;
+import com.pheth.hasee.stickerhero.ClickHandler.ClickHandler;
 import com.pheth.hasee.stickerhero.GreenDaoManager.DaoManager;
 import com.pheth.hasee.stickerhero.R;
 import com.pheth.hasee.stickerhero.greendao.Favorite;
@@ -26,7 +30,7 @@ import java.util.List;
 /**
  * Created by allengotstuff on 12/3/2016.
  */
-public class FavoritImojiFragment extends BaseFragment {
+public class FavoritImojiFragment extends BaseFragment implements FlexSpanAdapter.OnItemClickListener  {
 
     private static final String TAG = "FavoritImojiFragment";
     private Context mContext;
@@ -34,10 +38,13 @@ public class FavoritImojiFragment extends BaseFragment {
     private List<Favorite> favoriteImojiList;
     private List<BaseData> baseDataList;
 
+    private FavoriteAdapterAnimation holderAnimation;
+    private ClickHandler clickHandler;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        init();
         initdatabase();
         getFavoite();
     }
@@ -72,13 +79,20 @@ public class FavoritImojiFragment extends BaseFragment {
         Log.e(TAG, "favorite list size: " + favoriteImojiList.size());
     }
 
+    private void init(){
+        holderAnimation = new FavoriteAdapterAnimation();
+    }
+
     private void setupRecyclerview(RecyclerView recyclerview) {
 
         recyclerview.setLayoutManager(new GridLayoutManager(getContext(), 3));
         recyclerview.setHasFixedSize(true);
 
-        FlexSpanAdapter adapter = new FlexSpanAdapter(getContext(), baseDataList);
+        FlexSpanAdapter adapter = new FavoriteAdapter(getContext(), baseDataList);
+        adapter.setOnItemClickListener(this);
+        adapter.setAnimationHolder(holderAnimation);
         recyclerview.setAdapter(adapter);
+
         Log.e(TAG, "setup recyclerview");
     }
 
@@ -95,6 +109,50 @@ public class FavoritImojiFragment extends BaseFragment {
     @Override
     void setActionName() {
         actionName = TAG;
+    }
+
+    @Override
+    public void onItemClick(RecyclerView.ViewHolder holder, int pos) {
+        Log.e(TAG, ""+pos);
+        //控制点击动画
+        holderAnimation.setViewHolder(holder, pos);
+
+    }
+
+    public static class FavoriteAdapter extends FlexSpanAdapter {
+
+        public FavoriteAdapter(Context context, List<BaseData> datalist) {
+            super(context, datalist);
+        }
+
+
+        @Override
+        public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+            View holderView = LayoutInflater.from(parent.getContext()).inflate(R.layout.single_cell_favorite_adapter, parent, false);
+            MyHolder myViewHolder = new MyHolder(holderView);
+            return myViewHolder;
+        }
+
+        public static class MyHolder extends FlexSpanAdapter.MyHolder {
+
+            public SimpleDraweeView detailImage;
+            public TextView imojiTitle;
+
+            public ImageView favorite_delete_function, share_function;
+
+            public MyHolder(View itemView) {
+                super(itemView);
+                detailImage = (SimpleDraweeView) itemView.findViewById(R.id.dv_detail_image);
+                imojiTitle = (TextView) itemView.findViewById(R.id.title_tv);
+                setupControllor(itemView);
+            }
+
+            private void setupControllor(View itemView) {
+                favorite_delete_function = (ImageView) itemView.findViewById(R.id.iamgeview_1);
+                share_function = (ImageView) itemView.findViewById(R.id.iamgeview_2);
+            }
+        }
+
     }
 
 }

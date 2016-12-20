@@ -27,7 +27,7 @@ import io.imoji.sdk.objects.Imoji;
 /**
  * Created by allengotstuff on 11/29/2016.
  */
-public class FlexSpanAdapter extends AnimationAdapter<FlexSpanAdapter.MyHolder> {
+public class FlexSpanAdapter extends AnimationAdapter<RecyclerView.ViewHolder> {
 
     public static final int TYPE_HEADER = 1;
     public static final int TYPE_BODY = 2;
@@ -85,15 +85,17 @@ public class FlexSpanAdapter extends AnimationAdapter<FlexSpanAdapter.MyHolder> 
     }
 
     @Override
-    public MyHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View holderView = LayoutInflater.from(mContext).inflate(R.layout.single_detail_row_trending, parent, false);
         MyHolder myViewHolder = new MyHolder(holderView);
         return myViewHolder;
     }
 
     @Override
-    public void onBindViewHolder(final MyHolder holder, final int position) {
-        super.onBindViewHolder(holder, position);
+    public void onBindViewHolder(RecyclerView.ViewHolder viewHolder, final int position) {
+        super.onBindViewHolder(viewHolder, position);
+
+        final MyHolder holder = (MyHolder)viewHolder;
 
         int viewType = getItemViewType(position);
         setDraweeParam(holder, viewType);
@@ -161,7 +163,7 @@ public class FlexSpanAdapter extends AnimationAdapter<FlexSpanAdapter.MyHolder> 
         }
     }
 
-    public class MyHolder extends RecyclerView.ViewHolder {
+    public static class MyHolder extends RecyclerView.ViewHolder {
 
         public SimpleDraweeView detailImage;
         public TextView imojiTitle;

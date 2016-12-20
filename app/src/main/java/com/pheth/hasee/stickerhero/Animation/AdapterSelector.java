@@ -47,6 +47,12 @@ public abstract class AdapterSelector<T>  {
         }
     }
 
+
+    /**
+     *  This method should be use in Recyclerview's onClick to bind animation control with viewHolder.
+     * @param holder
+     * @param pos
+     */
     public void setViewHolder(T holder, int pos){
 
         if (lastClickPos == -999){
