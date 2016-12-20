@@ -104,5 +104,29 @@ public class MyGreenDaoUtils {
         }
     }
 
+    /**
+     *  delete the favorite imoji from favorite list.
+     * @param favoriteDao
+     * @param mfavorite
+     * @return
+     */
+    public static boolean deleteSingleImojiFavorite(FavoriteDao favoriteDao, Favorite mfavorite){
+        if (favoriteDao == null || mfavorite==null )
+            return false;
+
+        QueryBuilder qb = favoriteDao.queryBuilder();
+        Object result = qb.where(FavoriteDao.Properties.Identifier.eq(mfavorite.getIdentifier())).unique();
+
+
+        if(result==null)
+        {
+            return false;
+        }else
+        {
+            favoriteDao.delete((Favorite)result);
+            return true;
+        }
+    }
+
 
 }

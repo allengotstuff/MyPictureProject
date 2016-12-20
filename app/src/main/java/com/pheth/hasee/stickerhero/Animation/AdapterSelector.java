@@ -12,11 +12,11 @@ public abstract class AdapterSelector<T>  {
 
     private static final String TAG = "AdapterSelector";
 
-    private boolean selected;
+    protected boolean selected;
 
-    private T myHolder;
+    protected T myHolder;
 
-    private int lastClickPos;
+    protected int lastClickPos;
 
     public abstract void startAnimation(T holder);
 

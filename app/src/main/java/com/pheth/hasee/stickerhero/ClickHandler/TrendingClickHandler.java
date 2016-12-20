@@ -25,10 +25,10 @@ import java.util.Calendar;
 public class TrendingClickHandler implements ClickHandler<RecyclerView.ViewHolder, BaseData>, View.OnClickListener  {
 
 
-    private BaseData dataImoji;
+    protected BaseData dataImoji;
     private FlexSpanAdapter.MyHolder myHolder;
-    private DaoManager daoManager;
-    private Context mContext;
+    protected DaoManager daoManager;
+    protected Context mContext;
     private int position;
 
 
@@ -109,7 +109,7 @@ public class TrendingClickHandler implements ClickHandler<RecyclerView.ViewHolde
 
     }
 
-    private Favorite mapFavoriteItem() {
+    protected Favorite mapFavoriteItem() {
 
         if (dataImoji == null) {
             throw new RuntimeException("ClickHandler: dataImoji can not be null");

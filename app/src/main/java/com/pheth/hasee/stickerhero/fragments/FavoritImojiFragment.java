@@ -15,12 +15,11 @@ import android.widget.TextView;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.pheth.hasee.stickerhero.Adapter.FlexSpanAdapter;
 import com.pheth.hasee.stickerhero.Animation.FavoriteAdapterAnimation;
-import com.pheth.hasee.stickerhero.Animation.TrendingHolderAnimation;
 import com.pheth.hasee.stickerhero.BaseData.Data.BaseData;
 import com.pheth.hasee.stickerhero.ClickHandler.ClickHandler;
+import com.pheth.hasee.stickerhero.ClickHandler.FavoriteImojiClickHandler;
 import com.pheth.hasee.stickerhero.GreenDaoManager.DaoManager;
 import com.pheth.hasee.stickerhero.R;
-import com.pheth.hasee.stickerhero.greendao.Favorite;
 import com.pheth.hasee.stickerhero.utils.DataConverter;
 
 import java.util.ArrayList;
@@ -32,14 +31,15 @@ import java.util.List;
  */
 public class FavoritImojiFragment extends BaseFragment implements FlexSpanAdapter.OnItemClickListener  {
 
-    private static final String TAG = "FavoritImojiFragment";
+    public static final String TAG = "FavoritImojiFragment";
+
     private Context mContext;
     private DaoManager daoManager;
-    private List<Favorite> favoriteImojiList;
     private List<BaseData> baseDataList;
 
     private FavoriteAdapterAnimation holderAnimation;
     private ClickHandler clickHandler;
+    private FlexSpanAdapter adapter;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -59,6 +59,13 @@ public class FavoritImojiFragment extends BaseFragment implements FlexSpanAdapte
         return myRecyclerview;
     }
 
+    private void init(){
+        holderAnimation = new FavoriteAdapterAnimation();
+        clickHandler = new FavoriteImojiClickHandler(DaoManager.getManager(),getContext());
+
+        ((FavoriteImojiClickHandler)clickHandler).setAnimationHandler(holderAnimation);
+        baseDataList = new ArrayList<BaseData>();
+    }
 
     private void initdatabase() {
         daoManager = DaoManager.getManager();
@@ -66,31 +73,31 @@ public class FavoritImojiFragment extends BaseFragment implements FlexSpanAdapte
     }
 
     private void getFavoite() {
-        favoriteImojiList = new ArrayList<Favorite>();
+
         List databaseList = daoManager.getFavoriteIndividualDao().loadAll();
 
-        if (databaseList == null)
+        if (databaseList == null || databaseList.size()<=0)
             return;
 
-        favoriteImojiList.addAll(databaseList);
 
-        baseDataList = DataConverter.convertData(favoriteImojiList);
+        baseDataList.clear();
 
-        Log.e(TAG, "favorite list size: " + favoriteImojiList.size());
+        baseDataList.addAll(DataConverter.convertData(databaseList));
+
+        Log.e(TAG, "favorite list size: " + baseDataList.size());
     }
 
-    private void init(){
-        holderAnimation = new FavoriteAdapterAnimation();
-    }
+
 
     private void setupRecyclerview(RecyclerView recyclerview) {
 
         recyclerview.setLayoutManager(new GridLayoutManager(getContext(), 3));
         recyclerview.setHasFixedSize(true);
 
-        FlexSpanAdapter adapter = new FavoriteAdapter(getContext(), baseDataList);
+        adapter = new FavoriteAdapter(getContext(), baseDataList);
         adapter.setOnItemClickListener(this);
         adapter.setAnimationHolder(holderAnimation);
+        adapter.setClickHandler(clickHandler);
         recyclerview.setAdapter(adapter);
 
         Log.e(TAG, "setup recyclerview");
@@ -103,7 +110,9 @@ public class FavoritImojiFragment extends BaseFragment implements FlexSpanAdapte
 
     @Override
     public void updateFragment() {
-
+        Log.e(TAG, "updateFragment");
+        getFavoite();
+        adapter.notifyDataSetChanged();
     }
 
     @Override
@@ -123,6 +132,13 @@ public class FavoritImojiFragment extends BaseFragment implements FlexSpanAdapte
         Log.e(TAG, ""+pos);
         //控制点击动画
         holderAnimation.setViewHolder(holder, pos);
+
+
+        //控制点击的操
+        BaseData imoji = baseDataList.get(pos);
+
+        clickHandler.setViewHolder(holder,pos);
+        clickHandler.setData(imoji);
 
     }
 

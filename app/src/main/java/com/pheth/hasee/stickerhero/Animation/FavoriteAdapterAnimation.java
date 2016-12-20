@@ -13,6 +13,17 @@ import com.pheth.hasee.stickerhero.fragments.FavoritImojiFragment;
  */
 public class FavoriteAdapterAnimation extends TrendingHolderAnimation{
 
+    /**
+     * when deleting the favorite sticker from my favorite list, need to restore the curent
+     * referenced holder's animation property.
+     */
+    public void deleteFavoriteViewHolderRestore(){
+        if(myHolder!=null) {
+            restoreHolder(myHolder);
+            selected = false;
+            lastClickPos = -999;
+        }
+    }
     @Override
     void restoreHolder(RecyclerView.ViewHolder holder){
 

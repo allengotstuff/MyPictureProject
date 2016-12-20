@@ -14,13 +14,11 @@ public class TrendingHolderAnimation extends AdapterSelector<RecyclerView.ViewHo
     @Override
     public void startAnimation(RecyclerView.ViewHolder holder) {
         startDraweeAnimation(holder);
-
     }
 
     @Override
     public void cancelAnimation(RecyclerView.ViewHolder holder) {
         cancleDraweeAnimation(holder);
-
     }
 
     @Override

@@ -46,29 +46,6 @@ public class FlexSpanAdapter extends AnimationAdapter<RecyclerView.ViewHolder> {
         imojiList = (ArrayList<BaseData>) data;
     }
 
-//    public void setData(List list){
-//        ArrayList<BaseData> temp =  (ArrayList<BaseData>)list;
-//
-//        imojiList.clear();
-//        imojiList.addAll(temp);
-//        this.notifyDataSetChanged();
-//    }
-
-//    public void setLayoutManager(GridLayoutManager manager, final HashSet<Integer> fullSpanCount){
-//        layoutManager = manager;
-//        spanPositionSet = fullSpanCount;
-//        layoutManager.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup(){
-//            @Override
-//            public int getSpanSize(int position) {
-//
-//                if(spanPositionSet.contains(position)){
-//                    return layoutManager.getSpanCount();
-//                }
-//
-//                return 1;
-//            }
-//        });
-//    }
 
     public void setOnItemClickListener(OnItemClickListener listener) {
         onItemClickListener = listener;
