@@ -9,7 +9,7 @@ import android.os.Parcelable;
  */
 public class DataContainer implements BaseData, Parcelable {
 
-    String name="";
+    String name="imoji";
     String identifier="";
     String localThumbUrl="";
     String onlineThumbUrl="";

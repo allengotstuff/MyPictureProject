@@ -17,8 +17,8 @@ import com.pheth.hasee.stickerhero.greendao.Favorite;
  * Created by allengotstuff on 9/5/2016.
  */
 public class FragmentPageAdapter extends FragmentPagerAdapter {
-    final int PAGE_COUNT = 3;
-    private String tabTitles[] = new String[]{"Category","Favorite","History"};
+    final int PAGE_COUNT = 2;
+    private String tabTitles[] = new String[]{"Category","Trending"};
     private Context context;
 
     public FragmentPageAdapter(FragmentManager fm, Context context) {
