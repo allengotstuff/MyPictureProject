@@ -33,7 +33,6 @@ public class TrendingFragment extends BaseFragment implements FlexSpanAdapter.On
 
     private FlexSpanAdapter adapter;
 
-//    private ClickHandler clickHandler;
 
     private TrendingHolderAnimation holderAnimation;
     private ClickHandler clickHandler;
@@ -110,8 +109,15 @@ public class TrendingFragment extends BaseFragment implements FlexSpanAdapter.On
     }
 
 
+    private long lastClick = 0;
     @Override
     public void onItemClick(RecyclerView.ViewHolder holder, int pos) {
+
+        if(System.currentTimeMillis() - lastClick <150 && lastClick!=0 ){
+            return;
+        }
+        lastClick = System.currentTimeMillis();
+
 
         Log.e("Trending", "" + pos);
 

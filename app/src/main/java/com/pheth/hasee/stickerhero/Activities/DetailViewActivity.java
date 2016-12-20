@@ -69,7 +69,7 @@ public class DetailViewActivity extends BaseSecondaryActivity implements DetailV
 
         holderAnimation = new HolderAnimation();
 
-        clickHandler = new DetailClickHandler(DaoManager.getManager(),getBaseContext());
+        clickHandler = new DetailClickHandler(DaoManager.getManager(),DetailViewActivity.this);
 
         mContext = getBaseContext();
         baseData = getIntent().getParcelableExtra(DATACONTAINER);
@@ -130,9 +130,13 @@ public class DetailViewActivity extends BaseSecondaryActivity implements DetailV
         adapter.onRequestCancle();
     }
 
+    private long lastClick = 0;
     @Override
     public void onHolderClick(int pos, RecyclerView.ViewHolder holder) {
-
+        if(System.currentTimeMillis() - lastClick <150 && lastClick!=0 ){
+            return;
+        }
+        lastClick = System.currentTimeMillis();
         Log.e(TAG, "onclick"+pos );
 
 

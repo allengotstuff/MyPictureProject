@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
+import com.facebook.drawee.backends.pipeline.Fresco;
 import com.facebook.drawee.interfaces.DraweeController;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.pheth.hasee.stickerhero.Animation.AdapterSelector;
@@ -132,16 +133,24 @@ public class DetailViewAdapter extends AnimationAdapter<DetailViewAdapter.Detail
 
         switch (viewType) {
             case TYPE_HEADER:
-//                DraweeController controller = CommonUtils.getController(headData);
-                holder.detailImage.setImageURI(headData.getOnlineThumbUrl());
+                DraweeController controller_head = Fresco.newDraweeControllerBuilder()
+                        .setUri(headData.getOnlineThumbUrl())
+                        .setAutoPlayAnimations(true)
+                        .build();
+
+                holder.detailImage.setController(controller_head);
                 holder.itemView.setOnClickListener(null);
                 break;
 
             case TYPE_BODY:
-//                DraweeController controller_body = CommonUtils.getController(mList.get(position));
-//                holder.detailImage.setController(controller_body);
+
                 BaseData temp = mList.get(position);
-                holder.detailImage.setImageURI(temp.getOnlineThumbUrl());
+                DraweeController controller = Fresco.newDraweeControllerBuilder()
+                        .setUri(temp.getOnlineThumbUrl())
+                        .setAutoPlayAnimations(true)
+                        .build();
+
+                holder.detailImage.setController(controller);
 
                 holder.itemView.setOnClickListener(new View.OnClickListener() {
                     @Override

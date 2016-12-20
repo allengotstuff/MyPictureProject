@@ -36,8 +36,12 @@ public class HolderAnimation extends AdapterSelector<RecyclerView.ViewHolder> {
         myHolder.detailImage.setScaleX(1);
         myHolder.detailImage.setScaleY(1);
         myHolder.detailImage.setTranslationY(0);
-        myHolder.share_function.setVisibility(View.GONE);
+
+        myHolder.favorite_function.setTranslationX(0f);
         myHolder.favorite_function.setVisibility(View.GONE);
+
+        myHolder.share_function.setTranslationX(0f);
+        myHolder.share_function.setVisibility(View.GONE);
     }
 
     @Override
@@ -46,8 +50,12 @@ public class HolderAnimation extends AdapterSelector<RecyclerView.ViewHolder> {
         myHolder.detailImage.setScaleX(0.44f);
         myHolder.detailImage.setScaleY(0.4f);
         myHolder.detailImage.setTranslationY(50f);
-        myHolder.share_function.setVisibility(View.VISIBLE);
+
         myHolder.favorite_function.setVisibility(View.VISIBLE);
+        myHolder.favorite_function.setTranslationX(-90f);
+
+        myHolder.share_function.setVisibility(View.VISIBLE);
+        myHolder.share_function.setTranslationX(90f);
     }
 
 
@@ -81,9 +89,22 @@ public class HolderAnimation extends AdapterSelector<RecyclerView.ViewHolder> {
 
     private  void StartFucntionAnimation(RecyclerView.ViewHolder holder){
         DetailViewAdapter.DetailHolder myHolder = (DetailViewAdapter.DetailHolder)holder;
+        OvershootInterpolator overshootInterpolator = new OvershootInterpolator();
 
         myHolder.share_function.setVisibility(View.VISIBLE);
         myHolder.favorite_function.setVisibility(View.VISIBLE);
+
+        ObjectAnimator objectAnimator_04 = ObjectAnimator
+                .ofFloat(myHolder.favorite_function, "translationX",-90f)
+                .setDuration(200);
+        objectAnimator_04.setInterpolator(overshootInterpolator);
+        objectAnimator_04.start();
+
+        ObjectAnimator objectAnimator_05 = ObjectAnimator
+                .ofFloat(myHolder.share_function, "translationX",90f)
+                .setDuration(200);
+        objectAnimator_05.setInterpolator(overshootInterpolator);
+        objectAnimator_05.start();
     }
 
     private void cancleDraweeAnimation(RecyclerView.ViewHolder holder){
@@ -112,7 +133,10 @@ public class HolderAnimation extends AdapterSelector<RecyclerView.ViewHolder> {
     private  void cancleFucntionAnimation(RecyclerView.ViewHolder holder){
         DetailViewAdapter.DetailHolder myHolder = (DetailViewAdapter.DetailHolder)holder;
 
-        myHolder.share_function.setVisibility(View.GONE);
+        myHolder.favorite_function.setTranslationX(0f);
         myHolder.favorite_function.setVisibility(View.GONE);
+
+        myHolder.share_function.setTranslationX(0f);
+        myHolder.share_function.setVisibility(View.GONE);
     }
 }
