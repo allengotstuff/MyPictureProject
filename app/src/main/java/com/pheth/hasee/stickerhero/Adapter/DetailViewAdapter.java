@@ -140,10 +140,12 @@ public class DetailViewAdapter extends AnimationAdapter<DetailViewAdapter.Detail
 
                 holder.detailImage.setController(controller_head);
                 holder.itemView.setOnClickListener(null);
+
+                Log.e("DetailViewAdapter", "TYPE_HEADER "+ position);
                 break;
 
             case TYPE_BODY:
-
+                Log.e("DetailViewAdapter", "TYPE_BODY "+ position);
                 BaseData temp = mList.get(position);
                 DraweeController controller = Fresco.newDraweeControllerBuilder()
                         .setUri(temp.getOnlineThumbUrl())

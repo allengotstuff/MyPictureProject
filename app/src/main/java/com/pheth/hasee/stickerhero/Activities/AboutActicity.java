@@ -22,7 +22,6 @@ import java.util.ArrayList;
 public class AboutActicity extends BaseSecondaryActivity {
 
 
-    private AVLoadingIndicatorView loadingIndicatorView;
 
     private static final String TAG = "AboutActicity";
 
@@ -33,7 +32,6 @@ public class AboutActicity extends BaseSecondaryActivity {
         title_textview.setText(R.string.navigation_about);
 
     }
-
 
 
 }

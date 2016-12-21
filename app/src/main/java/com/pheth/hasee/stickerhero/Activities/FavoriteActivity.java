@@ -17,7 +17,7 @@ public class FavoriteActivity extends BaseSecondaryActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        super.setContentView(R.layout.about_activity);
+        super.setContentView(R.layout.favorite_activity);
         title_textview.setText(R.string.navigation_favitie_imoji);
 
         setFragment();

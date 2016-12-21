@@ -89,7 +89,7 @@ public class TrendingClickHandler implements ClickHandler<RecyclerView.ViewHolde
 
         boolean isSuccess = MyGreenDaoUtils.addSingleImojiFavorite(favoriteDao, favorite);
         if (isSuccess) {
-            Toast.makeText(mContext, "Add to favorite: " + position, Toast.LENGTH_SHORT).show();
+            Toast.makeText(mContext, "Add to favorite", Toast.LENGTH_SHORT).show();
         } else {
             Toast.makeText(mContext, "fail to add to favorite", Toast.LENGTH_SHORT).show();
         }
