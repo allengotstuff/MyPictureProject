@@ -7,6 +7,7 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.Toast;
 
+import com.flurry.android.FlurryAgent;
 import com.pheth.hasee.stickerhero.Adapter.FlexSpanAdapter;
 import com.pheth.hasee.stickerhero.BaseData.Data.BaseData;
 import com.pheth.hasee.stickerhero.BaseData.Data.DataContainer;
@@ -15,6 +16,7 @@ import com.pheth.hasee.stickerhero.R;
 import com.pheth.hasee.stickerhero.ShareOption.ShareOptionActivity;
 import com.pheth.hasee.stickerhero.greendao.Favorite;
 import com.pheth.hasee.stickerhero.greendao.FavoriteDao;
+import com.pheth.hasee.stickerhero.utils.DataCollectionConstant;
 import com.pheth.hasee.stickerhero.utils.MyGreenDaoUtils;
 
 import java.util.Calendar;
@@ -93,6 +95,7 @@ public class TrendingClickHandler implements ClickHandler<RecyclerView.ViewHolde
         } else {
             Toast.makeText(mContext, "fail to add to favorite", Toast.LENGTH_SHORT).show();
         }
+        FlurryAgent.logEvent(DataCollectionConstant.ADD_FAVORITE);
     }
 
     @Override
@@ -102,6 +105,7 @@ public class TrendingClickHandler implements ClickHandler<RecyclerView.ViewHolde
 
         intent.putExtra(ShareOptionActivity.PASS_BASE_DATA,dataContainer);
         mContext.startActivity(intent);
+        FlurryAgent.logEvent(DataCollectionConstant.INIT_SHARE_BUTTON);
     }
 
     @Override

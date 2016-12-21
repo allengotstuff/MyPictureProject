@@ -8,6 +8,7 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.Toast;
 
+import com.flurry.android.FlurryAgent;
 import com.pheth.hasee.stickerhero.Adapter.DetailViewAdapter;
 import com.pheth.hasee.stickerhero.BaseData.Data.BaseData;
 import com.pheth.hasee.stickerhero.BaseData.Data.DataContainer;
@@ -17,6 +18,7 @@ import com.pheth.hasee.stickerhero.ShareOption.ShareOptionActivity;
 import com.pheth.hasee.stickerhero.greendao.Favorite;
 import com.pheth.hasee.stickerhero.greendao.FavoriteDao;
 import com.pheth.hasee.stickerhero.iemoji.IemojiUtil;
+import com.pheth.hasee.stickerhero.utils.DataCollectionConstant;
 import com.pheth.hasee.stickerhero.utils.MyGreenDaoUtils;
 
 import java.util.Calendar;
@@ -98,6 +100,8 @@ public class DetailClickHandler implements ClickHandler<DetailViewAdapter.Detail
         } else {
             Toast.makeText(mContext, "fail to add to favorite", Toast.LENGTH_SHORT).show();
         }
+
+        FlurryAgent.logEvent(DataCollectionConstant.ADD_FAVORITE);
     }
 
     @Override
@@ -114,6 +118,7 @@ public class DetailClickHandler implements ClickHandler<DetailViewAdapter.Detail
 
         intent.putExtra(ShareOptionActivity.PASS_BASE_DATA,dataContainer);
         mContext.startActivity(intent);
+        FlurryAgent.logEvent(DataCollectionConstant.INIT_SHARE_BUTTON);
     }
 
     private Favorite mapFavoriteItem() {

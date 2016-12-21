@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
+import com.flurry.android.FlurryAgent;
 import com.pheth.hasee.stickerhero.Animation.AdapterSelector;
 import com.pheth.hasee.stickerhero.Animation.FavoriteAdapterAnimation;
 import com.pheth.hasee.stickerhero.GreenDaoManager.DaoManager;
@@ -15,6 +16,7 @@ import com.pheth.hasee.stickerhero.R;
 import com.pheth.hasee.stickerhero.fragments.FavoritImojiFragment;
 import com.pheth.hasee.stickerhero.greendao.Favorite;
 import com.pheth.hasee.stickerhero.greendao.FavoriteDao;
+import com.pheth.hasee.stickerhero.utils.DataCollectionConstant;
 import com.pheth.hasee.stickerhero.utils.MyGreenDaoUtils;
 
 /**
@@ -89,5 +91,7 @@ public class FavoriteImojiClickHandler extends TrendingClickHandler {
         } else {
             Toast.makeText(mContext, "Error: Unable to Delete Sticker", Toast.LENGTH_SHORT).show();
         }
+
+        FlurryAgent.logEvent(DataCollectionConstant.DELETE_COLLECTED_STICKER);
     }
 }

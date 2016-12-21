@@ -17,6 +17,7 @@ import com.pheth.hasee.stickerhero.R;
 import com.pheth.hasee.stickerhero.iemoji.IemojiUtil;
 import com.pheth.hasee.stickerhero.utils.CommonUtils;
 import com.pheth.hasee.stickerhero.utils.Constants;
+import com.pheth.hasee.stickerhero.utils.DataCollectionConstant;
 
 
 import java.util.HashMap;
@@ -75,7 +76,7 @@ public class ShareOptionActivity extends AppCompatActivity implements View.OnCli
             //TODO: need to implementing share on default sms
             case R.id.dv_sms:
 //                IemojiUtil.shareGif(getApplicationContext(), urlToString, Constants.SMS, null, null);
-                map.put("share_app", Constants.SMS);
+                map.put("share_app", "default Sms");
 
                 shareAction(Constants.SMS,urlToString);
                 break;
@@ -87,6 +88,7 @@ public class ShareOptionActivity extends AppCompatActivity implements View.OnCli
 //                } else {
 //                    Toast.makeText(getBaseContext(), "you don't have" + getResources().getString(R.string.facebook_messenger), Toast.LENGTH_SHORT).show();
 //                }
+                map.put("share_app", "FB Messenger");
                 shareAction(Constants.MESSENGER_FB,urlToString);
                 break;
 
@@ -97,6 +99,7 @@ public class ShareOptionActivity extends AppCompatActivity implements View.OnCli
 //                } else {
 //                    Toast.makeText(getBaseContext(), "you don't have" + getResources().getString(R.string.whatsapp_share), Toast.LENGTH_SHORT).show();
 //                }
+                map.put("share_app", "WhatsApp");
                 shareAction(Constants.WHATSAPP,urlToString);
                 break;
 
@@ -107,6 +110,7 @@ public class ShareOptionActivity extends AppCompatActivity implements View.OnCli
 //                } else {
 //                    Toast.makeText(getBaseContext(), "you don't have" + getResources().getString(R.string.instagram_share), Toast.LENGTH_SHORT).show();
 //                }
+                map.put("share_app", "instragram");
                 shareAction(Constants.INSTAGRAM,urlToString);
                 break;
 
@@ -117,6 +121,7 @@ public class ShareOptionActivity extends AppCompatActivity implements View.OnCli
 //                } else {
 //                    Toast.makeText(getBaseContext(), "you don't have" + getResources().getString(R.string.facebook), Toast.LENGTH_SHORT).show();
 //                }
+                map.put("share_app", "facebook");
                 shareAction(Constants.FACEBOOK,urlToString);
                 break;
 
@@ -127,6 +132,7 @@ public class ShareOptionActivity extends AppCompatActivity implements View.OnCli
 //                } else {
 //                    Toast.makeText(getBaseContext(), "you don't have" + getResources().getString(R.string.twitter), Toast.LENGTH_SHORT).show();
 //                }
+                map.put("share_app", "twitter");
                 shareAction(Constants.TWITTER,urlToString);
                 break;
 
@@ -137,21 +143,19 @@ public class ShareOptionActivity extends AppCompatActivity implements View.OnCli
 //                } else {
 //                    Toast.makeText(getBaseContext(), "you don't have" + getResources().getString(R.string.snapchat), Toast.LENGTH_SHORT).show();
 //                }
+                map.put("share_app", "snapchat");
                 shareAction(Constants.SNAPCHAT,urlToString);
                 break;
 
             case R.id.dv_more:
 //                IemojiUtil.shareGif(getApplicationContext(), urlToString, null, null, null);
-                map.put("share_app", Constants.MORE);
+                map.put("share_app", "more");
 
                 shareAction(null,urlToString);
                 break;
         }
 //        // 统计当前emoji package的点击
-//        if (map != null && map.size() > 0) {
-//            FlurryAgent.logEvent(Constants.IMOJI_SHARE, map);
-//        }
-//        finish();
+            FlurryAgent.logEvent(DataCollectionConstant.SHARE_PLATFORM, map);
     }
 
     private void shareAction(@Nullable String packageName, String urlToString) {
